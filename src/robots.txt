@@ -5,7 +5,7 @@ User-agent: *
 Allow: /
 
 # Sitemap Location
-Sitemap: https://kahuafashionclub.com/sitemap.xml
+Sitemap: https://coolfashionbazar.com/sitemap.xml
 
 # Disallow Admin and System Areas
 Disallow: /admin/

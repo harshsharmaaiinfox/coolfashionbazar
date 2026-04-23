@@ -48,14 +48,14 @@ export class DenverComponent implements OnInit, OnDestroy, AfterViewInit {
   public heroSlides = [
     {
       image: 'assets/images/banner13.png',
-      alt: 'Kahua Fashion New Arrivals',
+      alt: 'Cool Fashion Bazar Fashion New Arrivals',
       link: '/collections',
       saleText: 'FASHION SALE',
       saleSubtext: 'UPTO 70% OFF'
     },
     {
       image: 'assets/images/banner12.png',
-      alt: 'Kahua Fashion Collection',
+      alt: 'Cool Fashion Bazar Fashion Collection',
       link: '/collections',
       saleText: 'FASHION SALE',
       saleSubtext: 'Running Now!'

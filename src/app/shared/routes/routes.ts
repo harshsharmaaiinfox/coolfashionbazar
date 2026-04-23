@@ -6,7 +6,7 @@ export const content: Routes = [
   {
     path: "",
     loadChildren: () => import("../../components/themes/themes.module").then((m) => m.ThemesModule),
-    title: 'Kahuafashionclub Premium Mens and Womens Fashion Online'
+    title: 'CoolFashionBazar Premium Mens and Womens Fashion Online'
   },
   {
     path: 'privacy-policy',
@@ -35,7 +35,7 @@ export const content: Routes = [
   {
     path: "Contact-Us",
     loadChildren: () => import("../../contact-us/contact-us.module").then((m) => m.ContactUsModule),
-    title: 'Contact Kahuafashionclub – We’re Here to Help You 24/7'
+    title: 'Contact CoolFashionBazar – We’re Here to Help You 24/7'
   },
   {
     path: 'term-condition',
@@ -47,33 +47,33 @@ export const content: Routes = [
     path: "auth",
     loadChildren: () => import("../../components/auth/auth.module").then((m) => m.AuthModule),
     canActivateChild: [AuthGuard],
-    title: 'Login or Register Your Kahuafashionclub Account Securely'
+    title: 'Login or Register Your CoolFashionBazar Account Securely'
   },
   {
     path: "account",
     loadChildren: () => import("../../components/account/account.module").then((m) => m.AccountModule),
     canActivate: [AuthGuard],
-    title: 'Manage Your Orders & Profile | Kahuafashionclub Account'
+    title: 'Manage Your Orders & Profile | CoolFashionBazar Account'
   },
   {
     path: "",
     loadChildren: () => import("../../components/shop/shop.module").then((m) => m.ShopModule),
-    title: 'Browse Fashion Clothing Categories – Shop Online | Kahuafashionclub'
+    title: 'Browse Fashion Clothing Categories – Shop Online | CoolFashionBazar'
   },
   {
     path: "",
     loadChildren: () => import("../../components/blog/blog.module").then((m) => m.BlogModule),
-    title: 'Kahuafashionclub Blog – Latest Fashion News, Tips & Trends'
+    title: 'CoolFashionBazar Blog – Latest Fashion News, Tips & Trends'
   },
   {
     path: "",
     loadChildren: () => import("../../components/page/page.module").then((m) => m.PagesModule),
-    title: 'Explore Kahuafashionclub Info Pages – Learn More About Us'
+    title: 'Explore CoolFashionBazar Info Pages – Learn More About Us'
   },
   {
     path: '**',
     pathMatch: 'full',
     component: Error404Component,
-    title: '404 Error – Page Not Found | Kahuafashionclub Fashion Store'
+    title: '404 Error – Page Not Found | CoolFashionBazar Fashion Store'
   }
 ];

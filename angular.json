@@ -39,6 +39,7 @@
                             "src/robots.txt"
                         ],
                         "styles": [
+                            "node_modules/swiper/swiper-bundle.min.css",
                             "src/styles.scss"
                         ],
                         "scripts": []

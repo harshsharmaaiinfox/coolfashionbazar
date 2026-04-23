@@ -36,13 +36,13 @@ export class ContactUsComponent implements OnInit {
   ngOnInit() {
     // Set unique SEO data for Contact Us page
     this.seoService.setSEOData({
-      title: 'Contact Kahuafashionclub – We\'re Here to Help You 24/7',
-      description: 'Get in touch with Kahuafashionclub customer support. We\'re available 24/7 to help with orders, products, and any questions you may have.',
-      keywords: 'contact us, customer support, help, Kahuafashionclub contact, customer service',
-      canonicalUrl: 'https://kahuafashionclub.com/Contact-Us',
-      url: 'https://kahuafashionclub.com/Contact-Us',
+      title: 'Contact CoolFashionBazar – We\'re Here to Help You 24/7',
+      description: 'Get in touch with CoolFashionBazar customer support. We\'re available 24/7 to help with orders, products, and any questions you may have.',
+      keywords: 'contact us, customer support, help, CoolFashionBazar contact, customer service',
+      canonicalUrl: 'https://coolfashionbazar.com/Contact-Us',
+      url: 'https://coolfashionbazar.com/Contact-Us',
       type: 'website',
-      image: 'https://kahuafashionclub.com/assets/images/contact-us.jpg'
+      image: 'https://coolfashionbazar.com/assets/images/contact-us.jpg'
     });
   }
 

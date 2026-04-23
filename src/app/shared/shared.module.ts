@@ -1,11 +1,11 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule, CurrencyPipe } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { CarouselModule } from 'ngx-owl-carousel-o';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { Select2Module } from 'ng-select2-component';
-import { SwiperModule } from 'swiper/angular';
+// import { SwiperModule } from 'swiper/angular';
 import { TranslateModule } from '@ngx-translate/core';
 
 // Directives
@@ -215,7 +215,7 @@ import { SearchFilterPipe } from './pipe/search-filter.pipe';
     CarouselModule,
     NgbModule,
     Select2Module,
-    SwiperModule,
+    // SwiperModule,
     TranslateModule,
 
   ],
@@ -275,6 +275,7 @@ import { SearchFilterPipe } from './pipe/search-filter.pipe';
     BreadcrumbDigitalComponent,
     SeoHeadingComponent,
     CartSidebarComponent
-  ]
+  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class SharedModule { }

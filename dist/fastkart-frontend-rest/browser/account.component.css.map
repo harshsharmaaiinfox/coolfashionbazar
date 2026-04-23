@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["src/app/components/account/account.component.scss"],
-  "sourcesContent": ["// ============================================================\n// Dashboard Layout — Premium Redesign\n// ============================================================\n\n$da-ink:        #0F1720;\n$da-blue:       #1E7FC9;\n$da-surface:    #F8F9FB;\n$da-bg:         #EEF1F6;\n$da-line:       #E6E8EC;\n\n.kf-dashboard {\n  background:\n    radial-gradient(ellipse at 10% 0%, rgba($da-blue, 0.06) 0%, transparent 50%),\n    $da-bg;\n  padding: 36px 0 72px;\n  min-height: 80vh;\n  font-family: inherit;\n}\n\n.kf-dash-layout {\n  display: grid;\n  grid-template-columns: 280px 1fr;\n  gap: 28px;\n  align-items: start;\n\n  @media (max-width: 991px) {\n    grid-template-columns: 1fr;\n    gap: 20px;\n  }\n}\n\n.kf-dash-sidebar {\n  position: sticky;\n  top: 90px;\n  @media (max-width: 991px) { position: static; }\n}\n\n.kf-dash-content {\n  min-width: 0;\n  position: relative;\n}\n"],
-  "mappings": ";AAUA,CAAA;AACE;IACE;MAAA,QAAA,GAAA,IAAA,EAAA;MAAA,KAAA,EAAA,EAAA,GAAA,EAAA,GAAA,EAAA,MAAA,EAAA;MAAA,YAAA,IAAA;IAAA;AAEF,WAAA,KAAA,EAAA;AACA,cAAA;AACA,eAAA;;AAGF,CAAA;AACE,WAAA;AACA,yBAAA,MAAA;AACA,OAAA;AACA,eAAA;;AAEA,OAAA,CAAA,SAAA,EAAA;AANF,GAAA;AAOI,2BAAA;AACA,SAAA;;;AAIJ,CAAA;AACE,YAAA;AACA,OAAA;;AACA,OAAA,CAAA,SAAA,EAAA;AAHF,GAAA;AAG8B,cAAA;;;AAG9B,CAAA;AACE,aAAA;AACA,YAAA;;",
-  "names": []
-}

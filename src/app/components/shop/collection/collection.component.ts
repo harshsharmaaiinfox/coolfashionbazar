@@ -98,27 +98,27 @@ export class CollectionComponent {
     
     switch (categoryLower) {
       case 'activewear':
-        title = 'Activewear Collection | Gym Wear, Sportswear & Fitness Clothes | kahuafashionclub';
-        description = 'Shop premium activewear and sportswear at Kahuafashionclub. Find high-quality gym wear, fitness clothes, yoga pants, sports bras, and athletic wear for men & women. Perfect for workouts, running, and active lifestyle.';
-        keywords = 'activewear, gym wear, sportswear, fitness clothes, workout clothes, yoga pants, sports bras, athletic wear, running clothes, exercise wear, gym clothes, fitness apparel, kahuafashionclub';
+        title = 'Activewear Collection | Gym Wear, Sportswear & Fitness Clothes | CoolFashionBazar';
+        description = 'Shop premium activewear and sportswear at CoolFashionBazar. Find high-quality gym wear, fitness clothes, yoga pants, sports bras, and athletic wear for men & women. Perfect for workouts, running, and active lifestyle.';
+        keywords = 'activewear, gym wear, sportswear, fitness clothes, workout clothes, yoga pants, sports bras, athletic wear, running clothes, exercise wear, gym clothes, fitness apparel, CoolFashionBazar';
         break;
 
       case 'men':
-        title = 'Mens Clothing Collection kahuafashionclub';
-        description = 'Explore mens shirts jackets suits jeans and more at Kahuafashionclub. New arrivals fast PAN India delivery COD and easy 7 day returns.';
-        keywords = 'men\'s clothes, men\'s fashion, men\'s clothing, men\'s apparel, men\'s shirts, men\'s pants, men\'s jeans, men\'s jackets, men\'s casual wear, men\'s formal clothes, stylish men\'s fashion, kahuafashionclub';
+        title = 'Mens Clothing Collection CoolFashionBazar';
+        description = 'Explore mens shirts jackets suits jeans and more at CoolFashionBazar. New arrivals fast PAN India delivery COD and easy 7 day returns.';
+        keywords = 'men\'s clothes, men\'s fashion, men\'s clothing, men\'s apparel, men\'s shirts, men\'s pants, men\'s jeans, men\'s jackets, men\'s casual wear, men\'s formal clothes, stylish men\'s fashion, CoolFashionBazar';
         break;
 
       case 'women':
-        title = 'Women\'s Clothing Collection | Fashionable Women\'s Apparel & Style | kahuafashionclub';
-        description = 'Explore stunning women\'s clothing and fashion at Kahuafashionclub. Shop trendy women\'s fashion including dresses, tops, jeans, skirts, women\'s casual wear, formal clothes, and stylish women\'s apparel. Fashion that makes you feel confident.';
-        keywords = 'women\'s clothes, women\'s fashion, women\'s clothing, women\'s apparel, women\'s dresses, women\'s tops, women\'s jeans, women\'s skirts, women\'s casual wear, women\'s formal clothes, stylish women\'s fashion, kahuafashionclub';
+        title = 'Women\'s Clothing Collection | Fashionable Women\'s Apparel & Style | CoolFashionBazar';
+        description = 'Explore stunning women\'s clothing and fashion at CoolFashionBazar. Shop trendy women\'s fashion including dresses, tops, jeans, skirts, women\'s casual wear, formal clothes, and stylish women\'s apparel. Fashion that makes you feel confident.';
+        keywords = 'women\'s clothes, women\'s fashion, women\'s clothing, women\'s apparel, women\'s dresses, women\'s tops, women\'s jeans, women\'s skirts, women\'s casual wear, women\'s formal clothes, stylish women\'s fashion, CoolFashionBazar';
         break;
 
       default:
-        title = `${category.charAt(0).toUpperCase() + category.slice(1)} Collection | Kahuafashionclub Fashion Store`;
-        description = `Shop ${category} collection at Kahuafashionclub. Discover trendy fashion, quality clothing, and stylish apparel for every occasion.`;
-        keywords = `${category}, fashion, clothing, apparel, Kahuafashionclub, trendy style`;
+        title = `${category.charAt(0).toUpperCase() + category.slice(1)} Collection | CoolFashionBazar Fashion Store`;
+        description = `Shop ${category} collection at CoolFashionBazar. Discover trendy fashion, quality clothing, and stylish apparel for every occasion.`;
+        keywords = `${category}, fashion, clothing, apparel, CoolFashionBazar, trendy style`;
         break;
     }
 
@@ -130,12 +130,12 @@ export class CollectionComponent {
     this.meta.updateTag({ name: 'keywords', content: keywords });
     this.meta.updateTag({ property: 'og:title', content: title });
     this.meta.updateTag({ property: 'og:description', content: description });
-    this.meta.updateTag({ property: 'og:url', content: `https://Kahuafashionclub.in/collections/${category}` });
+    this.meta.updateTag({ property: 'og:url', content: `https://CoolFashionBazar.in/collections/${category}` });
     this.meta.updateTag({ name: 'twitter:title', content: title });
     this.meta.updateTag({ name: 'twitter:description', content: description });
 
     // Update canonical URL
-    this.meta.updateTag({ rel: 'canonical', href: `https://Kahuafashionclub.in/collections/${category}` });
+    this.meta.updateTag({ rel: 'canonical', href: `https://CoolFashionBazar.in/collections/${category}` });
     
     // Update breadcrumb
     this.breadcrumb.title = `${category.charAt(0).toUpperCase() + category.slice(1)} Collection`;
@@ -150,9 +150,9 @@ export class CollectionComponent {
    * Set default SEO meta tags for collections page
    */
   private setDefaultSEO(): void {
-    const title = 'Shop Collections | Activewear, Men\'s & Women\'s Fashion | kahuafashionclub';
-    const description = 'Explore our curated collections at Kahuafashionclub. Shop activewear, men\'s clothing, women\'s fashion, and more. Find the perfect style for every occasion with our quality fashion collections.';
-    const keywords = 'collections, activewear, men\'s clothes, women\'s clothes, fashion collections, stylish clothing, Kahuafashionclub collections';
+    const title = 'Shop Collections | Activewear, Men\'s & Women\'s Fashion | CoolFashionBazar';
+    const description = 'Explore our curated collections at CoolFashionBazar. Shop activewear, men\'s clothing, women\'s fashion, and more. Find the perfect style for every occasion with our quality fashion collections.';
+    const keywords = 'collections, activewear, men\'s clothes, women\'s clothes, fashion collections, stylish clothing, CoolFashionBazar collections';
 
     // Force title update
     this.forceUpdateTitle(title);
@@ -162,10 +162,10 @@ export class CollectionComponent {
     this.meta.updateTag({ name: 'keywords', content: keywords });
     this.meta.updateTag({ property: 'og:title', content: title });
     this.meta.updateTag({ property: 'og:description', content: description });
-    this.meta.updateTag({ property: 'og:url', content: 'https://Kahuafashionclub.in/collections' });
+    this.meta.updateTag({ property: 'og:url', content: 'https://CoolFashionBazar.in/collections' });
     this.meta.updateTag({ name: 'twitter:title', content: title });
     this.meta.updateTag({ name: 'twitter:description', content: description });
-    this.meta.updateTag({ rel: 'canonical', href: 'https://Kahuafashionclub.in/collections' });
+    this.meta.updateTag({ rel: 'canonical', href: 'https://CoolFashionBazar.in/collections' });
     
     // Reset breadcrumb to default
     this.breadcrumb.title = 'Collections';

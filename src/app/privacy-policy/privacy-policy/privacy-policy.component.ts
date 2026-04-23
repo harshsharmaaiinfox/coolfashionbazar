@@ -15,11 +15,11 @@ export class PrivacyPolicyComponent implements OnInit {
   ngOnInit() {
     // Set unique SEO data for Privacy Policy page
     this.seoService.setSEOData({
-      title: 'Privacy Policy – How We Use Your Data | Kahuafashionclub',
-      description: 'Learn how Kahuafashionclub protects and uses your personal information. Read our comprehensive privacy policy to understand your rights and our data practices.',
-      keywords: 'privacy policy, data protection, personal information, kahuafashionclub privacy, data usage',
-      canonicalUrl: 'https://kahuafashionclub.com/privacy-policy', // ✅ Canonical URL for SEO
-      url: 'https://kahuafashionclub.com/privacy-policy',
+      title: 'Privacy Policy – How We Use Your Data | CoolFashionBazar',
+      description: 'Learn how CoolFashionBazar protects and uses your personal information. Read our comprehensive privacy policy to understand your rights and our data practices.',
+      keywords: 'privacy policy, data protection, personal information, CoolFashionBazar privacy, data usage',
+      canonicalUrl: 'https://coolfashionbazar.com/privacy-policy', // ✅ Canonical URL for SEO
+      url: 'https://coolfashionbazar.com/privacy-policy',
       type: 'website'
     });
   }

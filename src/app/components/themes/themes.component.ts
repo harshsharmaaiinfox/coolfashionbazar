@@ -44,9 +44,9 @@ export class ThemesComponent implements OnInit {
     
     // Set additional homepage-specific SEO data
     this.seoService.setSEOData({
-      canonicalUrl: 'https://Kahuafashionclub.in/',
-      url: 'https://Kahuafashionclub.in/',
-      image: 'https://Kahuafashionclub.in/assets/images/hero-banner.jpg'
+      canonicalUrl: 'https://CoolFashionBazar.in/',
+      url: 'https://CoolFashionBazar.in/',
+      image: 'https://CoolFashionBazar.in/assets/images/hero-banner.jpg'
     });
   }
   

@@ -7,8 +7,8 @@ import { SeoService } from '../services/seo.service';
     <div class="seo-example-container">
       <!-- Main page title with H1 -->
       <app-seo-heading 
-        title="Kahuafashionclub Premium Mens and Womens Fashion Online" 
-        description="Discover new season shirts jackets suits denim and more at Kahuafashionclub. Premium quality fast shipping across India COD and easy returns."
+        title="CoolFashionBazar Premium Mens and Womens Fashion Online" 
+        description="Discover new season shirts jackets suits denim and more at CoolFashionBazar. Premium quality fast shipping across India COD and easy returns."
         level="1"
         headingClass="main-title">
       </app-seo-heading>
@@ -177,11 +177,11 @@ export class SeoExampleComponent implements OnInit {
   ngOnInit() {
     // Set comprehensive SEO data for this page
     this.seoService.setSEOData({
-      title: 'Kahuafashionclub Premium Mens and Womens Fashion Online',
-      description: 'Discover new season shirts jackets suits denim and more at Kahuafashionclub. Premium quality fast shipping across India COD and easy returns.',
-      keywords: 'activewear, gym wear, joggers, men\'s clothes, women\'s clothes, stylish outfits, comfort fit, performance clothing, kahuafashionclub',
-      image: 'https://Kahuafashionclub.in/assets/images/hero-banner.jpg',
-      url: 'https://Kahuafashionclub.in',
+      title: 'CoolFashionBazar Premium Mens and Womens Fashion Online',
+      description: 'Discover new season shirts jackets suits denim and more at CoolFashionBazar. Premium quality fast shipping across India COD and easy returns.',
+      keywords: 'activewear, gym wear, joggers, men\'s clothes, women\'s clothes, stylish outfits, comfort fit, performance clothing, CoolFashionBazar',
+      image: 'https://CoolFashionBazar.in/assets/images/hero-banner.jpg',
+      url: 'https://CoolFashionBazar.in',
       type: 'website',
       author: 'Ecomus Team'
     });
@@ -191,8 +191,8 @@ export class SeoExampleComponent implements OnInit {
 
     // Set breadcrumb structured data
     this.seoService.setBreadcrumbStructuredData([
-      { name: 'Home', url: 'https://Kahuafashionclub.in' },
-      { name: 'Featured Products', url: 'https://Kahuafashionclub.in/featured' }
+      { name: 'Home', url: 'https://CoolFashionBazar.in' },
+      { name: 'Featured Products', url: 'https://CoolFashionBazar.in/featured' }
     ]);
   }
 } 

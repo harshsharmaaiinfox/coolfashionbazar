@@ -1,8 +1,8 @@
 import { Component, Input } from '@angular/core';
 import { TopBarContent } from '../../../../interface/theme-option.interface';
-import SwiperCore, { Navigation, Pagination, Autoplay } from "swiper";
+import { register } from 'swiper/element/bundle';
 
-SwiperCore.use([Navigation, Pagination, Autoplay]);
+register();
 
 @Component({
   selector: 'app-notice',

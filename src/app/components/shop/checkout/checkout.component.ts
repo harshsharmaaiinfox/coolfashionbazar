@@ -783,7 +783,7 @@ export class CheckoutComponent {
     });
   }
 
-  // Transaction Status Check for Kahuafashionclub Nabu (and other payment gateways)
+  // Transaction Status Check for CoolFashionBazar Nabu (and other payment gateways)
   checkTransactionStatusSleekSynergy(uuid: any, paymentWindow: Window | null, payment_method: string) {
     this.pollingSubscription = interval(this.pollingInterval).pipe(
       switchMap(() => this.cartService.checkTransectionStatusNeoKred(uuid, payment_method)),
