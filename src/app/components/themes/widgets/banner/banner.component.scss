@@ -1,0 +1,262 @@
+// ============================================
+// Premium Banner Carousel — scoped styles
+// Used by <app-theme-banner> with style: horizontal/vertical/full_width
+// ============================================
+
+$brand-blue:      #1E7FC9;
+$brand-blue-dark: #135a95;
+$brand-ink:       #0F1720;
+$bg:              #FFFFFF;
+$line:            #E6E8EC;
+
+$radius-lg: 22px;
+$radius-md: 14px;
+
+// -----------------------------------------------------------
+// Shared banner image container — works across all styles
+// -----------------------------------------------------------
+:host {
+  display: block;
+
+  ::ng-deep .banner-contain {
+    position: relative;
+    display: block;
+    border-radius: $radius-lg;
+    overflow: hidden;
+    background: $bg;
+    box-shadow:
+      0 1px 2px rgba($brand-ink, 0.04),
+      0 10px 28px rgba($brand-ink, 0.08);
+    transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+                box-shadow 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+    isolation: isolate;
+
+    img,
+    .bg-size,
+    .bg-img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+                  filter 0.6s ease;
+      will-change: transform;
+    }
+
+    // Soft gradient overlay that deepens on hover
+    &::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        135deg,
+        rgba($brand-ink, 0) 55%,
+        rgba($brand-ink, 0.18) 100%
+      );
+      opacity: 0.45;
+      transition: opacity 0.5s ease;
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    // Diagonal shine sweep on hover
+    &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -60%;
+      width: 40%;
+      height: 100%;
+      background: linear-gradient(
+        115deg,
+        transparent 0%,
+        rgba(#fff, 0) 20%,
+        rgba(#fff, 0.28) 50%,
+        rgba(#fff, 0) 80%,
+        transparent 100%
+      );
+      transform: skewX(-18deg);
+      transition: left 0.85s cubic-bezier(0.22, 1, 0.36, 1);
+      pointer-events: none;
+      z-index: 3;
+    }
+
+    &:hover {
+      transform: translateY(-4px);
+      box-shadow:
+        0 2px 4px rgba($brand-ink, 0.05),
+        0 22px 48px rgba($brand-blue, 0.18),
+        0 10px 22px rgba($brand-ink, 0.12);
+
+      img,
+      .bg-size,
+      .bg-img {
+        transform: scale(1.06);
+        filter: saturate(1.08) contrast(1.02);
+      }
+
+      &::before { opacity: 0.75; }
+      &::after  { left: 120%; }
+    }
+  }
+
+  // Corner ribbon badge (shown on first banner in carousel)
+  ::ng-deep .banner-slider owl-carousel-o .owl-item:first-child .banner-contain::before {
+    // (keeps existing overlay but does nothing special for now)
+  }
+}
+
+// -----------------------------------------------------------
+// Horizontal carousel — owl-carousel overrides
+// -----------------------------------------------------------
+:host ::ng-deep .banner-slider {
+  position: relative;
+  padding: 8px 0 48px;
+
+  // --- OWL dots (custom pill indicators) ---
+  .owl-dots {
+    position: absolute;
+    bottom: 12px;
+    left: 0;
+    right: 0;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    z-index: 5;
+
+    .owl-dot {
+      width: 10px;
+      height: 4px;
+      border-radius: 4px;
+      background: rgba($brand-ink, 0.2);
+      border: none;
+      outline: none;
+      padding: 0 !important;
+      transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+      cursor: pointer;
+
+      &:hover { background: rgba($brand-ink, 0.4); }
+
+      span {
+        display: none !important;
+      }
+
+      &.active {
+        width: 28px;
+        background: $brand-blue;
+        box-shadow: 0 2px 8px rgba($brand-blue, 0.35);
+      }
+    }
+  }
+
+  // --- OWL navigation arrows ---
+  .owl-nav {
+    position: absolute;
+    top: calc(50% - 24px);
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-between;
+    pointer-events: none;
+    z-index: 4;
+    padding: 0 14px;
+
+    button.owl-prev,
+    button.owl-next {
+      pointer-events: auto;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: rgba(#fff, 0.88) !important;
+      backdrop-filter: saturate(180%) blur(14px);
+      -webkit-backdrop-filter: saturate(180%) blur(14px);
+      border: 1px solid rgba($brand-ink, 0.08) !important;
+      color: $brand-ink !important;
+      font-size: 20px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow:
+        0 2px 6px rgba($brand-ink, 0.08),
+        0 10px 22px rgba($brand-ink, 0.08);
+      opacity: 0;
+      transform: translateX(-6px) scale(0.92);
+      transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+      cursor: pointer;
+
+      &.disabled { opacity: 0 !important; pointer-events: none; }
+
+      &:hover {
+        background: $brand-blue !important;
+        color: #fff !important;
+        border-color: $brand-blue !important;
+        box-shadow: 0 10px 28px rgba($brand-blue, 0.4);
+      }
+
+      span {
+        display: inline-block;
+        line-height: 1;
+        font-size: 22px;
+      }
+    }
+
+    button.owl-next {
+      transform: translateX(6px) scale(0.92);
+    }
+  }
+
+  // Show arrows on hover
+  &:hover .owl-nav {
+    button.owl-prev,
+    button.owl-next {
+      opacity: 1;
+      transform: translateX(0) scale(1);
+    }
+  }
+}
+
+// -----------------------------------------------------------
+// Sale / full-width banner variant (extra glow)
+// -----------------------------------------------------------
+:host(.sale-banner) ::ng-deep .banner-contain {
+  border-radius: $radius-lg;
+
+  &::before {
+    background: linear-gradient(
+      135deg,
+      rgba($brand-blue, 0.08) 0%,
+      rgba($brand-ink, 0.22) 100%
+    );
+    opacity: 0.55;
+  }
+
+  &:hover {
+    box-shadow:
+      0 4px 10px rgba($brand-ink, 0.08),
+      0 22px 58px rgba($brand-blue, 0.32);
+  }
+}
+
+// -----------------------------------------------------------
+// Responsive
+// -----------------------------------------------------------
+@media (max-width: 767px) {
+  :host ::ng-deep .banner-contain {
+    border-radius: $radius-md;
+
+    &:hover { transform: translateY(-2px); }
+  }
+
+  :host ::ng-deep .banner-slider {
+    padding-bottom: 38px;
+
+    .owl-nav { display: none; }
+  }
+}
+
+@media (max-width: 480px) {
+  :host ::ng-deep .banner-contain {
+    border-radius: 12px;
+  }
+}

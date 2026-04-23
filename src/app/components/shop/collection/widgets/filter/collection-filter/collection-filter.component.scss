@@ -1,0 +1,119 @@
+// ============================================================
+// Active filter chips — Premium Redesign
+// ============================================================
+
+$cf-ink:        #0F1720;
+$cf-muted:      #6B7280;
+$cf-bg:         #FFFFFF;
+$cf-surface:    #F8F9FB;
+$cf-line:       #E6E8EC;
+$cf-blue:       #1E7FC9;
+$cf-blue-soft:  #EAF3FB;
+$cf-gold:       #B38A48;
+$cf-rose:       #E7475A;
+
+:host { display: block; }
+
+.filter-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 22px 20px 30px; // Added left padding to 30px
+  border-bottom: 1px solid $cf-line;
+
+  h2 {
+    font-size: 18px !important;
+    font-weight: 900 !important;
+    color: $cf-ink !important;
+    margin: 0 0 0 20px !important; // Forced left margin
+    letter-spacing: -0.4px;
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  a {
+    font-size: 10.5px;
+    font-weight: 800;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    color: $cf-rose;
+    text-decoration: none;
+    padding: 7px 16px;
+    border: 1.5px solid rgba($cf-rose, 0.2);
+    border-radius: 999px;
+    background: #fff;
+    transition: all 0.25s ease;
+
+    &:hover {
+      background: $cf-rose;
+      color: #fff;
+      border-color: $cf-rose;
+      box-shadow: 0 6px 14px rgba($cf-rose, 0.3);
+      transform: translateY(-1px);
+    }
+  }
+}
+
+// Active filter chips
+ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px; // Increased gap
+  list-style: none !important;
+  padding: 16px 22px !important; // Reduced padding
+  margin: 0 !important;
+  border-bottom: 1px solid $cf-line;
+  background: $cf-surface; // Subtle background for active tags area
+
+  li {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 10px 7px 16px;
+    background: #fff;
+    border: 1.5px solid $cf-line;
+    border-radius: 999px;
+    list-style: none !important;
+    transition: all 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+    box-shadow: 0 2px 5px rgba($cf-ink, 0.04);
+
+    &::before, &::marker { display: none !important; content: none !important; }
+
+    a {
+      font-size: 11.5px;
+      font-weight: 700;
+      color: $cf-muted;
+      text-decoration: none;
+      letter-spacing: 0.2px;
+    }
+
+    .close-icon {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: $cf-surface;
+      color: $cf-muted !important;
+      font-size: 13px !important;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.25s ease;
+
+      &:hover {
+        background: $cf-rose;
+        color: #fff !important;
+        transform: rotate(90deg);
+      }
+    }
+
+    &:hover {
+      border-color: $cf-blue;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba($cf-blue, 0.12);
+      
+      a { color: $cf-blue; }
+    }
+  }
+}

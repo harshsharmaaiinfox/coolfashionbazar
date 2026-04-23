@@ -1,0 +1,1137 @@
+// ============================================
+// Cool Fashion Bazar — Header (redesign)
+// Palette derived from logo: blue + black on clean white
+// Influences: Myntra (search-first), Nike (letter-spaced nav),
+// Amazon (utility strip), Zara (whitespace + minimalism)
+// ============================================
+
+$brand-blue:      #1E7FC9;         // from the logo
+$brand-blue-dark: #135a95;
+$brand-blue-soft: #E7F2FB;
+$brand-ink:       #0F1720;         // near-black
+$text:            #1A1A1A;
+$muted:           #5C6573;
+$bg:              #FFFFFF;
+$surface:         #F7F8FA;
+$line:            #E6E8EC;
+$accent-warn:     #FF3E6C;         // Myntra-style sale pink
+
+$radius-pill: 999px;
+$radius-md:   10px;
+$radius-sm:   6px;
+
+// ------------------------------------------------------------
+// Root
+// ------------------------------------------------------------
+.cfb-header {
+  position: relative;
+  width: 100%;
+  z-index: 100;
+  background: $bg;
+  font-family: inherit;
+
+  &.is-sticky {
+    .cfb-utility,
+    .cfb-nav-row {
+      max-height: 0;
+      padding-top: 0;
+      padding-bottom: 0;
+      overflow: hidden;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .cfb-main {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      width: 100%;
+      z-index: 1000;
+      background: rgba($bg, 0.92);
+      backdrop-filter: saturate(180%) blur(14px);
+      -webkit-backdrop-filter: saturate(180%) blur(14px);
+      border-bottom: 1px solid $line;
+      box-shadow: 0 6px 24px rgba($brand-ink, 0.06);
+      animation: cfbSlide 0.3s ease-out;
+
+      .cfb-main__row { height: 68px; }
+      .cfb-logo ::ng-deep .web-logo img {
+        height: 46px !important;
+        max-width: 170px !important;
+      }
+    }
+  }
+}
+
+@keyframes cfbSlide {
+  from { transform: translateY(-100%); }
+  to   { transform: translateY(0); }
+}
+
+@keyframes cfbHeartBeat {
+  0%   { transform: scale(1); }
+  30%  { transform: scale(1.18); }
+  60%  { transform: scale(0.96); }
+  100% { transform: scale(1.08); }
+}
+
+// ------------------------------------------------------------
+// TIER 1 — Utility strip (Amazon / Ajio inspired)
+// ------------------------------------------------------------
+.cfb-utility {
+  background: $brand-ink;
+  color: rgba(#fff, 0.85);
+  font-size: 12px;
+  padding: 8px 0;
+  letter-spacing: 0.3px;
+  transition: max-height 0.3s ease, opacity 0.2s ease, padding 0.3s ease;
+
+  &__row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+
+  &__left,
+  &__right {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+
+  &__item {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+
+    i {
+      font-size: 14px;
+      color: $brand-blue;
+    }
+  }
+
+  &__dot {
+    display: inline-block;
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: rgba(#fff, 0.35);
+  }
+
+  &__link {
+    color: rgba(#fff, 0.85);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: color 0.2s ease;
+
+    i { font-size: 13px; color: $brand-blue; }
+    &:hover { color: #fff; }
+
+    &--pill {
+      padding: 5px 12px;
+      border-radius: $radius-pill;
+      background: $brand-blue;
+      color: #fff;
+      font-weight: 600;
+      font-size: 11.5px;
+      letter-spacing: 0.5px;
+
+      &:hover {
+        background: lighten($brand-blue, 6%);
+        color: #fff;
+      }
+    }
+  }
+}
+
+// ------------------------------------------------------------
+// TIER 2 — Main row (Myntra inspired, logo-search-icons)
+// ------------------------------------------------------------
+.cfb-main {
+  background: $bg;
+  border-bottom: 1px solid $line;
+  transition: background 0.3s ease, border-color 0.3s ease;
+
+  &__row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 28px;
+    height: 92px;
+    transition: height 0.3s ease;
+  }
+
+  &__brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-shrink: 0;
+  }
+
+  &__search {
+    flex: 1;
+    max-width: 640px;
+    display: flex;
+    align-items: center;
+  }
+
+  &__actions {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-shrink: 0;
+  }
+}
+
+// ---- Logo ----
+.cfb-logo ::ng-deep {
+  .web-logo {
+    display: inline-flex;
+    align-items: center;
+
+    img {
+      height: 64px !important;
+      width: auto !important;
+      max-width: 230px !important;
+      object-fit: contain !important;
+      transition: height 0.3s ease, max-width 0.3s ease;
+    }
+  }
+}
+
+// ---- Hamburger (mobile) ----
+.cfb-menu-trigger {
+  width: 40px;
+  height: 40px;
+  border-radius: $radius-md;
+  border: 1px solid $line;
+  background: $bg;
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  padding: 0;
+  cursor: pointer;
+  transition: all 0.25s ease;
+
+  span {
+    width: 18px;
+    height: 2px;
+    background: $brand-ink;
+    border-radius: 2px;
+    transition: all 0.25s ease;
+  }
+
+  &:hover {
+    border-color: $brand-blue;
+    background: $brand-blue-soft;
+
+    span { background: $brand-blue; }
+    span:nth-child(1) { width: 14px; }
+    span:nth-child(3) { width: 10px; }
+  }
+}
+
+// ---- Search bar (Myntra / Amazon hybrid) ----
+.cfb-search {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 46px;
+  background: $surface;
+  border: 1.5px solid $line;
+  border-radius: $radius-pill;
+  padding: 0 6px 0 18px;
+  transition: all 0.25s ease;
+
+  &__icon {
+    font-size: 18px;
+    color: $muted;
+    margin-right: 10px;
+    flex-shrink: 0;
+  }
+
+  &__input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    outline: none;
+    height: 100%;
+    font-size: 14px;
+    color: $text;
+    letter-spacing: 0.2px;
+
+    &::placeholder {
+      color: $muted;
+      font-size: 13.5px;
+    }
+  }
+
+  &__btn {
+    flex-shrink: 0;
+    height: 36px;
+    padding: 0 22px;
+    border-radius: $radius-pill;
+    background: $brand-blue;
+    color: #fff;
+    border: none;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+
+    i { font-size: 16px; }
+
+    &:hover {
+      background: $brand-blue-dark;
+      box-shadow: 0 6px 16px rgba($brand-blue, 0.35);
+    }
+  }
+
+  &:hover,
+  &:focus-within {
+    background: $bg;
+    border-color: $brand-blue;
+    box-shadow: 0 4px 18px rgba($brand-blue, 0.12);
+  }
+}
+
+// ---- Mobile search icon fallback ----
+.cfb-search-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: $radius-md;
+  border: 1px solid $line;
+  background: $bg;
+  color: $text;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.25s ease;
+
+  i { font-size: 18px; }
+
+  &:hover {
+    border-color: $brand-blue;
+    background: $brand-blue-soft;
+    color: $brand-blue;
+  }
+}
+
+// ---- Right action icons ----
+.cfb-actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.cfb-action {
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  padding: 4px 10px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+
+  &:hover { transform: translateY(-1px); }
+
+  &__label {
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    font-weight: 600;
+    color: $muted;
+    margin-top: 2px;
+  }
+
+  // Normalize icon widgets
+  ::ng-deep {
+    .header-wishlist,
+    .btn.header-wishlist,
+    a.header-wishlist {
+      position: relative;
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      width: 42px !important;
+      height: 42px !important;
+      border-radius: 50% !important;
+      background: transparent !important;
+      border: 1px solid transparent !important;
+      box-shadow: none !important;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+      cursor: pointer;
+      text-decoration: none !important;
+
+      i {
+        font-size: 19px !important;
+        color: $brand-ink !important;
+        line-height: 1 !important;
+      }
+
+      // Premium SVG icons
+      .cfb-ico {
+        width: 22px;
+        height: 22px;
+        color: $brand-ink;
+        transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+                    color 0.25s ease, fill 0.25s ease;
+        fill: none;
+      }
+
+      .cfb-ico--heart {
+        transform-origin: center;
+      }
+
+      .cfb-ico--bag {
+        transform-origin: center;
+      }
+
+      &:hover {
+        border-color: $brand-blue !important;
+        background: $brand-blue-soft !important;
+        box-shadow: 0 6px 18px rgba($brand-blue, 0.18) !important;
+
+        i { color: $brand-blue !important; }
+
+        // Heart fills on hover (classic premium wishlist interaction)
+        .cfb-ico--heart {
+          color: $brand-blue;
+          fill: $brand-blue;
+          transform: scale(1.08);
+          animation: cfbHeartBeat 0.7s ease-in-out;
+        }
+
+        // Bag tilts slightly + color shift
+        .cfb-ico--bag {
+          color: $brand-blue;
+          transform: translateY(-1px) scale(1.06);
+        }
+      }
+
+      .badge,
+      .badge-number {
+        position: absolute !important;
+        top: 2px !important;
+        right: 2px !important;
+        left: auto !important;
+        bottom: auto !important;
+        transform: none !important;
+        background: $accent-warn !important;
+        color: #fff !important;
+        font-size: 9px !important;
+        font-weight: 700 !important;
+        min-width: 16px !important;
+        height: 16px !important;
+        padding: 0 4px !important;
+        border-radius: 8px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        border: 2px solid $bg !important;
+        line-height: 1 !important;
+      }
+    }
+
+    .onhover-dropdown.header-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+
+      app-button {
+        display: inline-flex;
+
+        button {
+          position: relative;
+          display: inline-flex !important;
+          align-items: center !important;
+          justify-content: center !important;
+          width: 42px !important;
+          height: 42px !important;
+          border-radius: 50% !important;
+          background: transparent !important;
+          border: 1px solid transparent !important;
+          box-shadow: none !important;
+          padding: 0 !important;
+          cursor: pointer !important;
+          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+
+          > div {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+          }
+
+          i {
+            font-size: 19px !important;
+            color: $brand-ink !important;
+            line-height: 1 !important;
+            display: block !important;
+          }
+
+          // Premium SVG bag icon
+          .cfb-ico {
+            width: 22px;
+            height: 22px;
+            color: $brand-ink;
+            transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+                        color 0.25s ease;
+            fill: none;
+          }
+
+          .badge {
+            position: absolute !important;
+            top: 0 !important;
+            right: 0 !important;
+            transform: translate(35%, -35%) !important;
+            background: $accent-warn !important;
+            color: #fff !important;
+            font-size: 9px !important;
+            font-weight: 700 !important;
+            min-width: 16px !important;
+            height: 16px !important;
+            padding: 0 4px !important;
+            border-radius: 8px !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            border: 2px solid $bg !important;
+            line-height: 1 !important;
+          }
+
+          &:hover {
+            border-color: $brand-blue !important;
+            background: $brand-blue-soft !important;
+            box-shadow: 0 6px 18px rgba($brand-blue, 0.18) !important;
+
+            i { color: $brand-blue !important; }
+
+            .cfb-ico--bag {
+              color: $brand-blue;
+              transform: translateY(-1px) scale(1.06);
+            }
+          }
+        }
+      }
+    }
+
+    .custom-account-dropdown {
+      .account-trigger {
+        .account-icon-wrapper {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+          background: $brand-blue;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          box-shadow: 0 4px 12px rgba($brand-blue, 0.25);
+
+          i {
+            font-size: 18px !important;
+            color: #fff !important;
+            background: none !important;
+            border-radius: 0 !important;
+          }
+
+          .user-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            overflow: hidden;
+
+            img { width: 100%; height: 100%; object-fit: cover; }
+
+            .avatar-initial {
+              width: 100%;
+              height: 100%;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              background: $brand-blue-dark;
+              color: #fff;
+              font-weight: 700;
+              font-size: 14px;
+            }
+          }
+
+          &:hover {
+            background: $brand-blue-dark;
+            box-shadow: 0 6px 18px rgba($brand-blue, 0.4);
+            transform: translateY(-1px);
+          }
+        }
+      }
+
+      .account-dropdown-menu {
+        border: none !important;
+        border-radius: $radius-md !important;
+        box-shadow: 0 12px 36px rgba($brand-ink, 0.14) !important;
+        overflow: hidden;
+        border-top: 3px solid $brand-blue !important;
+
+        .dropdown-item {
+          transition: all 0.2s ease;
+
+          &:hover { background: $brand-blue-soft; }
+
+          .dropdown-link {
+            color: $text;
+            &:hover { color: $brand-blue; }
+            i { color: $brand-blue !important; }
+          }
+        }
+      }
+    }
+  }
+}
+
+// ------------------------------------------------------------
+// TIER 3 — Nav row (Nike / Zara inspired)
+// ------------------------------------------------------------
+.cfb-nav-row {
+  background: $bg;
+  border-bottom: 1px solid $line;
+  transition: max-height 0.3s ease, opacity 0.2s ease, padding 0.3s ease;
+}
+
+.cfb-nav {
+  ::ng-deep {
+    .navbar-nav {
+      display: flex !important;
+      flex-direction: row !important;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      margin: 0;
+      padding: 4px 0;
+      list-style: none;
+
+      .nav-item {
+        position: relative;
+
+        .nav-link,
+        .dropdown-item {
+          color: $brand-ink !important;
+          font-size: 12.5px;
+          font-weight: 700;
+          letter-spacing: 1.8px;
+          text-transform: uppercase;
+          padding: 14px 20px !important;
+          border-radius: 0;
+          transition: all 0.25s ease;
+          white-space: nowrap;
+          position: relative;
+          background: none !important;
+
+          &::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 3px;
+            background: $brand-blue;
+            transition: width 0.3s ease;
+            border-radius: 2px 2px 0 0;
+          }
+
+          &:hover {
+            color: $brand-blue !important;
+            background: none !important;
+
+            &::before { width: 46%; }
+          }
+        }
+
+        .dropdown-toggle::after {
+          content: '\ea4e' !important;
+          font-family: 'remixicon' !important;
+          position: static !important;
+          display: inline-block !important;
+          width: auto !important;
+          height: auto !important;
+          font-size: 12px !important;
+          margin-left: 5px !important;
+          vertical-align: middle !important;
+          border: none !important;
+          background: none !important;
+          transform: none !important;
+          transition: transform 0.2s ease !important;
+          color: $muted !important;
+        }
+
+        &:hover .dropdown-toggle::after {
+          transform: rotate(180deg) !important;
+          color: $brand-blue !important;
+        }
+
+        .dropdown-menu {
+          border: none;
+          border-radius: $radius-md;
+          box-shadow: 0 14px 36px rgba($brand-ink, 0.14);
+          padding: 10px 0;
+          min-width: 230px;
+          background: $bg;
+          border-top: 3px solid $brand-blue;
+
+          .dropdown-item {
+            padding: 10px 22px;
+            color: $text;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 1.2px;
+            transition: all 0.2s ease;
+
+            &::before { display: none; }
+
+            &:hover {
+              background: $brand-blue-soft;
+              color: $brand-blue;
+              padding-left: 28px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+// Nav items are text-only everywhere — hide the icon image emitted by the
+// shared menu template in every context.
+.cfb-nav ::ng-deep .menu-icon,
+.cfb-drawer__body ::ng-deep .menu-icon {
+  display: none !important;
+}
+
+// ------------------------------------------------------------
+// Mobile Drawer
+// ------------------------------------------------------------
+.cfb-drawer {
+  background: $bg !important;
+  box-shadow: 4px 0 40px rgba($brand-ink, 0.18) !important;
+  width: 320px;
+  display: flex;
+  flex-direction: column;
+
+  &__header {
+    padding: 20px 22px;
+    background: linear-gradient(135deg, $brand-blue 0%, $brand-blue-dark 100%);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-shrink: 0;
+  }
+
+  &__brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    i {
+      font-size: 22px;
+      color: #fff;
+    }
+
+    span {
+      color: #fff;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+  }
+
+  &__close {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(#fff, 0.18);
+    color: #fff;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.25s ease;
+
+    &:hover {
+      background: rgba(#fff, 0.3);
+      transform: rotate(90deg);
+    }
+  }
+
+  &__search {
+    margin: 16px 20px 8px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 16px;
+    border: 1.5px solid $line;
+    border-radius: $radius-pill;
+    background: $surface;
+    transition: all 0.25s ease;
+
+    i { color: $muted; font-size: 16px; }
+
+    input {
+      flex: 1;
+      border: none;
+      outline: none;
+      background: transparent;
+      font-size: 13px;
+      color: $text;
+      &::placeholder { color: $muted; }
+    }
+
+    &:focus-within {
+      border-color: $brand-blue;
+      background: $bg;
+    }
+  }
+
+  &__body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 8px 0 20px;
+
+    ::ng-deep {
+      .navbar-nav {
+        padding: 0;
+        margin: 0;
+
+        .nav-item {
+          border-bottom: 1px solid $line;
+
+          &:last-child { border-bottom: none; }
+
+          .nav-link {
+            padding: 14px 22px;
+            color: $text;
+            font-weight: 700;
+            font-size: 12.5px;
+            letter-spacing: 1.6px;
+            text-transform: uppercase;
+            transition: all 0.25s ease;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            &:hover {
+              color: $brand-blue;
+              padding-left: 28px;
+              background: $brand-blue-soft;
+            }
+          }
+
+          .dropdown-toggle::after {
+            content: '\ea4e' !important;
+            font-family: 'remixicon' !important;
+            border: none !important;
+            font-size: 14px;
+            color: $muted;
+            transition: transform 0.3s ease;
+          }
+
+          .dropdown-toggle[aria-expanded="true"]::after {
+            transform: rotate(180deg) !important;
+            color: $brand-blue;
+          }
+
+          .dropdown-menu {
+            background: $surface;
+            border: none;
+            box-shadow: none;
+            padding: 0;
+            margin: 0;
+
+            .dropdown-item {
+              padding: 12px 22px 12px 42px;
+              color: $muted;
+              font-size: 12px;
+              font-weight: 600;
+              letter-spacing: 1px;
+              text-transform: uppercase;
+              border-bottom: 1px solid $line;
+              transition: all 0.2s ease;
+
+              &:hover {
+                background: $brand-blue-soft;
+                color: $brand-blue;
+                padding-left: 50px;
+              }
+
+              &:last-child { border-bottom: none; }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  &__footer {
+    padding: 14px 22px;
+    border-top: 1px solid $line;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    background: $surface;
+  }
+
+  &__contact {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: $text;
+    font-size: 12.5px;
+
+    i {
+      color: $brand-blue;
+      font-size: 15px;
+    }
+  }
+}
+
+// ------------------------------------------------------------
+// Dark mode
+// ------------------------------------------------------------
+html.dark {
+  $d-bg:      #0E1116;
+  $d-surface: #161B22;
+  $d-ink:     #ECECEC;
+  $d-muted:   #9A9A9A;
+  $d-line:    #232A33;
+
+  .cfb-header { background: $d-bg; }
+
+  .cfb-utility { background: #000; color: rgba(#fff, 0.8); }
+
+  .cfb-main {
+    background: $d-bg;
+    border-bottom-color: $d-line;
+  }
+
+  .cfb-menu-trigger {
+    background: $d-surface;
+    border-color: $d-line;
+    span { background: $d-ink; }
+    &:hover {
+      background: rgba($brand-blue, 0.12);
+      span { background: $brand-blue; }
+    }
+  }
+
+  .cfb-search {
+    background: $d-surface;
+    border-color: $d-line;
+
+    &__input {
+      color: $d-ink;
+      &::placeholder { color: $d-muted; }
+    }
+
+    &__icon { color: $d-muted; }
+
+    &:hover,
+    &:focus-within {
+      background: $d-bg;
+      border-color: $brand-blue;
+    }
+  }
+
+  .cfb-search-icon {
+    background: $d-surface;
+    border-color: $d-line;
+    color: $d-ink;
+  }
+
+  .cfb-action {
+    &__label { color: $d-muted; }
+
+    ::ng-deep {
+      .header-wishlist i,
+      .btn.header-wishlist i,
+      .onhover-dropdown.header-badge app-button button i { color: $d-ink !important; }
+
+      .header-wishlist:hover,
+      .btn.header-wishlist:hover,
+      .onhover-dropdown.header-badge app-button button:hover {
+        background: rgba($brand-blue, 0.12) !important;
+        border-color: $brand-blue !important;
+      }
+
+      .badge, .badge-number { border-color: $d-bg !important; }
+    }
+  }
+
+  .cfb-nav-row {
+    background: $d-bg;
+    border-bottom-color: $d-line;
+  }
+
+  .cfb-nav ::ng-deep {
+    .navbar-nav .nav-item {
+      .nav-link,
+      .dropdown-item {
+        color: $d-ink !important;
+        &:hover { color: lighten($brand-blue, 18%) !important; }
+      }
+    }
+
+    .dropdown-menu {
+      background: $d-surface !important;
+      border-top-color: $brand-blue !important;
+
+      .dropdown-item {
+        color: $d-ink !important;
+
+        &:hover {
+          color: lighten($brand-blue, 18%) !important;
+          background: rgba($brand-blue, 0.14) !important;
+        }
+      }
+    }
+  }
+
+  .cfb-header.is-sticky .cfb-main {
+    background: rgba($d-bg, 0.88);
+    border-bottom-color: $d-line;
+  }
+
+  .cfb-drawer {
+    background: $d-bg !important;
+
+    &__search {
+      background: $d-surface;
+      border-color: $d-line;
+      input { color: $d-ink; &::placeholder { color: $d-muted; } }
+      i { color: $d-muted; }
+    }
+
+    &__body ::ng-deep .navbar-nav .nav-item {
+      border-bottom-color: $d-line;
+
+      .nav-link {
+        color: $d-ink;
+        &:hover { color: lighten($brand-blue, 18%); }
+      }
+
+      .dropdown-menu {
+        background: $d-surface;
+        .dropdown-item {
+          color: $d-muted;
+          border-bottom-color: $d-line;
+          &:hover { color: lighten($brand-blue, 18%); }
+        }
+      }
+    }
+
+    &__footer { background: $d-surface; border-top-color: $d-line; }
+    &__contact { color: $d-ink; }
+  }
+}
+
+// ------------------------------------------------------------
+// Responsive
+// ------------------------------------------------------------
+@media (max-width: 1199px) {
+  .cfb-main__row {
+    height: 80px;
+    gap: 16px;
+  }
+
+  .cfb-logo ::ng-deep .web-logo img {
+    height: 52px !important;
+    max-width: 190px !important;
+  }
+
+  .cfb-main__search { max-width: none; }
+}
+
+@media (max-width: 991px) {
+  .cfb-search {
+    height: 42px;
+
+    &__btn { padding: 0 16px; }
+  }
+}
+
+@media (max-width: 767px) {
+  .cfb-utility {
+    font-size: 11px;
+    padding: 6px 0;
+
+    &__left { gap: 10px; }
+  }
+
+  .cfb-main__row {
+    height: 68px;
+    gap: 10px;
+  }
+
+  .cfb-logo ::ng-deep .web-logo img {
+    height: 44px !important;
+    max-width: 150px !important;
+  }
+
+  .cfb-actions { gap: 0; }
+
+  .cfb-action {
+    padding: 4px 6px;
+
+    ::ng-deep {
+      .header-wishlist,
+      .btn.header-wishlist,
+      a.header-wishlist,
+      .onhover-dropdown.header-badge app-button button {
+        width: 38px !important;
+        height: 38px !important;
+      }
+
+      .custom-account-dropdown .account-trigger .account-icon-wrapper {
+        width: 38px !important;
+        height: 38px !important;
+
+        i { font-size: 17px !important; }
+      }
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .cfb-utility__left {
+    .cfb-utility__dot,
+    .cfb-utility__item:nth-child(n+3) { display: none !important; }
+  }
+
+  .cfb-main__row { height: 60px; }
+
+  .cfb-logo ::ng-deep .web-logo img {
+    height: 38px !important;
+    max-width: 130px !important;
+  }
+}

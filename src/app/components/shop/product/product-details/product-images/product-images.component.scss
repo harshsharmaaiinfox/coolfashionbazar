@@ -1,0 +1,143 @@
+// ============================================================
+// Product Detail — Left Image Panel (premium showcase)
+// ============================================================
+
+$pi-ink:          #0F1720;
+$pi-muted:        #6B7280;
+$pi-bg:           #FFFFFF;
+$pi-surface:      #F8F9FB;
+$pi-line:         #E6E8EC;
+$pi-blue:         #1E7FC9;
+$pi-blue-dark:    #135a95;
+$pi-blue-soft:    #EAF3FB;
+$pi-gold:         #B38A48;
+$pi-rose:         #E7475A;
+
+:host { display: block; font-family: inherit; }
+
+:host ::ng-deep {
+  .product-left-box { position: relative; }
+
+  // ----- Label tags (Sale / Featured) -----
+  .product-label-group {
+    position: absolute;
+    top: 18px;
+    left: 18px;
+    z-index: 5;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .product-label-tag {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 14px;
+    background: linear-gradient(135deg, $pi-rose 0%, darken($pi-rose, 10%) 100%);
+    color: #fff;
+    border-radius: 999px;
+    font-size: 10.5px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    box-shadow: 0 4px 12px rgba($pi-rose, 0.38);
+    line-height: 1;
+
+    &.warning-label-tag {
+      background: linear-gradient(135deg, $pi-gold 0%, darken($pi-gold, 10%) 100%);
+      box-shadow: 0 4px 12px rgba($pi-gold, 0.38);
+    }
+
+    span { color: inherit; font: inherit; letter-spacing: inherit; }
+  }
+
+  // ----- Main image frame -----
+  .product-main-image-wrapper {
+    position: relative;
+    border-radius: 22px;
+    overflow: hidden;
+    background: $pi-surface;
+    box-shadow:
+      0 2px 6px rgba($pi-ink, 0.04),
+      0 18px 48px rgba($pi-ink, 0.10);
+    transition: box-shadow 0.45s ease, transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+    isolation: isolate;
+
+    // Offset gold frame behind
+    &::before {
+      content: '';
+      position: absolute;
+      top: 16px;
+      left: -10px;
+      right: 10px;
+      bottom: -14px;
+      border: 1.5px solid rgba($pi-gold, 0.4);
+      border-radius: 22px;
+      z-index: -1;
+      transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    &:hover {
+      transform: translateY(-3px);
+      box-shadow:
+        0 4px 10px rgba($pi-ink, 0.06),
+        0 26px 62px rgba($pi-blue, 0.18);
+
+      &::before {
+        transform: translate(10px, 10px);
+      }
+
+      .product-full-image {
+        transform: scale(1.04);
+      }
+    }
+  }
+
+  .product-main-image,
+  .slider-image {
+    position: relative;
+    min-height: 520px;
+    aspect-ratio: 1 / 1.12;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    padding: 18px;
+  }
+
+  .product-full-image,
+  img.product-full-image,
+  img.img-fluid.product-full-image {
+    max-width: 100% !important;
+    max-height: 100% !important;
+    width: auto !important;
+    height: auto !important;
+    object-fit: contain !important;
+    display: block;
+    transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1) !important;
+    will-change: transform;
+    filter: saturate(1.02);
+  }
+
+  video { border-radius: 14px; width: 100%; }
+  audio { width: 100%; }
+}
+
+@media (max-width: 991px) {
+  :host ::ng-deep {
+    .product-main-image,
+    .slider-image { min-height: 420px; }
+  }
+}
+
+@media (max-width: 600px) {
+  :host ::ng-deep {
+    .product-main-image-wrapper { border-radius: 16px; }
+    .product-main-image,
+    .slider-image { min-height: 340px; padding: 14px; }
+    .product-label-tag {
+      padding: 5px 11px;
+      font-size: 9.5px;
+      letter-spacing: 1.6px;
+    }
+  }
+}

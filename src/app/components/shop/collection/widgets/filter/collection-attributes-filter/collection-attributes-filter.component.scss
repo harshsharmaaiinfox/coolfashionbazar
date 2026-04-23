@@ -1,0 +1,123 @@
+// ============================================================
+// Attribute filter (Size, Color, etc.) — Premium Design
+// ============================================================
+
+$attr-ink:        #0F1720;
+$attr-muted:      #6B7280;
+$attr-bg:         #FFFFFF;
+$attr-surface:    #F8F9FB;
+$attr-line:       #E6E8EC;
+$attr-blue:       #1E7FC9;
+$attr-blue-dark:  #135a95;
+$attr-blue-soft:  #EAF3FB;
+
+:host { display: block; }
+
+.category-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px; // More spacing between tags
+  padding: 12px 22px 18px !important; // Balanced padding
+  margin: 0 !important;
+  list-style: none !important;
+  max-height: 280px; // More height
+  overflow-y: auto;
+
+  &::-webkit-scrollbar { width: 5px; }
+  &::-webkit-scrollbar-thumb { background: #e0e0e0; border-radius: 10px; }
+
+  li {
+    list-style: none !important;
+    margin: 0 !important;
+    display: flex !important;
+
+    &::before, &::marker { display: none !important; content: none !important; }
+  }
+}
+
+// Hide default checkbox, style the label as a pill
+.form-check {
+  padding: 0 !important;
+  margin: 0 !important;
+  position: relative;
+
+  // Hide browser checkbox
+  .checkbox_animated {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+    pointer-events: none;
+  }
+
+  // Label becomes a pill button
+  .form-check-label {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 44px; // Square-ish for sizes
+    height: 44px;
+    padding: 0 12px;
+    border: 1.5px solid $attr-line;
+    border-radius: 12px; // Slightly more rounded
+    background: #fff;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+    user-select: none;
+    box-shadow: 0 2px 5px rgba($attr-ink, 0.04);
+
+    .name {
+      font-size: 13.5px;
+      font-weight: 700;
+      color: $attr-muted;
+      letter-spacing: 0.2px;
+      text-transform: uppercase;
+    }
+
+    .color-box {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      border: 2px solid #fff;
+      flex-shrink: 0;
+      box-shadow: 0 0 0 1.5px $attr-line;
+    }
+
+    &:hover {
+      border-color: $attr-blue;
+      background: $attr-surface;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba($attr-blue, 0.1);
+
+      .name { color: $attr-blue; }
+    }
+  }
+
+  // Checked state — THE "BLUE" DESIGN
+  .checkbox_animated:checked + .form-check-label {
+    background: linear-gradient(135deg, $attr-blue 0%, $attr-blue-dark 100%);
+    border-color: transparent;
+    box-shadow: 0 6px 16px rgba($attr-blue, 0.35);
+
+    .name { color: #fff; }
+
+    // Remove the clunky checkmark badge
+    &::after { display: none !important; } 
+  }
+
+  // Color swatch checked
+  .checkbox_animated:checked + .form-check-label .color-box {
+    box-shadow: 0 0 0 2px #fff;
+  }
+}
+
+// Color label variant
+.color-label-box {
+  padding: 0 !important;
+  width: 44px !important;
+  height: 44px !important;
+
+  &:hover .color-box {
+    transform: scale(1.1);
+  }
+}

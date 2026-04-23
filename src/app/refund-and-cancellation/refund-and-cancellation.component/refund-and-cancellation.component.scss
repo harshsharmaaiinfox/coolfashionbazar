@@ -1,0 +1,233 @@
+// ============================================================
+// Cool Fashion Bazar — Policy Design System (Premium Blue)
+// ============================================================
+
+$kfp-ink:         #0F1720;
+$kfp-ink-soft:    #2B3240;
+$kfp-muted:       #6B7280;
+$kfp-bg:          #F8F9FB;
+$kfp-surface:     #FFFFFF;
+$kfp-line:        #E6E8EC;
+$kfp-blue:        #1E7FC9;
+$kfp-blue-dark:   #135a95;
+$kfp-blue-soft:   #EAF3FB;
+$white:          #FFFFFF;
+
+// Hero Section
+.kfp-hero {
+  background: linear-gradient(135deg, $kfp-ink 0%, #1a2430 100%);
+  padding: 80px 0;
+  position: relative;
+  overflow: hidden;
+
+  // Background decoration
+  &::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -10%;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba($kfp-blue, 0.1) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+
+  .kfp-hero-inner {
+    max-width: 700px;
+    margin: 0 auto;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+
+    .kfp-eyebrow {
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 4px;
+      color: $kfp-blue;
+      margin: 0 0 16px;
+      display: inline-block;
+      padding: 6px 16px;
+      background: rgba($kfp-blue, 0.1);
+      border-radius: 99px;
+    }
+
+    h1 {
+      font-size: 42px;
+      font-weight: 900;
+      color: $white;
+      margin: 0 0 16px;
+      line-height: 1.1;
+      letter-spacing: -1px;
+
+      @media (max-width: 768px) { font-size: 32px; }
+    }
+
+    p {
+      font-size: 16px;
+      color: rgba($white, 0.6);
+      line-height: 1.6;
+      margin: 0;
+      font-weight: 500;
+    }
+  }
+}
+
+// Content Section
+.kfp-content {
+  padding: 80px 0;
+  background: $kfp-bg;
+  display: flex;
+  justify-content: center;
+
+  .container-fluid-lg {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .kfp-card {
+    max-width: 900px;
+    width: 100%;
+    background: $kfp-surface;
+    border-radius: 30px;
+    border: 1px solid $kfp-line;
+    padding: 60px;
+    box-shadow:
+      0 4px 6px rgba($kfp-ink, 0.02),
+      0 20px 50px rgba($kfp-ink, 0.06);
+
+    @media (max-width: 768px) { padding: 30px; }
+  }
+
+  .kfp-updated {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: $kfp-muted;
+    margin-bottom: 40px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    &::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      background: $kfp-blue;
+      border-radius: 50%;
+    }
+  }
+
+  .kfp-section {
+    margin-bottom: 48px;
+    position: relative;
+
+    &:last-child { margin-bottom: 0; }
+
+    h3 {
+      font-size: 20px;
+      font-weight: 800;
+      color: $kfp-ink;
+      margin: 0 0 20px;
+      position: relative;
+      display: inline-block;
+
+      &::after {
+        content: '';
+        position: absolute;
+        bottom: -4px;
+        left: 0;
+        width: 30px;
+        height: 3px;
+        background: $kfp-blue;
+        border-radius: 99px;
+      }
+    }
+
+    p, li {
+      font-size: 15px;
+      color: $kfp-ink-soft;
+      line-height: 1.8;
+      margin: 0 0 16px;
+      font-weight: 400;
+
+      &:last-child { margin-bottom: 0; }
+    }
+
+    ul {
+      padding-left: 20px;
+      margin: 16px 0;
+      list-style: none;
+
+      li {
+        position: relative;
+        margin-bottom: 12px;
+
+        &::before {
+          content: '→';
+          position: absolute;
+          left: -20px;
+          color: $kfp-blue;
+          font-weight: 800;
+        }
+      }
+    }
+
+    strong {
+      color: $kfp-ink;
+      font-weight: 700;
+    }
+  }
+
+  .kfp-contact {
+    margin-top: 60px;
+    padding: 40px;
+    background: $kfp-bg;
+    border-radius: 20px;
+    border: 1px solid $kfp-line;
+
+    h3 {
+      font-size: 16px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: $kfp-ink;
+      margin: 0 0 24px;
+    }
+
+    .contact-item {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    p {
+      font-size: 14px;
+      color: $kfp-ink-soft;
+      line-height: 1.6;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+
+      i {
+        color: $kfp-blue;
+        font-size: 18px;
+      }
+
+      a {
+        color: $kfp-blue;
+        font-weight: 700;
+        text-decoration: none;
+        transition: all 0.2s ease;
+
+        &:hover {
+          color: $kfp-blue-dark;
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+}

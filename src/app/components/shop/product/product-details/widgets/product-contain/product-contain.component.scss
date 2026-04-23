@@ -1,0 +1,511 @@
+// ============================================================
+// Product Detail · Right Panel — Premium Interactive Redesign
+// Size · Quantity · Add to Bag · Buy Now
+// Inspired by Nike · Zalando · Net-a-Porter · Farfetch
+// ============================================================
+
+$pc-ink:          #0F1720;
+$pc-ink-soft:     #2B3240;
+$pc-muted:        #6B7280;
+$pc-bg:           #FFFFFF;
+$pc-surface:      #F8F9FB;
+$pc-line:         #E6E8EC;
+$pc-line-strong:  #D1D5DB;
+$pc-blue:         #1E7FC9;
+$pc-blue-dark:    #135a95;
+$pc-blue-soft:    #EAF3FB;
+$pc-gold:         #B38A48;
+$pc-gold-soft:    #F6EFDE;
+$pc-rose:         #E7475A;
+$pc-rose-soft:    #FDECEE;
+$pc-success:      #16A34A;
+$pc-success-soft: #E7F6EC;
+$pc-white:        #ffffff;
+
+:host { display: block; font-family: inherit; }
+
+// ── Brand tag ───────────────────────────────────────────────
+.kf-brand-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  background: $pc-gold-soft;
+  border: 1px solid rgba($pc-gold, 0.35);
+  border-radius: 999px;
+  margin-bottom: 16px;
+
+  .kf-brand-icon { font-size: 11px; color: $pc-gold; line-height: 1; }
+
+  .kf-brand-name {
+    font-size: 10.5px;
+    font-weight: 800;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: darken($pc-gold, 10%);
+  }
+}
+
+// ── Product title ────────────────────────────────────────────
+.kf-product-title {
+  font-size: 30px !important;
+  font-weight: 800 !important;
+  color: $pc-ink !important;
+  line-height: 1.15 !important;
+  letter-spacing: -0.7px;
+  margin: 0 0 18px !important;
+  @media (max-width: 768px) { font-size: 23px !important; }
+}
+
+// ── Price block ──────────────────────────────────────────────
+.kf-price-block { margin: 0 0 24px; }
+
+.kf-price-row {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 22px;
+  background: linear-gradient(135deg, $pc-blue-soft 0%, #FFFFFF 100%);
+  border: 1px solid rgba($pc-blue, 0.22);
+  border-radius: 14px;
+  box-shadow: 0 2px 4px rgba($pc-ink, 0.02), 0 10px 26px rgba($pc-blue, 0.08);
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 12px; bottom: 12px; left: 0;
+    width: 3px;
+    background: linear-gradient(180deg, $pc-blue 0%, $pc-blue-dark 100%);
+    border-radius: 0 2px 2px 0;
+  }
+}
+
+.kf-price-current {
+  font-size: 28px;
+  font-weight: 800;
+  color: $pc-ink !important;
+  line-height: 1;
+  letter-spacing: -0.6px;
+}
+
+.kf-price-original {
+  font-size: 15px;
+  font-weight: 600;
+  color: $pc-muted;
+  text-decoration: line-through;
+  text-decoration-thickness: 2px;
+}
+
+.kf-discount-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 12px;
+  background: $pc-rose;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  border-radius: 999px;
+  box-shadow: 0 4px 10px rgba($pc-rose, 0.32);
+  line-height: 1;
+}
+
+.kf-divider { width: 100%; height: 1px; background: $pc-line; margin: 0 0 22px; }
+
+.kf-description {
+  margin-bottom: 22px;
+  p { font-size: 14px; color: $pc-muted; line-height: 1.7; margin: 0; }
+}
+
+// ── Variant block (size/color) ────────────────────────────────
+.kf-variant-block {
+  margin-bottom: 28px;
+  padding: 22px;
+  background: $pc-surface;
+  border: 1px solid $pc-line;
+  border-radius: 16px;
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 20px; left: 0; bottom: 20px;
+    width: 3px;
+    background: linear-gradient(180deg, $pc-blue 0%, $pc-gold 100%);
+    border-radius: 0 3px 3px 0;
+  }
+}
+
+// ── Quantity + Wishlist block ────────────────────────────────
+.kf-action-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 22px;
+  padding: 18px 22px;
+  background: $pc-bg;
+  border: 1.5px solid $pc-line;
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba($pc-ink, 0.04);
+  flex-wrap: wrap;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+
+  &:hover {
+    border-color: rgba($pc-blue, 0.3);
+    box-shadow: 0 4px 16px rgba($pc-blue, 0.1);
+  }
+}
+
+.kf-qty-label {
+  font-size: 10.5px;
+  font-weight: 800;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: $pc-muted;
+  white-space: nowrap;
+}
+
+// Premium QTY pill stepper
+.kf-qty-group {
+  display: inline-flex;
+  align-items: center;
+  border: 2px solid $pc-ink;
+  border-radius: 999px;
+  overflow: hidden;
+  height: 52px;
+  background: $pc-bg;
+  box-shadow: 0 4px 14px rgba($pc-ink, 0.1);
+  transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+
+  &:hover {
+    box-shadow: 0 6px 20px rgba($pc-blue, 0.2);
+    border-color: $pc-blue;
+  }
+
+  ::ng-deep {
+    .qty-btn, button.qty-btn, button.qty-minus, button.qty-plus {
+      width: 52px !important;
+      height: 100% !important;
+      border: none !important;
+      background: transparent !important;
+      color: $pc-ink !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      padding: 0 !important;
+      border-radius: 0 !important;
+      cursor: pointer;
+      transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+      font-size: 0 !important;
+
+      i {
+        font-size: 18px !important;
+        color: $pc-ink !important;
+        transition: all 0.25s ease;
+      }
+
+      &:hover {
+        background: $pc-blue-soft !important;
+
+        i { color: $pc-blue !important; transform: scale(1.2); }
+      }
+
+      &:active {
+        background: $pc-blue !important;
+        i { color: $pc-white !important; }
+      }
+    }
+  }
+
+  .qty-input {
+    width: 52px;
+    height: 100%;
+    border: none;
+    border-left: 1.5px solid $pc-line;
+    border-right: 1.5px solid $pc-line;
+    text-align: center;
+    font-size: 17px;
+    font-weight: 900;
+    color: $pc-ink;
+    padding: 0;
+    outline: none;
+    background: transparent;
+    letter-spacing: -0.5px;
+
+    &:focus { box-shadow: none; }
+  }
+}
+
+// Wishlist button — elevated circle
+.kf-wishlist-wrap {
+  margin-left: auto;
+  flex-shrink: 0;
+
+  ::ng-deep .kf-wishlist-btn, ::ng-deep button.kf-wishlist-btn {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    height: 52px !important;
+    padding: 0 22px !important;
+    background: $pc-bg !important;
+    border: 2px solid $pc-line-strong !important;
+    border-radius: 999px !important;
+    font-size: 11.5px !important;
+    font-weight: 800 !important;
+    letter-spacing: 1.5px !important;
+    text-transform: uppercase;
+    color: $pc-ink !important;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+    box-shadow: 0 2px 8px rgba($pc-ink, 0.06) !important;
+
+    i {
+      font-size: 19px !important;
+      color: $pc-ink !important;
+      transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    &:hover {
+      border-color: $pc-rose !important;
+      color: $pc-rose !important;
+      background: $pc-rose-soft !important;
+      transform: scale(1.04) !important;
+      box-shadow: 0 8px 22px rgba($pc-rose, 0.25) !important;
+
+      i { color: $pc-rose !important; transform: scale(1.2) rotate(-8deg); }
+    }
+
+    .ri-heart-fill { color: $pc-rose !important; }
+  }
+}
+
+// ── CTA buttons block ─────────────────────────────────────────
+.kf-cta-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+// ─ Shared CTA base ─
+.kf-btn-cart, .kf-btn-buy {
+  &, &.btn {
+    position: relative;
+    height: 56px !important;
+    padding: 0 28px !important;
+    border-radius: 999px !important;
+    font-size: 12px !important;
+    font-weight: 800 !important;
+    letter-spacing: 2.5px !important;
+    text-transform: uppercase;
+    cursor: pointer;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1) !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100% !important;
+    text-decoration: none !important;
+  }
+}
+
+// Add to Bag — outlined pill with animated ink fill from center
+.kf-btn-cart, .kf-btn-cart.btn {
+  background: $pc-bg !important;
+  color: $pc-ink !important;
+  border: 2px solid $pc-ink !important;
+  box-shadow:
+    0 2px 4px rgba($pc-ink, 0.04),
+    0 8px 20px rgba($pc-ink, 0.06);
+
+  // Radial fill from center on hover
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: $pc-ink;
+    border-radius: 999px;
+    transform: scale(0);
+    transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+    transform-origin: center;
+    z-index: 0;
+  }
+
+  > * { position: relative; z-index: 1; }
+
+  &:hover:not(:disabled) {
+    color: $pc-white !important;
+    box-shadow:
+      0 8px 20px rgba($pc-ink, 0.22),
+      0 16px 36px rgba($pc-ink, 0.14);
+
+    &::before { transform: scale(1); }
+
+    .kf-btn-inner i {
+      transform: translateY(-2px) scale(1.12);
+    }
+  }
+
+  &.disabled, &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    &::before { display: none; }
+  }
+}
+
+// Buy Now — premium gold-gradient pill with animated glow pulse
+.kf-btn-buy, .kf-btn-buy.btn {
+  background: linear-gradient(135deg, $pc-gold 0%, darken($pc-gold, 16%) 100%) !important;
+  color: $pc-white !important;
+  border: 2px solid darken($pc-gold, 10%) !important;
+  box-shadow:
+    0 4px 10px rgba($pc-gold, 0.3),
+    0 12px 28px rgba($pc-gold, 0.22);
+
+  // Animated glow ring that pulses on idle
+  &::before {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    border-radius: 999px;
+    background: transparent;
+    border: 2px solid rgba($pc-gold, 0);
+    transition: all 0.4s ease;
+  }
+
+  // Arrow icon on the right
+  &::after {
+    content: '\ea6c';
+    font-family: 'remixicon';
+    font-size: 18px;
+    position: relative;
+    z-index: 1;
+    margin-left: 10px;
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .kf-btn-inner {
+    position: relative;
+    z-index: 1;
+  }
+
+  &:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow:
+      0 8px 20px rgba($pc-gold, 0.45),
+      0 18px 40px rgba($pc-gold, 0.28);
+    color: $pc-white !important;
+    background: linear-gradient(135deg, lighten($pc-gold, 6%) 0%, $pc-gold 100%) !important;
+
+    &::before {
+      inset: -6px;
+      border-color: rgba($pc-gold, 0.4);
+    }
+    &::after { transform: translateX(5px); }
+  }
+
+  &:disabled { opacity: 0.6; cursor: not-allowed; }
+}
+
+.kf-btn-inner {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  line-height: 1;
+  position: relative;
+  z-index: 1;
+
+  i { font-size: 20px !important; transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); }
+}
+
+// ── Trust strip ───────────────────────────────────────────────
+.kf-trust-strip {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  padding: 14px;
+  background: $pc-surface;
+  border: 1px solid $pc-line;
+  border-radius: 14px;
+  margin-bottom: 16px;
+  @media (max-width: 480px) { grid-template-columns: 1fr; gap: 6px; padding: 10px; }
+}
+
+.kf-trust-sep { display: none; }
+
+.kf-trust-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background: $pc-blue-soft;
+    i { background: $pc-blue; color: #fff !important; transform: rotate(-8deg) scale(1.08); }
+  }
+
+  i {
+    width: 34px;
+    height: 34px;
+    min-width: 34px;
+    border-radius: 10px;
+    background: $pc-blue-soft;
+    color: $pc-blue !important;
+    font-size: 17px !important;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  span { font-size: 11.5px; font-weight: 700; color: $pc-ink; letter-spacing: 0.4px; line-height: 1.3; }
+}
+
+// ── Total price (wholesale) ────────────────────────────────────
+.kf-total-price {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  padding: 14px 20px;
+  margin-bottom: 16px;
+  background: $pc-gold-soft;
+  border: 1px solid rgba($pc-gold, 0.35);
+  border-radius: 12px;
+
+  span { font-size: 11px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; color: darken($pc-gold, 14%); }
+  strong { font-size: 20px; font-weight: 800; color: $pc-ink !important; letter-spacing: -0.4px; }
+}
+
+// ── Unavailable ───────────────────────────────────────────────
+.kf-unavailable {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 20px;
+  background: $pc-rose-soft;
+  border: 1.5px solid rgba($pc-rose, 0.35);
+  border-radius: 14px;
+  color: darken($pc-rose, 10%);
+  font-size: 13.5px;
+  font-weight: 700;
+
+  i { font-size: 20px !important; color: $pc-rose !important; }
+}
+
+// ── Responsive ────────────────────────────────────────────────
+@media (max-width: 768px) {
+  .kf-price-row { padding: 14px 18px; gap: 10px; flex-wrap: wrap; }
+  .kf-price-current { font-size: 24px; }
+  .kf-action-row { padding: 14px 16px; gap: 12px; }
+  .kf-qty-group { height: 48px; }
+  .kf-qty-group ::ng-deep .qty-btn, .kf-qty-group ::ng-deep button.qty-btn { width: 46px !important; }
+  .kf-qty-group .qty-input { width: 46px; font-size: 15px; }
+  .kf-wishlist-wrap ::ng-deep .kf-wishlist-btn { height: 48px !important; padding: 0 18px !important; }
+  .kf-btn-cart, .kf-btn-buy, .kf-btn-cart.btn, .kf-btn-buy.btn { height: 56px !important; font-size: 11.5px !important; }
+}

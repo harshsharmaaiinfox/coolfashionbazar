@@ -1,0 +1,846 @@
+// ============================================
+// Cool Fashion Bazar — Product Card (redesign)
+// Style: "Floating Showcase" — layered image mat, pill price tag,
+// sliding quick-view bar, split Add-to-Bag button
+// ============================================
+
+$brand-blue:      #1E7FC9;
+$brand-blue-dark: #135a95;
+$brand-blue-soft: #E7F2FB;
+$brand-ink:       #0F1720;
+$text:            #1A1A1A;
+$muted:           #6B7280;
+$bg:              #FFFFFF;
+$surface:         #F7F8FA;
+$line:            #E6E8EC;
+$sale:            #FF3E6C;
+$success:         #16A34A;
+$gold:            #B89968;
+
+$radius-card: 20px;
+$radius-img:  14px;
+$radius-pill: 999px;
+
+:host {
+  display: block;
+  height: 100%;
+}
+
+// =============================================================
+// OUTER CARD — floating, rounded, layered shadow
+// =============================================================
+.kf-product {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: $bg;
+  border-radius: $radius-card;
+  padding: 12px 12px 18px;
+  border: 1px solid transparent;
+  box-shadow:
+    0 1px 2px rgba($brand-ink, 0.04),
+    0 10px 28px rgba($brand-ink, 0.06);
+  transition:
+    transform 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.4s ease 0.05s;
+  isolation: isolate;
+  overflow: visible; // let the floating price pill escape if needed
+
+  // Subtle hairline on hover (no heavy border)
+  &:hover {
+    transform: translateY(-6px);
+    border-color: rgba($brand-blue, 0.18);
+    box-shadow:
+      0 2px 4px rgba($brand-ink, 0.05),
+      0 26px 54px rgba($brand-blue, 0.18),
+      0 12px 26px rgba($brand-ink, 0.1);
+
+    .kf-img {
+      transform: scale(1.07);
+      transition-delay: 0.03s;
+    }
+
+    .kf-product-media::after {
+      left: 130%;
+      transition-delay: 0.15s;
+    }
+
+    .kf-wish {
+      transform: scale(1);
+      opacity: 1;
+      transition-delay: 0.1s;
+    }
+
+    .kf-quick {
+      opacity: 1;
+      transform: translateY(0);
+      transition-delay: 0.2s;
+    }
+  }
+}
+
+// =============================================================
+// IMAGE — mounted in an inner rounded frame (like a gallery mat)
+// =============================================================
+.kf-product-media {
+  position: relative;
+  overflow: hidden;
+  background: $surface;
+  aspect-ratio: 4 / 5;  // slightly taller portrait ratio — more editorial
+  border-radius: $radius-img;
+  margin-bottom: 32px; // room for the floating price pill
+
+  // Subtle inner gradient to give depth
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      180deg,
+      rgba($brand-ink, 0) 60%,
+      rgba($brand-ink, 0.18) 100%
+    );
+    z-index: 1;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.45s ease 0.08s;
+  }
+
+  // Diagonal shine sweep — runs across the image on card hover
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -60%;
+    width: 45%;
+    height: 100%;
+    background: linear-gradient(
+      115deg,
+      transparent 0%,
+      rgba(#fff, 0) 25%,
+      rgba(#fff, 0.28) 50%,
+      rgba(#fff, 0) 75%,
+      transparent 100%
+    );
+    transform: skewX(-18deg);
+    transition: left 1s cubic-bezier(0.22, 1, 0.36, 1);
+    pointer-events: none;
+    z-index: 2;
+  }
+}
+
+.kf-product:hover .kf-product-media::before {
+  opacity: 1;
+  transition-delay: 0.08s;
+}
+
+.kf-img-link {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.kf-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transition: transform 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+              filter 0.5s ease;
+  will-change: transform;
+}
+
+.kf-product:hover .kf-img {
+  filter: saturate(1.08) contrast(1.02);
+}
+
+// =============================================================
+// BADGE — gradient corner ribbon (top-left)
+// =============================================================
+.kf-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 4;
+  padding: 5px 12px;
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: #fff;
+  background: linear-gradient(135deg, $brand-ink 0%, lighten($brand-ink, 12%) 100%);
+  border-radius: $radius-pill;
+  box-shadow: 0 4px 10px rgba($brand-ink, 0.25);
+  line-height: 1.3;
+
+  &--sale {
+    background: linear-gradient(135deg, $sale 0%, darken($sale, 10%) 100%);
+    box-shadow: 0 4px 10px rgba($sale, 0.35);
+  }
+  &--new {
+    background: linear-gradient(135deg, $brand-blue 0%, $brand-blue-dark 100%);
+    box-shadow: 0 4px 10px rgba($brand-blue, 0.35);
+  }
+  &--hot {
+    background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+    box-shadow: 0 4px 10px rgba(#F59E0B, 0.35);
+  }
+}
+
+// =============================================================
+// WISHLIST — always-visible rounded chip, top-right of image
+// =============================================================
+.kf-wish {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 4;
+  width: 38px;
+  height: 38px;
+  border: none;
+  background: rgba(#fff, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow:
+    0 1px 2px rgba($brand-ink, 0.06),
+    0 4px 14px rgba($brand-ink, 0.1);
+  opacity: 0.85;
+  transform: scale(0.88);
+  transition: transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1),
+              opacity 0.35s ease,
+              background 0.25s ease,
+              box-shadow 0.3s ease;
+
+  i {
+    font-size: 19px;
+    color: $text;
+    transition: all 0.25s ease;
+  }
+
+  &:hover {
+    background: $sale;
+    box-shadow: 0 6px 18px rgba($sale, 0.45);
+    transform: scale(1.05);
+
+    i {
+      color: #fff;
+      transform: scale(1.1);
+    }
+  }
+
+  &.active {
+    background: $sale;
+    box-shadow: 0 6px 18px rgba($sale, 0.45);
+
+    i { color: #fff; }
+  }
+}
+
+// =============================================================
+// QUICK VIEW — slides UP from bottom of image as a full bar
+// =============================================================
+.kf-quick {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 3;
+  border: none;
+  background: rgba($brand-ink, 0.92);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  color: #fff;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 1.8px;
+  text-transform: uppercase;
+  opacity: 0;
+  transform: translateY(100%);
+  transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+              opacity 0.4s ease,
+              background 0.3s ease,
+              letter-spacing 0.35s ease;
+  border-radius: 0;
+
+  // Add the text label via pseudo (since HTML only has the icon)
+  &::after {
+    content: 'Quick View';
+  }
+
+  i {
+    font-size: 16px;
+    color: #fff;
+    margin-right: 2px;
+  }
+
+  &:hover {
+    background: $brand-blue;
+
+    &::after { letter-spacing: 2.4px; }
+  }
+}
+
+// =============================================================
+// CLOSE BUTTON (wishlist page)
+// =============================================================
+.product-close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 10;
+
+  .close-button {
+    width: 32px;
+    height: 32px;
+    border-radius: 10px;
+    background: rgba(#fff, 0.95);
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba($brand-ink, 0.12);
+    transition: all 0.25s ease;
+
+    i { font-size: 15px; color: $text; }
+
+    &:hover {
+      background: $sale;
+      i { color: #fff; }
+    }
+  }
+}
+
+// =============================================================
+// BODY
+// =============================================================
+.kf-product-body {
+  position: relative;
+  padding: 0 4px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 12px;
+}
+
+// =============================================================
+// FLOATING PRICE PILL — straddles image & body boundary
+// =============================================================
+.kf-price-row {
+  position: absolute;
+  top: -52px;   // pulls it up so it overlaps the image bottom edge
+  left: 4px;
+  right: 4px;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  pointer-events: none; // non-interactive wrapper
+
+  .kf-price,
+  .kf-stock { pointer-events: auto; }
+}
+
+.kf-price {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 16px;
+  background: #fff;
+  color: $brand-ink;
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: -0.2px;
+  border-radius: $radius-pill;
+  box-shadow:
+    0 2px 4px rgba($brand-ink, 0.06),
+    0 10px 24px rgba($brand-ink, 0.14);
+  border: 1.5px solid $brand-blue-soft;
+  line-height: 1;
+  transition: transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1),
+              background 0.35s ease,
+              color 0.35s ease,
+              border-color 0.35s ease,
+              box-shadow 0.4s ease;
+}
+
+.kf-product:hover .kf-price {
+  background: $brand-blue;
+  color: #fff;
+  border-color: $brand-blue-dark;
+  box-shadow: 0 12px 28px rgba($brand-blue, 0.42);
+  transform: translateY(-3px);
+  transition-delay: 0.12s;
+}
+
+.kf-stock {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #fff;
+  padding: 6px 11px 6px 10px;
+  background: $brand-ink;
+  border: 1.5px solid $brand-ink;
+  border-radius: $radius-pill;
+  line-height: 1;
+  box-shadow:
+    0 2px 4px rgba($brand-ink, 0.1),
+    0 8px 18px rgba($brand-ink, 0.22);
+  white-space: nowrap;
+  transition: transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1),
+              background 0.35s ease,
+              color 0.35s ease,
+              border-color 0.35s ease,
+              box-shadow 0.4s ease;
+
+  &::before {
+    content: '';
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #22c55e;
+    box-shadow:
+      0 0 0 2px rgba(#22c55e, 0.25),
+      0 0 8px rgba(#22c55e, 0.6);
+    flex-shrink: 0;
+    animation: kfStockPulse 1.8s ease-in-out infinite;
+  }
+}
+
+.kf-product:hover .kf-stock {
+  background: #fff;
+  color: $brand-ink;
+  border-color: $brand-ink;
+  box-shadow:
+    0 2px 4px rgba($brand-ink, 0.08),
+    0 10px 22px rgba($brand-ink, 0.18);
+  transform: translateY(-3px);
+  transition-delay: 0.18s;
+}
+
+@keyframes kfStockPulse {
+  0%, 100% {
+    box-shadow:
+      0 0 0 2px rgba(#22c55e, 0.25),
+      0 0 8px rgba(#22c55e, 0.6);
+  }
+  50% {
+    box-shadow:
+      0 0 0 6px rgba(#22c55e, 0),
+      0 0 14px rgba(#22c55e, 0.8);
+  }
+}
+
+// =============================================================
+// NAME / DESCRIPTION
+// =============================================================
+.kf-product-top {
+  flex: 1;
+  padding-top: 4px;
+}
+
+.kf-name-link {
+  text-decoration: none;
+  color: inherit;
+
+  &:hover .kf-name { color: $brand-blue; }
+}
+
+.kf-name {
+  font-size: 14px;
+  font-weight: 700;
+  color: $text;
+  margin: 0 0 5px;
+  line-height: 1.4;
+  letter-spacing: -0.1px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  transition: color 0.25s ease;
+}
+
+.kf-desc {
+  font-size: 11.5px;
+  color: $muted;
+  letter-spacing: 0.1px;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+// =============================================================
+// ADD TO BAG — split design: icon panel + text panel
+// =============================================================
+.kf-product-bottom {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: auto;
+}
+
+.kf-cart-row {
+  ::ng-deep app-product-cart-button {
+    width: 100%;
+    display: block;
+
+    button,
+    a {
+      position: relative;
+      width: 100%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      height: 44px;
+      padding: 0 18px 0 14px;
+      background: $brand-ink;
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.6px;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+      overflow: hidden;
+      text-decoration: none;
+
+      // Icon chip on the left (the split divider panel)
+      &::before {
+        content: '';
+        position: absolute;
+        top: 6px;
+        bottom: 6px;
+        left: 42px;
+        width: 1.5px;
+        background: rgba(#fff, 0.18);
+        transition: all 0.3s ease;
+      }
+
+      // Icon via pseudo element on the left
+      &::after {
+        content: '\f11d'; // remix shopping-bag icon
+        font-family: 'remixicon';
+        position: absolute;
+        left: 16px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 16px;
+        color: #fff;
+        transition: transform 0.3s ease;
+      }
+
+      // Push text to the right of the icon
+      padding-left: 52px;
+
+      // Animated background fill from left on hover
+      background-image: linear-gradient(90deg, $brand-blue 0%, $brand-blue 100%);
+      background-size: 0% 100%;
+      background-repeat: no-repeat;
+      background-position: left center;
+
+      &:hover {
+        background-color: $brand-ink;
+        background-size: 100% 100%;
+        box-shadow: 0 10px 26px rgba($brand-blue, 0.4);
+        transform: translateY(-1px);
+
+        &::before { background: rgba(#fff, 0.3); }
+        &::after  { transform: translateY(-50%) rotate(-8deg) scale(1.1); }
+      }
+
+      // Hide default spinner/text issues
+      > * { position: relative; z-index: 1; }
+    }
+
+    // Quantity box — split stepper design when item is in cart
+    .cart_qty.qty-box {
+      .input-group {
+        display: flex;
+        height: 44px;
+        border-radius: 12px;
+        overflow: hidden;
+        border: 1.5px solid $brand-ink;
+        background: $bg;
+        box-shadow: 0 4px 14px rgba($brand-ink, 0.08);
+
+        button {
+          position: relative;
+          background: $brand-ink !important;
+          border: none !important;
+          border-radius: 0 !important;
+          color: #fff !important;
+          padding: 0 !important;
+          width: 44px;
+          min-width: 44px;
+          height: 100% !important;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: background 0.2s ease !important;
+
+          // Kill the icon-column pseudo for qty buttons
+          &::before, &::after { display: none !important; }
+
+          i {
+            color: #fff !important;
+            font-size: 16px !important;
+          }
+
+          &:hover {
+            background: $brand-blue !important;
+            transform: none !important;
+            box-shadow: none !important;
+          }
+        }
+
+        input {
+          flex: 1;
+          border: none !important;
+          border-radius: 0 !important;
+          background: $bg !important;
+          text-align: center;
+          font-weight: 700;
+          font-size: 14px;
+          color: $brand-ink;
+          height: 100% !important;
+          padding: 0 !important;
+          outline: none;
+        }
+      }
+    }
+  }
+}
+
+// =============================================================
+// DARK MODE
+// =============================================================
+html.dark {
+  $d-bg:      #161B22;
+  $d-surface: #1E2530;
+  $d-ink:     #ECECEC;
+  $d-muted:   #8A94A6;
+  $d-line:    #2A3442;
+
+  .kf-product {
+    background: $d-bg;
+    box-shadow:
+      0 1px 2px rgba(#000, 0.3),
+      0 10px 28px rgba(#000, 0.4);
+
+    &:hover {
+      border-color: rgba($brand-blue, 0.3);
+      box-shadow:
+        0 2px 4px rgba(#000, 0.35),
+        0 22px 48px rgba($brand-blue, 0.22),
+        0 10px 22px rgba(#000, 0.4);
+    }
+  }
+
+  .kf-product-media { background: $d-surface; }
+
+  .kf-wish {
+    background: rgba($d-surface, 0.92);
+    i { color: $d-ink; }
+  }
+
+  .kf-price {
+    background: $d-surface;
+    color: $d-ink;
+    border-color: rgba($brand-blue, 0.3);
+    box-shadow: 0 10px 24px rgba(#000, 0.4);
+  }
+
+  .kf-product:hover .kf-price {
+    background: $brand-blue;
+    color: #fff;
+  }
+
+  .kf-name { color: $d-ink; }
+  .kf-desc { color: $d-muted; }
+
+  .kf-stock {
+    background: #fff;
+    color: $brand-ink;
+    border-color: #fff;
+    box-shadow:
+      0 2px 4px rgba(#000, 0.35),
+      0 10px 22px rgba(#000, 0.45);
+  }
+
+  .kf-product:hover .kf-stock {
+    background: $brand-ink;
+    color: #fff;
+    border-color: $brand-ink;
+  }
+
+  .kf-cart-row ::ng-deep app-product-cart-button {
+    button, a {
+      background: $brand-blue;
+      color: #fff;
+
+      &::before { background: rgba(#fff, 0.2); }
+
+      &:hover {
+        background-color: $brand-blue-dark;
+      }
+    }
+
+    .cart_qty.qty-box .input-group {
+      border-color: $brand-blue;
+      background: $d-bg;
+
+      input {
+        background: $d-bg !important;
+        color: $d-ink;
+      }
+    }
+  }
+}
+
+// =============================================================
+// RESPONSIVE
+// =============================================================
+@media (max-width: 991px) {
+  .kf-product { padding: 10px 10px 16px; }
+
+  .kf-product-media { margin-bottom: 28px; }
+
+  .kf-price-row { top: -46px; }
+
+  .kf-price {
+    padding: 7px 13px;
+    font-size: 13.5px;
+  }
+
+  .kf-cart-row ::ng-deep app-product-cart-button button,
+  .kf-cart-row ::ng-deep app-product-cart-button a {
+    height: 42px;
+    font-size: 11.5px;
+  }
+}
+
+@media (max-width: 767px) {
+  .kf-product {
+    padding: 8px 8px 14px;
+    border-radius: 16px;
+  }
+
+  .kf-product-media {
+    border-radius: 12px;
+    margin-bottom: 26px;
+    aspect-ratio: 4 / 5;
+  }
+
+  .kf-badge {
+    top: 8px;
+    left: 8px;
+    padding: 4px 10px;
+    font-size: 9px;
+    letter-spacing: 1.2px;
+  }
+
+  .kf-wish {
+    top: 8px;
+    right: 8px;
+    width: 34px;
+    height: 34px;
+    border-radius: 10px;
+
+    i { font-size: 17px; }
+  }
+
+  .kf-quick {
+    height: 36px;
+    font-size: 10.5px;
+    letter-spacing: 1.4px;
+    i { font-size: 14px; }
+  }
+
+  .kf-price-row { top: -42px; left: 2px; right: 2px; }
+
+  .kf-price {
+    padding: 6px 11px;
+    font-size: 12.5px;
+  }
+
+  .kf-stock {
+    font-size: 9px;
+    padding: 4px 8px;
+  }
+
+  .kf-name { font-size: 12.5px; }
+  .kf-desc { font-size: 10.5px; }
+
+  .kf-cart-row ::ng-deep app-product-cart-button {
+    button, a {
+      height: 40px;
+      font-size: 11px;
+      letter-spacing: 1.3px;
+      padding-left: 44px;
+
+      &::after { left: 14px; font-size: 15px; }
+      &::before { left: 36px; }
+    }
+
+    .cart_qty.qty-box .input-group {
+      height: 40px;
+
+      button {
+        width: 38px;
+        min-width: 38px;
+
+        i { font-size: 14px !important; }
+      }
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .kf-product { padding: 6px 6px 12px; border-radius: 14px; }
+  .kf-product-media { border-radius: 10px; margin-bottom: 22px; }
+  .kf-price-row { top: -38px; }
+  .kf-price { font-size: 12px; padding: 5px 10px; }
+  .kf-stock { display: none; } // too tight on small screens
+}
+
+// =============================================================
+// RTL
+// =============================================================
+body.rtl {
+  .kf-badge { left: auto; right: 10px; }
+  .kf-wish  { right: auto; left: 10px; }
+  .kf-price-row { flex-direction: row-reverse; }
+
+  .kf-cart-row ::ng-deep app-product-cart-button {
+    button, a {
+      padding-left: 18px;
+      padding-right: 52px;
+
+      &::before { left: auto; right: 42px; }
+      &::after  { left: auto; right: 16px; }
+    }
+  }
+}

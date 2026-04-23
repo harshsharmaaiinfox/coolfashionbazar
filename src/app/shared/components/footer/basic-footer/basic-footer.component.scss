@@ -1,0 +1,330 @@
+// ============================================
+// Kahua Fashion — Footer (Premium Redesign)
+// ============================================
+
+$ft-blue:      #1E7FC9;
+$ft-blue-dark: #135a95;
+$ft-ink:       #0B1220;
+$ft-ink-2:     #141C2A;
+$ft-gold:      #B89968;
+$ft-white:     #ffffff;
+$ft-muted:     rgba($ft-white, 0.5);
+$ft-dim:       rgba($ft-white, 0.35);
+$ft-text:      rgba($ft-white, 0.68);
+$ft-line:      rgba($ft-white, 0.08);
+
+:host {
+  display: block;
+
+  ::ng-deep {
+    &::before,
+    &::after,
+    .footer-section-2::before,
+    .footer-section-2::after {
+      display: none !important;
+      background-image: none !important;
+    }
+  }
+}
+
+.kf-footer {
+  position: relative;
+  padding: 80px 0 0;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse at 12% 8%, rgba($ft-blue, 0.12) 0%, transparent 45%),
+    radial-gradient(circle at 88% 92%, rgba($ft-gold, 0.05) 0%, transparent 55%),
+    linear-gradient(180deg, $ft-ink 0%, $ft-ink-2 100%) !important;
+
+  // Top gold accent hairline
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent 0%, rgba($ft-gold, 0.4) 50%, transparent 100%);
+  }
+
+  > .container-fluid-lg {
+    position: relative;
+    z-index: 2;
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+}
+
+// ---------------------------------------------------
+// Box Container for Grid
+// ---------------------------------------------------
+.footer-box {
+  background: rgba($ft-white, 0.03);
+  border: 1px solid $ft-line;
+  border-radius: 30px;
+  padding: 60px 50px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+
+  @media (max-width: 991px) { padding: 40px 30px; }
+  @media (max-width: 575px) { padding: 10px 20px; border-radius: 20px; }
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1.5fr;
+  gap: 40px;
+
+  @media (max-width: 1200px) { gap: 30px; }
+
+  @media (max-width: 991px) {
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+  }
+
+  @media (max-width: 575px) {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+}
+
+// ---------------------------------------------------
+// Column Heads
+// ---------------------------------------------------
+.col-head {
+  margin-bottom: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  @media (max-width: 575px) {
+    cursor: pointer;
+    padding: 20px 0;
+    margin-bottom: 0;
+    border-bottom: 1px solid $ft-line;
+  }
+
+  h5 {
+    position: relative;
+    margin: 0;
+    padding-left: 0;
+    font-size: 13px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 2.5px;
+    color: $ft-gold;
+    transition: color 0.3s ease;
+
+    &::after {
+      content: '';
+      display: block;
+      width: 25px;
+      height: 2px;
+      background: $ft-blue;
+      margin-top: 8px;
+      border-radius: 2px;
+    }
+  }
+
+  .mob-toggle {
+    font-size: 20px;
+    color: $ft-muted;
+    display: none;
+    transition: all 0.3s ease;
+
+    @media (max-width: 575px) { display: block; }
+  }
+
+  &.open .mob-toggle {
+    transform: rotate(135deg);
+    color: $ft-gold;
+  }
+}
+
+// ---------------------------------------------------
+// Links and Content
+// ---------------------------------------------------
+.col-links {
+  @media (max-width: 575px) {
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  &.expanded,
+  &.always-open {
+    @media (max-width: 575px) {
+      max-height: 800px;
+      opacity: 1;
+      padding: 20px 0;
+    }
+  }
+
+  ul,
+  ::ng-deep ul {
+    list-style: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+
+    li {
+      display: block !important;
+      margin: 0 !important;
+
+      a {
+        position: relative;
+        color: $ft-text !important;
+        text-decoration: none !important;
+        font-size: 14.5px;
+        font-weight: 500;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.3s ease;
+
+        &:hover {
+          color: $ft-blue !important;
+          transform: translateX(5px);
+        }
+      }
+    }
+  }
+}
+
+// ---------------------------------------------------
+// Store Info Specifics
+// ---------------------------------------------------
+.store-info {
+  li {
+    font-size: 14px;
+    line-height: 1.8;
+    color: $ft-text;
+    padding-left: 30px;
+    position: relative;
+    margin-bottom: 20px !important;
+
+    &::before {
+      font-family: 'remixicon';
+      position: absolute;
+      left: 0;
+      top: 2px;
+      font-size: 18px;
+      color: $ft-blue;
+    }
+
+    &:first-child::before { content: '\ef3b'; } // ri-map-pin-line
+
+    &.store-contact {
+      padding-top: 20px;
+      border-top: 1px solid $ft-line;
+      margin-bottom: 0 !important;
+
+      &::before {
+        content: '\ef27'; // ri-phone-line
+        top: 24px;
+      }
+    }
+
+    a {
+      color: $ft-white !important;
+      font-weight: 600;
+      &:hover { color: $ft-blue !important; }
+    }
+  }
+}
+
+// ---------------------------------------------------
+// Social Icons
+// ---------------------------------------------------
+.footer-social {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 30px;
+
+  a {
+    width: 38px;
+    height: 38px;
+    border-radius: 12px;
+    background: rgba($ft-white, 0.05);
+    border: 1px solid $ft-line;
+    color: $ft-white !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+
+    svg {
+      width: 18px;
+      height: 18px;
+      color: inherit;
+    }
+
+    &:hover {
+      background: $ft-blue;
+      border-color: $ft-blue;
+      transform: translateY(-5px) rotate(8deg);
+      box-shadow: 0 10px 20px rgba($ft-blue, 0.3);
+    }
+  }
+}
+
+// ---------------------------------------------------
+// Copyright Bar
+// ---------------------------------------------------
+.kf-copyright-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 30px 0 40px;
+  text-align: center;
+
+  p {
+    margin: 0;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: $ft-dim;
+  }
+}
+
+// ---------------------------------------------------
+// Back to Top
+// ---------------------------------------------------
+.back-to-top-btn {
+  position: fixed;
+  bottom: 40px;
+  right: 40px;
+  z-index: 1000;
+  width: 50px;
+  height: 50px;
+  background: linear-gradient(135deg, $ft-blue 0%, $ft-blue-dark 100%);
+  color: $ft-white;
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 10px 30px rgba($ft-blue, 0.4);
+  transition: all 0.3s ease;
+  opacity: 0;
+  visibility: hidden;
+
+  &.show { opacity: 1; visibility: visible; }
+
+  .btt-arrow { font-size: 24px; font-weight: bold; }
+
+  &:hover {
+    transform: translateY(-5px);
+    background: $ft-gold;
+    box-shadow: 0 10px 30px rgba($ft-gold, 0.4);
+  }
+
+  @media (max-width: 575px) { bottom: 20px; right: 20px; width: 44px; height: 44px; }
+}

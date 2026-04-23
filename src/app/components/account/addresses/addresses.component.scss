@@ -1,0 +1,492 @@
+// ============================================================
+// Addresses Page — Premium Redesign
+// Consistent with dashboard · bank-details design system
+// ============================================================
+
+$ad-ink:          #0F1720;
+$ad-ink-soft:     #2B3240;
+$ad-muted:        #6B7280;
+$ad-bg:           #FFFFFF;
+$ad-surface:      #F8F9FB;
+$ad-line:         #E6E8EC;
+$ad-line-strong:  #D1D5DB;
+$ad-blue:         #1E7FC9;
+$ad-blue-dark:    #135a95;
+$ad-blue-soft:    #EAF3FB;
+$ad-gold:         #B38A48;
+$ad-gold-soft:    #F6EFDE;
+$ad-rose:         #E7475A;
+$ad-rose-soft:    #FDECEE;
+$ad-success:      #16A34A;
+$ad-success-soft: #E7F6EC;
+
+:host { display: block; font-family: inherit; }
+
+.addresses-page-container {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+// ============================================================
+// PAGE HEADER
+// ============================================================
+.addresses-page-header {
+  position: relative;
+  padding: 28px 30px;
+  background: linear-gradient(135deg, $ad-ink 0%, $ad-ink-soft 100%);
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow:
+    0 4px 10px rgba($ad-ink, 0.15),
+    0 20px 48px rgba($ad-ink, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: -30px; right: -20px;
+    width: 200px; height: 200px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba($ad-blue, 0.25) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -20px; left: -10px;
+    width: 150px; height: 150px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba($ad-gold, 0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .header-content {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .header-icon-wrapper {
+    width: 52px;
+    height: 52px;
+    border-radius: 16px;
+    background: rgba(#fff, 0.1);
+    border: 1px solid rgba(#fff, 0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+
+    i { font-size: 24px !important; color: $ad-gold !important; }
+  }
+
+  .header-text-content {
+    .page-title {
+      font-size: 18px !important;
+      font-weight: 800 !important;
+      color: #fff !important;
+      letter-spacing: -0.3px;
+      margin: 0 0 4px !important;
+    }
+
+    .page-subtitle {
+      font-size: 13px !important;
+      color: rgba(#fff, 0.6) !important;
+      margin: 0 !important;
+    }
+  }
+
+  .header-actions {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .btn-back-dashboard {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    background: rgba(#fff, 0.08);
+    border: 1px solid rgba(#fff, 0.15);
+    border-radius: 999px;
+    text-decoration: none;
+    color: rgba(#fff, 0.85);
+    font-size: 11.5px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    backdrop-filter: blur(8px);
+
+    i { font-size: 15px !important; transition: transform 0.3s ease; }
+
+    &:hover {
+      background: rgba(#fff, 0.18);
+      border-color: rgba(#fff, 0.28);
+      color: #fff;
+      i { transform: translateX(-3px); }
+    }
+  }
+
+  .btn-add-address {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 11px 22px;
+    background: linear-gradient(135deg, $ad-blue 0%, $ad-blue-dark 100%);
+    border: none;
+    border-radius: 999px;
+    color: #fff;
+    font-size: 11.5px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    box-shadow: 0 6px 18px rgba($ad-blue, 0.45);
+    position: relative;
+    overflow: hidden;
+
+    &::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, $ad-gold 0%, darken($ad-gold, 12%) 100%);
+      transform: translateX(-101%);
+      transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    > * { position: relative; z-index: 1; }
+
+    i { font-size: 16px !important; transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); }
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 28px rgba($ad-gold, 0.45);
+
+      &::before { transform: translateX(0); }
+      i { transform: rotate(90deg) scale(1.1); }
+    }
+  }
+
+  @media (max-width: 768px) {
+    padding: 22px 20px;
+    border-radius: 16px;
+    flex-direction: column;
+    align-items: flex-start;
+
+    .header-actions {
+      width: 100%;
+
+      .btn-back-dashboard,
+      .btn-add-address {
+        flex: 1;
+        justify-content: center;
+      }
+    }
+  }
+}
+
+// ============================================================
+// ADDRESS CARDS GRID
+// ============================================================
+.addresses-list-container {
+  .addresses-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 18px;
+
+    @media (max-width: 575px) { grid-template-columns: 1fr; }
+  }
+}
+
+.address-card {
+  background: $ad-bg;
+  border: 1px solid $ad-line;
+  border-radius: 20px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow:
+    0 2px 4px rgba($ad-ink, 0.03),
+    0 12px 30px rgba($ad-ink, 0.07);
+  transition: all 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  position: relative;
+
+  // Left accent bar animates in on hover
+  &::before {
+    content: '';
+    position: absolute;
+    top: 18px;
+    left: 0;
+    bottom: 18px;
+    width: 3px;
+    background: linear-gradient(180deg, $ad-blue 0%, $ad-gold 100%);
+    border-radius: 0 3px 3px 0;
+    opacity: 0;
+    transform: scaleY(0.4);
+    transition: all 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  &:hover {
+    transform: translateY(-5px);
+    border-color: rgba($ad-blue, 0.28);
+    box-shadow:
+      0 6px 14px rgba($ad-ink, 0.05),
+      0 24px 56px rgba($ad-blue, 0.16);
+
+    &::before { opacity: 1; transform: scaleY(1); }
+
+    .address-icon-wrapper {
+      background: $ad-blue;
+      border-color: $ad-blue-dark;
+      transform: scale(1.08) rotate(-8deg);
+      box-shadow: 0 8px 20px rgba($ad-blue, 0.4);
+
+      i { color: #fff !important; }
+    }
+  }
+}
+
+// Card Header
+.address-card-header {
+  padding: 18px 22px 16px;
+  background: linear-gradient(90deg, $ad-surface 0%, $ad-bg 100%);
+  border-bottom: 1px solid $ad-line;
+}
+
+.address-title-section {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.address-icon-wrapper {
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  border-radius: 14px;
+  background: $ad-blue-soft;
+  border: 1px solid rgba($ad-blue, 0.2);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+  flex-shrink: 0;
+
+  i { font-size: 20px !important; color: $ad-blue !important; }
+}
+
+.address-label {
+  display: block;
+  font-size: 10px !important;
+  font-weight: 800 !important;
+  letter-spacing: 2px !important;
+  text-transform: uppercase;
+  color: $ad-muted;
+  margin-bottom: 3px;
+}
+
+.address-title {
+  font-size: 15px !important;
+  font-weight: 800 !important;
+  color: $ad-ink !important;
+  margin: 0 !important;
+  letter-spacing: -0.2px;
+}
+
+// Card Body
+.address-card-body {
+  padding: 18px 22px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.address-info-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+
+  > i {
+    width: 30px;
+    height: 30px;
+    min-width: 30px;
+    border-radius: 9px;
+    background: $ad-surface;
+    border: 1px solid $ad-line;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px !important;
+    color: $ad-muted !important;
+    margin-top: 2px;
+    flex-shrink: 0;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .address-card:hover & > i {
+    background: $ad-blue-soft;
+    border-color: rgba($ad-blue, 0.2);
+    color: $ad-blue !important;
+  }
+
+  .info-label {
+    display: block;
+    font-size: 10px !important;
+    font-weight: 800 !important;
+    letter-spacing: 2px !important;
+    text-transform: uppercase;
+    color: $ad-muted;
+    margin-bottom: 4px;
+  }
+
+  .info-value {
+    display: block;
+    font-size: 13.5px !important;
+    font-weight: 600;
+    color: $ad-ink !important;
+    line-height: 1.6;
+  }
+
+  .address-structured {
+    div {
+      font-size: 13px;
+      color: $ad-ink-soft;
+      line-height: 1.6;
+    }
+  }
+}
+
+.address-info-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  padding-top: 14px;
+  border-top: 1px solid $ad-line;
+
+  .address-info-item { margin-bottom: 0; }
+
+  @media (max-width: 450px) { grid-template-columns: 1fr; }
+}
+
+// Card Footer
+.address-card-footer {
+  padding: 14px 22px;
+  border-top: 1px solid $ad-line;
+  background: $ad-surface;
+  display: flex;
+  gap: 10px;
+}
+
+.btn-edit-address,
+.btn-delete-address {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 10px 16px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  border: none;
+
+  i { font-size: 15px !important; transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1); }
+}
+
+.btn-edit-address {
+  background: $ad-blue-soft;
+  color: $ad-blue;
+  border: 1px solid rgba($ad-blue, 0.25);
+
+  &:hover {
+    background: $ad-blue;
+    color: #fff;
+    border-color: $ad-blue-dark;
+    transform: translateY(-1px);
+    box-shadow: 0 8px 20px rgba($ad-blue, 0.32);
+
+    i { transform: rotate(-8deg) scale(1.1); }
+  }
+}
+
+.btn-delete-address {
+  background: $ad-surface;
+  color: $ad-muted;
+  border: 1px solid $ad-line;
+
+  &:hover {
+    background: $ad-rose-soft;
+    color: $ad-rose;
+    border-color: rgba($ad-rose, 0.3);
+    transform: translateY(-1px);
+    box-shadow: 0 8px 20px rgba($ad-rose, 0.2);
+
+    i { transform: scale(1.1); }
+  }
+}
+
+// ============================================================
+// EMPTY STATE
+// ============================================================
+.addresses-empty-state {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 320px;
+  padding: 60px 32px;
+  background: $ad-bg;
+  border: 1px solid $ad-line;
+  border-radius: 20px;
+  box-shadow:
+    0 2px 4px rgba($ad-ink, 0.03),
+    0 12px 30px rgba($ad-ink, 0.07);
+
+  .empty-state-content {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+
+    > i {
+      width: 80px;
+      height: 80px;
+      border-radius: 24px;
+      background: $ad-surface;
+      border: 1px solid $ad-line;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 36px !important;
+      color: $ad-line-strong !important;
+      box-shadow: 0 4px 14px rgba($ad-ink, 0.06);
+    }
+
+    h4 {
+      font-size: 16px !important;
+      font-weight: 700 !important;
+      color: $ad-muted !important;
+      margin: 0 !important;
+      letter-spacing: 0.2px;
+    }
+  }
+}

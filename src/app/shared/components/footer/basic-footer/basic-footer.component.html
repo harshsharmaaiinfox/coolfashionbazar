@@ -1,0 +1,115 @@
+<!-- Main Footer -->
+<footer class="kf-footer">
+    <div class="container-fluid-lg">
+
+        <div class="footer-box">
+            <div class="footer-grid">
+
+                <!-- Customer Service -->
+                <div class="footer-col footer-col-service">
+                    <div class="col-head">
+                        <h5>Customer Service</h5>
+                    </div>
+                    <div class="col-links always-open">
+                        <ul>
+                            <li><a routerLink="/Contact-Us">Contact Us</a></li>
+                            <li><a routerLink="/page/about-us">About Us</a></li>
+                        </ul>
+
+                        <div class="footer-social">
+                            <a href="https://www.instagram.com/" target="_blank" title="Instagram" aria-label="Instagram">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                    <rect x="3" y="3" width="18" height="18" rx="5"/>
+                                    <circle cx="12" cy="12" r="4"/>
+                                    <circle cx="17.5" cy="6.5" r="0.6" fill="currentColor"/>
+                                </svg>
+                            </a>
+                            <a href="https://www.facebook.com/" target="_blank" title="Facebook" aria-label="Facebook">
+                                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                    <path d="M14 13.5h2.5l1-4H14v-2c0-1.03 0-2 2-2h1.5V2.14c-.326-.043-1.557-.14-2.857-.14C11.928 2 10 3.657 10 6.7v2.8H7v4h3V22h4v-8.5z"/>
+                                </svg>
+                            </a>
+                            <a href="https://www.youtube.com/" target="_blank" title="Youtube" aria-label="YouTube">
+                                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                    <path d="M21.582 6.186a2.506 2.506 0 0 0-1.768-1.768C18.254 4 12 4 12 4s-6.254 0-7.814.418A2.506 2.506 0 0 0 2.418 6.186C2 7.746 2 12 2 12s0 4.254.418 5.814a2.506 2.506 0 0 0 1.768 1.768C5.746 20 12 20 12 20s6.254 0 7.814-.418a2.506 2.506 0 0 0 1.768-1.768C22 16.254 22 12 22 12s0-4.254-.418-5.814zM10 15.464V8.536L16 12l-6 3.464z"/>
+                                </svg>
+                            </a>
+                            <a href="https://x.com/" target="_blank" title="X" aria-label="X (Twitter)">
+                                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Policy -->
+                <div class="footer-col" (click)="toggle('useful_link')">
+                    <div class="col-head" [class.open]="active['useful_link']">
+                        <h5>Policy</h5>
+                        <i class="ri-add-line mob-toggle"></i>
+                    </div>
+                    <div class="col-links" [class.expanded]="active['useful_link']">
+                        <ul>
+                            <li><a routerLink="/shipping-returns">Shipping &amp; Returns</a></li>
+                            <li><a routerLink="/return-policy">Return Policy</a></li>
+                            <li><a routerLink="/privacy-policy">Privacy Policy</a></li>
+                            <li><a routerLink="/term-condition">Terms &amp; Conditions</a></li>
+                            <li><a routerLink="/refund-cancellation">Refund &amp; Cancellation</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Shop -->
+                <div class="footer-col" (click)="toggle('collections')">
+                    <div class="col-head" [class.open]="active['collections']">
+                        <h5>Shop</h5>
+                        <i class="ri-add-line mob-toggle"></i>
+                    </div>
+                    <div class="col-links" [class.expanded]="active['collections']">
+                        <app-footer-categories [data]="data"></app-footer-categories>
+                        <ul *ngIf="!data?.footer?.footer_categories?.length">
+                            <li><a routerLink="/collections/activewear">Activewear</a></li>
+                            <li><a routerLink="/collections/men">Men</a></li>
+                            <li><a routerLink="/collections/women">Women</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Our Store -->
+                <div class="footer-col footer-col-store">
+                    <div class="col-head">
+                        <h5>Our Store</h5>
+                    </div>
+                    <div class="col-links always-open">
+                        <ul class="store-info">
+                            <li>
+                                KISMATECH SOFTWARE PVT LTD<br>
+                                123 Innovation Drive, Tech Park<br>
+                                Silicon Valley, Digital District<br>
+                                Meta City - 543210
+                            </li>
+                            <li class="store-contact">
+                                Tel: <a href="tel:+910000000000">+91 00000 00000</a><br>
+                                Email: <a href="mailto:contact&#64;kismatech.com">contact&#64;kismatech.com</a><br>
+                                GST: 00ABCDE0000F1Z0
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Bottom copyright band -->
+        <div class="kf-copyright-bar">
+            <p>Copyright 2026 &copy; KISMATECH SOFTWARE PVT LTD</p>
+        </div>
+
+    </div>
+</footer>
+
+<!-- Back to Top -->
+<button class="back-to-top-btn" [class.show]="showBackToTop" (click)="scrollToTop()" type="button" aria-label="Back to top">
+    <span class="btt-arrow">&#8593;</span>
+</button>

@@ -1,0 +1,290 @@
+// ============================================================
+// Variant Attributes — Premium Size & Color Selector
+// Inspired by Nike · Zalando · Farfetch
+// ============================================================
+
+$va-ink:          #0F1720;
+$va-ink-soft:     #2B3240;
+$va-muted:        #6B7280;
+$va-bg:           #FFFFFF;
+$va-surface:      #F8F9FB;
+$va-line:         #E6E8EC;
+$va-line-strong:  #D1D5DB;
+$va-blue:         #1E7FC9;
+$va-blue-dark:    #135a95;
+$va-blue-soft:    #EAF3FB;
+$va-gold:         #B38A48;
+$va-gold-soft:    #F6EFDE;
+$va-rose:         #E7475A;
+$va-success:      #16A34A;
+
+:host { display: block; font-family: inherit; }
+
+// ─── Attribute title row ────────────────────────────────────
+.product-title {
+  margin-bottom: 14px;
+
+  h4 {
+    font-size: 12px !important;
+    font-weight: 800 !important;
+    letter-spacing: 2.5px !important;
+    text-transform: uppercase !important;
+    color: $va-muted !important;
+    margin: 0 !important;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+
+    strong, b { color: $va-ink !important; font-weight: 900 !important; }
+  }
+}
+
+// ─── Dropdown style ─────────────────────────────────────────
+.form-control.form-select {
+  height: 50px;
+  border: 1.5px solid $va-line-strong !important;
+  border-radius: 14px !important;
+  padding: 0 42px 0 16px !important;
+  font-size: 14px !important;
+  font-weight: 700 !important;
+  color: $va-ink !important;
+  background-color: $va-surface !important;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%230F1720' viewBox='0 0 24 24'%3E%3Cpath d='M12 13.172l4.95-4.95 1.414 1.414L12 16 5.636 9.636 7.05 8.222z'/%3E%3C/svg%3E") !important;
+  background-repeat: no-repeat !important;
+  background-position: right 14px center !important;
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  cursor: pointer;
+  transition: all 0.3s ease !important;
+  box-shadow: 0 2px 6px rgba($va-ink, 0.04) !important;
+
+  &:focus {
+    outline: none !important;
+    border-color: $va-blue !important;
+    background-color: $va-bg !important;
+    box-shadow:
+      0 0 0 4px rgba($va-blue, 0.12),
+      0 4px 14px rgba($va-blue, 0.1) !important;
+  }
+
+  option {
+    font-weight: 600;
+    padding: 8px;
+
+    &:disabled { color: $va-muted; }
+  }
+}
+
+// ─── Radio style ─────────────────────────────────────────────
+.digital-price {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+
+  .form-check {
+    padding: 0 !important;
+    margin: 0 !important;
+
+    .form-check-input {
+      display: none !important;
+    }
+
+    .form-check-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 18px;
+      border: 1.5px solid $va-line-strong;
+      border-radius: 12px;
+      background: $va-bg;
+      cursor: pointer;
+      font-size: 13.5px;
+      font-weight: 700;
+      color: $va-ink;
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+      &:hover {
+        border-color: $va-blue;
+        background: $va-blue-soft;
+        transform: translateY(-1px);
+        box-shadow: 0 6px 14px rgba($va-blue, 0.15);
+      }
+    }
+
+    .form-check-input:checked + .form-check-label {
+      background: $va-ink;
+      border-color: $va-ink;
+      color: $va-bg;
+      box-shadow: 0 6px 18px rgba($va-ink, 0.28);
+    }
+  }
+}
+
+// ─── Size / Text button pills ────────────────────────────────
+ul.select-package {
+  display: flex !important;
+  flex-wrap: wrap;
+  gap: 8px !important;
+  list-style: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+
+  li {
+    list-style: none !important;
+    position: relative;
+
+    // Sold-out state
+    &.disabled {
+      opacity: 0.35;
+      pointer-events: none;
+      cursor: not-allowed;
+
+      app-button button,
+      button {
+        text-decoration: line-through !important;
+        text-decoration-thickness: 1.5px !important;
+      }
+    }
+
+    // Active: the selected variant
+    &.active {
+      app-button button,
+      > button {
+        background: $va-ink !important;
+        color: $va-bg !important;
+        border-color: $va-ink !important;
+        box-shadow:
+          0 4px 10px rgba($va-ink, 0.2),
+          0 10px 24px rgba($va-ink, 0.15) !important;
+        transform: translateY(-1px);
+
+        // Tiny checkmark badge
+        &::after {
+          content: '\eb7b';
+          font-family: 'remixicon';
+          position: absolute;
+          top: -6px;
+          right: -6px;
+          width: 16px;
+          height: 16px;
+          border-radius: 50%;
+          background: $va-blue;
+          color: #fff;
+          font-size: 10px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border: 2px solid $va-bg;
+          box-shadow: 0 2px 6px rgba($va-blue, 0.4);
+          line-height: 1;
+        }
+      }
+    }
+
+    // App-button wrapper + regular button
+    app-button,
+    app-button button,
+    > button {
+      position: relative;
+      min-width: 40px !important;
+      height: 40px !important;
+      padding: 0 14px !important;
+      border: 1.5px solid $va-line-strong !important;
+      border-radius: 10px !important;
+      background: $va-bg !important;
+      color: $va-ink !important;
+      font-size: 12px !important;
+      font-weight: 800 !important;
+      letter-spacing: 0.5px !important;
+      text-transform: uppercase;
+      cursor: pointer;
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+      box-shadow: 0 2px 6px rgba($va-ink, 0.04) !important;
+      white-space: nowrap;
+      outline: none !important;
+
+      &:hover {
+        border-color: $va-blue !important;
+        background: $va-blue-soft !important;
+        color: $va-blue !important;
+        transform: translateY(-2px) !important;
+        box-shadow:
+          0 6px 16px rgba($va-blue, 0.18),
+          0 2px 4px rgba($va-ink, 0.04) !important;
+      }
+    }
+  }
+}
+
+// ─── Color swatches ──────────────────────────────────────────
+ul.select-package.color {
+  gap: 12px !important;
+
+  li {
+    > button,
+    app-button button {
+      width: 40px !important;
+      height: 40px !important;
+      min-width: 40px !important;
+      padding: 0 !important;
+      border-radius: 50% !important;
+      border: 2px solid rgba($va-ink, 0.1) !important;
+      box-shadow: 0 2px 8px rgba($va-ink, 0.12) !important;
+      transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+
+      &:hover {
+        transform: scale(1.12) translateY(-1px) !important;
+        box-shadow: 0 8px 18px rgba($va-ink, 0.25) !important;
+        border-color: rgba($va-ink, 0.2) !important;
+        background: inherit !important;
+        color: transparent !important;
+      }
+    }
+
+    &.active > button,
+    &.active app-button button {
+      border: 3px solid $va-bg !important;
+      box-shadow:
+        0 0 0 3px $va-blue,
+        0 8px 22px rgba($va-ink, 0.22) !important;
+      transform: scale(1.08) !important;
+      background: inherit !important;
+
+      // Remove the text checkmark for color
+      &::after { display: none !important; }
+    }
+  }
+}
+
+// ─── Image variant grid ──────────────────────────────────────
+ul.select-package.image {
+  gap: 10px !important;
+
+  li {
+    img {
+      width: 70px !important;
+      height: 80px !important;
+      object-fit: cover;
+      border-radius: 10px !important;
+      border: 2px solid $va-line !important;
+      cursor: pointer;
+      transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1) !important;
+
+      &:hover {
+        transform: translateY(-2px) !important;
+        box-shadow: 0 8px 18px rgba($va-ink, 0.18) !important;
+        border-color: $va-blue !important;
+      }
+    }
+
+    &.active img {
+      border-color: $va-blue !important;
+      box-shadow:
+        0 0 0 3px rgba($va-blue, 0.25),
+        0 8px 22px rgba($va-blue, 0.22) !important;
+    }
+  }
+}

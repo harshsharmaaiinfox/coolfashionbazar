@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/shared/components/header/minimal-header/minimal-header.component.scss"],
+  "sourcesContent": ["// Hide wishlist icon on mobile screens\r\n@media (max-width: 767px) {\r\n  .rightside-box .right-side-menu .right-side:nth-child(2) {\r\n    display: none !important;\r\n  }\r\n}"],
+  "mappings": ";AACA,OAAA,CAAA,SAAA,EAAA;AACE,GAAA,cAAA,CAAA,gBAAA,CAAA,UAAA;AACE,aAAA;;;",
+  "names": []
+}

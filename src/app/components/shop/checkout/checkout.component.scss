@@ -1,0 +1,790 @@
+// ============================================================
+// Kahua Fashion — Checkout Page  (Premium Redesign)
+// Unified design tokens matching auth + cart pages
+// ============================================================
+
+$ink:          #0F1720;
+$ink-soft:     #2B3240;
+$muted:        #6B7280;
+$bg:           #F8F9FB;
+$white:        #FFFFFF;
+$surface:      #F2F4F7;
+$line:         #E6E8EC;
+$line-strong:  #D1D5DB;
+$blue:         #1E7FC9;
+$blue-dark:    #135a95;
+$blue-soft:    #EAF3FB;
+$gold:         #B38A48;
+$gold-soft:    #F6EFDE;
+$rose:         #E7475A;
+$rose-soft:    #FDECEE;
+$success:      #16A34A;
+$success-soft: #E7F6EC;
+
+// ============================================================
+// EYEBROW
+// ============================================================
+.kfc-eyebrow {
+  font-size: 10.5px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 3.5px;
+  color: $gold;
+  margin: 0 0 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  &::before {
+    content: '';
+    display: inline-block;
+    width: 20px;
+    height: 2px;
+    background: $gold;
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+}
+
+// ============================================================
+// HERO BANNER
+// ============================================================
+.kfc-checkout-hero {
+  background: linear-gradient(135deg, $ink 0%, $ink-soft 100%);
+  padding: 52px 0 44px;
+  position: relative;
+  overflow: hidden;
+
+  &::after {
+    content: '\f11d'; // ri-shopping-bag-line
+    font-family: 'remixicon';
+    position: absolute;
+    right: 5%;
+    top: -20px;
+    font-size: 180px;
+    color: rgba($white, 0.03);
+    line-height: 1;
+    pointer-events: none;
+  }
+
+  .kfc-eyebrow {
+    color: $gold;
+    &::before { background: $gold; }
+  }
+
+  h1 {
+    font-size: 38px;
+    font-weight: 900;
+    color: $white;
+    margin: 0;
+    letter-spacing: -1px;
+    line-height: 1.1;
+    position: relative;
+    z-index: 1;
+
+    @media (max-width: 768px) { font-size: 26px; }
+  }
+}
+
+// ============================================================
+// CHECKOUT BODY
+// ============================================================
+.kfc-checkout-body {
+  background: $bg;
+  padding: 44px 0 72px;
+}
+
+.kfc-checkout-grid {
+  display: grid;
+  grid-template-columns: 1fr 400px;
+  gap: 32px;
+  align-items: flex-start;
+
+  @media (max-width: 1100px) { grid-template-columns: 1fr; }
+}
+
+// ============================================================
+// LEFT — STEPS COLUMN
+// ============================================================
+.kfc-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.kfc-step {
+  background: $white;
+  border: 1px solid $line;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow:
+    0 2px 4px rgba($ink, 0.03),
+    0 12px 28px rgba($ink, 0.07);
+  transition: box-shadow 0.3s ease;
+
+  &:hover {
+    box-shadow:
+      0 4px 8px rgba($ink, 0.05),
+      0 20px 42px rgba($blue, 0.1);
+  }
+
+  .kfc-step-head {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 20px 28px;
+    background: linear-gradient(135deg, $ink 0%, $ink-soft 100%);
+    border-bottom: none;
+    position: relative;
+    overflow: hidden;
+
+    &::after {
+      content: '';
+      position: absolute;
+      right: -10px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: rgba($white, 0.03);
+    }
+
+    .kfc-step-num {
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      color: $gold;
+      min-width: 28px;
+      width: 32px;
+      height: 32px;
+      border-radius: 10px;
+      background: rgba($white, 0.08);
+      border: 1px solid rgba($white, 0.14);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    h3 {
+      font-size: 13px;
+      font-weight: 800;
+      color: $white;
+      margin: 0;
+      flex: 1;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .kfc-btn-add {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: $white;
+      text-decoration: none;
+      border: 1.5px solid rgba($white, 0.35);
+      padding: 7px 14px;
+      border-radius: 999px;
+      transition: all 0.25s ease;
+      white-space: nowrap;
+      position: relative;
+      z-index: 1;
+
+      i { font-size: 14px; }
+
+      &:hover {
+        background: $blue;
+        border-color: $blue;
+        box-shadow: 0 4px 12px rgba($blue, 0.4);
+      }
+    }
+  }
+
+  .kfc-step-body {
+    padding: 28px;
+
+    @media (max-width: 768px) { padding: 20px; }
+  }
+}
+
+// ============================================================
+// FORM
+// ============================================================
+.kfc-form {
+  .kfc-form-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 16px;
+
+    @media (max-width: 768px) { grid-template-columns: 1fr; }
+  }
+}
+
+.kfc-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  label {
+    font-size: 11px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: $ink;
+  }
+
+  input, textarea {
+    height: 50px;
+    padding: 0 16px;
+    border: 1.5px solid $line-strong;
+    border-radius: 14px;
+    font-size: 14px;
+    font-weight: 600;
+    color: $ink;
+    background: $surface;
+    font-family: inherit;
+    transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+    width: 100%;
+    box-shadow: 0 1px 3px rgba($ink, 0.04);
+    outline: none;
+
+    &:focus {
+      border-color: $blue;
+      background: $white;
+      box-shadow:
+        0 0 0 4px rgba($blue, 0.12),
+        0 4px 12px rgba($blue, 0.08);
+      transform: translateY(-1px);
+    }
+
+    &::placeholder {
+      color: $line-strong;
+      font-size: 13.5px;
+      font-weight: 400;
+    }
+  }
+
+  textarea { height: auto; padding: 14px 16px; }
+
+  .kfc-error {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 12px;
+    font-weight: 700;
+    color: $rose;
+    padding: 5px 10px;
+    background: $rose-soft;
+    border: 1px solid rgba($rose, 0.2);
+    border-radius: 8px;
+  }
+}
+
+.kfc-account-actions {
+  button.btn {
+    height: 46px;
+    padding: 0 28px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    background: linear-gradient(135deg, $blue 0%, $blue-dark 100%);
+    color: $white;
+    border: none;
+    box-shadow: 0 4px 14px rgba($blue, 0.3);
+    transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+    cursor: pointer;
+
+    &:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 22px rgba($blue, 0.42);
+    }
+
+    &:disabled { opacity: 0.55; cursor: not-allowed; }
+  }
+
+  span {
+    font-size: 13.5px;
+    color: $muted;
+    font-weight: 500;
+
+    a {
+      color: $blue;
+      font-weight: 700;
+      text-decoration: none;
+      &:hover { text-decoration: underline; }
+    }
+  }
+}
+
+.kfc-check-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 14px;
+
+  input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    accent-color: $blue;
+    cursor: pointer;
+  }
+
+  label {
+    font-size: 13px;
+    color: $muted;
+    cursor: pointer;
+  }
+}
+
+// ============================================================
+// RIGHT — SIDEBAR COLUMN
+// ============================================================
+.kfc-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  position: sticky;
+  top: 24px;
+
+  @media (max-width: 1100px) { position: relative; top: 0; }
+}
+
+// ============================================================
+// PANELS (sidebar cards)
+// ============================================================
+.kfc-panel {
+  background: $white;
+  border: 1px solid $line;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow:
+    0 2px 4px rgba($ink, 0.03),
+    0 12px 28px rgba($ink, 0.08);
+
+  .kfc-panel-head {
+    padding: 22px 28px;
+    background: linear-gradient(135deg, $ink 0%, $ink-soft 100%);
+    position: relative;
+    overflow: hidden;
+
+    &::after {
+      content: '';
+      position: absolute;
+      right: -16px;
+      bottom: -16px;
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: rgba($white, 0.04);
+    }
+
+    .kfc-eyebrow {
+      color: $gold;
+      &::before { background: $gold; }
+    }
+
+    h3 {
+      font-size: 14px;
+      font-weight: 800;
+      color: $white;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      position: relative;
+      z-index: 1;
+    }
+  }
+
+  .kfc-panel-body {
+    padding: 24px 28px;
+
+    @media (max-width: 768px) { padding: 18px 20px; }
+  }
+}
+
+// ============================================================
+// ORDER ITEM LIST
+// ============================================================
+.kfc-item-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.kfc-item {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  padding: 14px 0;
+  border-bottom: 1px solid $line;
+  transition: background 0.2s ease;
+
+  &:first-child { padding-top: 0; }
+  &:last-child { border-bottom: none; }
+
+  .kfc-item-img {
+    width: 60px;
+    height: 60px;
+    flex-shrink: 0;
+    border-radius: 12px;
+    border: 1px solid $line;
+    overflow: hidden;
+    background: $surface;
+    box-shadow: 0 2px 8px rgba($ink, 0.08);
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+  }
+
+  .kfc-item-info {
+    flex: 1;
+    min-width: 0;
+
+    .kfc-item-name {
+      font-size: 13.5px;
+      font-weight: 700;
+      color: $ink;
+      margin: 0 0 4px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .kfc-item-variant {
+      display: inline-block;
+      font-size: 10.5px;
+      font-weight: 800;
+      color: $blue;
+      margin: 0 0 6px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      background: $blue-soft;
+      padding: 2px 8px;
+      border-radius: 999px;
+    }
+
+    .kfc-item-price-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+
+      .kfc-item-price {
+        font-size: 14px;
+        font-weight: 800;
+        color: $ink;
+      }
+
+      .kfc-item-qty {
+        font-size: 12px;
+        font-weight: 600;
+        color: $muted;
+        background: $surface;
+        padding: 2px 8px;
+        border-radius: 999px;
+        border: 1px solid $line;
+      }
+    }
+  }
+}
+
+// ============================================================
+// TOTALS
+// ============================================================
+.kfc-totals {
+  margin-bottom: 16px;
+  background: $surface;
+  border-radius: 14px;
+  padding: 4px 16px;
+  border: 1px solid $line;
+}
+
+.kfc-total-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  font-size: 13.5px;
+  color: $muted;
+  font-weight: 600;
+  border-bottom: 1px solid $line;
+
+  &:last-child { border-bottom: none; }
+
+  .kfc-active {
+    color: $success;
+    font-weight: 800;
+  }
+}
+
+.kfc-total-divider {
+  height: 1.5px;
+  background: linear-gradient(90deg, $blue 0%, $gold 100%);
+  border-radius: 2px;
+  margin: 4px 0;
+}
+
+.kfc-grand-total {
+  padding: 16px 0 6px;
+  border-bottom: none !important;
+  background: transparent;
+
+  span:first-child {
+    font-size: 11px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: $ink;
+  }
+
+  span:last-child {
+    font-size: 24px;
+    font-weight: 900;
+    color: $blue;
+    letter-spacing: -0.8px;
+  }
+}
+
+// ============================================================
+// MIN ORDER ERROR
+// ============================================================
+.kfc-min-order-error {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  color: $rose;
+  border: 1.5px solid rgba($rose, 0.25);
+  background: $rose-soft;
+  padding: 10px 14px;
+  border-radius: 10px;
+  margin-bottom: 14px;
+
+  i { font-size: 16px; }
+}
+
+// ============================================================
+// PLACE ORDER BUTTON
+// ============================================================
+::ng-deep .kfc-place-order-btn,
+::ng-deep button.kfc-place-order-btn {
+  position: relative;
+  width: 100% !important;
+  height: 58px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 10px !important;
+  padding: 0 32px !important;
+  background: linear-gradient(135deg, $blue 0%, $blue-dark 100%) !important;
+  color: $white !important;
+  border: none !important;
+  border-radius: 14px !important;
+  font-size: 12.5px !important;
+  font-weight: 800 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 2px !important;
+  cursor: pointer !important;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1) !important;
+  box-shadow:
+    0 4px 12px rgba($blue, 0.28),
+    0 14px 32px rgba($blue, 0.2) !important;
+  margin-top: 16px !important;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, $gold 0%, darken($gold, 12%) 100%);
+    transform: translateX(-101%);
+    transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  > * { position: relative; z-index: 1; }
+  > div {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 10px !important;
+    width: 100% !important;
+    position: relative;
+    z-index: 1;
+  }
+
+  i { font-size: 18px !important; transition: transform 0.4s ease; }
+
+  &:hover:not(:disabled):not(.disabled) {
+    transform: translateY(-2px) !important;
+    box-shadow:
+      0 6px 16px rgba($gold, 0.3),
+      0 18px 40px rgba($gold, 0.35) !important;
+
+    &::before { transform: translateX(0); }
+    i { transform: rotate(-15deg); }
+  }
+
+  &:disabled, &.disabled {
+    opacity: 0.45 !important;
+    cursor: not-allowed !important;
+    transform: none !important;
+    box-shadow: none !important;
+  }
+}
+
+// ============================================================
+// EMPTY / MISC
+// ============================================================
+.kfc-empty-msg {
+  font-size: 13.5px;
+  color: $muted;
+  font-weight: 500;
+  padding: 16px 0;
+  text-align: center;
+}
+
+// ============================================================
+// QR MODAL
+// ============================================================
+.kfc-qr-modal {
+  border-radius: 20px;
+  overflow: hidden;
+
+  .kfc-qr-modal-header {
+    padding: 22px 28px;
+    background: linear-gradient(135deg, $ink 0%, $ink-soft 100%);
+    border-bottom: none;
+
+    h5 {
+      font-size: 15px;
+      font-weight: 700;
+      color: $white;
+      margin: 0;
+      letter-spacing: 0.3px;
+
+      strong { color: $gold; }
+    }
+  }
+
+  .kfc-qr-modal-body {
+    padding: 28px;
+    text-align: center;
+    background: $bg;
+
+    .kfc-qr-box {
+      border: 2px solid $line;
+      border-radius: 18px;
+      display: inline-block;
+      padding: 14px;
+      margin-bottom: 18px;
+      background: $white;
+      box-shadow: 0 8px 24px rgba($ink, 0.1);
+
+      img { display: block; max-width: 200px; border-radius: 8px; }
+    }
+
+    .kfc-upi-id {
+      font-size: 15px;
+      font-weight: 800;
+      color: $ink;
+      margin: 0 0 12px;
+      letter-spacing: 0.3px;
+    }
+
+    .kfc-qr-note {
+      font-size: 13px;
+      color: $muted;
+      line-height: 1.7;
+      max-width: 340px;
+      margin: 0 auto 16px;
+      font-weight: 500;
+    }
+
+    .kfc-payment-icons img {
+      max-width: 200px;
+      border: 1px solid $line;
+      border-radius: 10px;
+    }
+  }
+
+  .kfc-qr-modal-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 28px;
+    border-top: 1px solid $line;
+    background: $white;
+
+    strong { font-size: 20px; font-weight: 900; color: $blue; letter-spacing: -0.5px; }
+  }
+}
+
+.kfc-btn-primary {
+  height: 44px;
+  padding: 0 24px;
+  background: linear-gradient(135deg, $blue 0%, $blue-dark 100%);
+  color: $white;
+  border: none;
+  border-radius: 999px;
+  font-size: 11.5px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+  box-shadow: 0 4px 12px rgba($blue, 0.28);
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 22px rgba($blue, 0.42);
+  }
+}
+
+// ============================================================
+// PAYMENT / LOADER
+// ============================================================
+.payByNeoKred {
+  app-loader {
+    width: 500px;
+    height: 500px;
+    display: inline-block;
+  }
+
+  .loader-wrapper,
+  .custom-loader-wrapper {
+    position: absolute;
+    height: 500px;
+  }
+}
+
+// ============================================================
+// RESPONSIVE
+// ============================================================
+@media (max-width: 768px) {
+  .kfc-checkout-hero { padding: 36px 0 30px; }
+
+  .kfc-step .kfc-step-body { padding: 18px; }
+  .kfc-step .kfc-step-head { padding: 16px 20px; }
+
+  .kfc-panel .kfc-panel-body { padding: 18px 20px; }
+  .kfc-panel .kfc-panel-head { padding: 18px 20px; }
+
+  .kfc-grand-total span:last-child { font-size: 20px !important; }
+}

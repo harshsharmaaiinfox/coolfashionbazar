@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/components/themes/berlin/berlin.component.scss"],
+  "sourcesContent": ["/* Homepage Title Section - H1 Styling */\r\n.homepage-title-section {\r\n  padding: 3rem 0;\r\n  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);\r\n  margin-bottom: 0;\r\n  border-bottom: 1px solid #dee2e6;\r\n}\r\n\r\n.page-title-section {\r\n  padding: 0;\r\n}\r\n\r\n.main-page-title {\r\n  font-size: 3rem;\r\n  font-weight: 700;\r\n  color: #2c3e50;\r\n  margin-bottom: 1.5rem;\r\n  line-height: 1.2;\r\n  text-shadow: 0 2px 4px rgba(0,0,0,0.1);\r\n  \r\n  @media (max-width: 768px) {\r\n    font-size: 2.2rem;\r\n  }\r\n  \r\n  @media (max-width: 576px) {\r\n    font-size: 1.8rem;\r\n  }\r\n}\r\n\r\n.page-description {\r\n  font-size: 1.2rem;\r\n  color: #6c757d;\r\n  margin: 0;\r\n  line-height: 1.6;\r\n  max-width: 700px;\r\n  margin: 0 auto;\r\n  font-weight: 400;\r\n  \r\n  @media (max-width: 768px) {\r\n    font-size: 1.1rem;\r\n  }\r\n}\r\n\r\n/* Existing theme styles can go here */\r\n"],
+  "mappings": ";AACA,CAAA;AACE,WAAA,KAAA;AACA;IAAA;MAAA,MAAA;MAAA,QAAA,EAAA;MAAA,QAAA;AACA,iBAAA;AACA,iBAAA,IAAA,MAAA;;AAGF,CAAA;AACE,WAAA;;AAGF,CAAA;AACE,aAAA;AACA,eAAA;AACA,SAAA;AACA,iBAAA;AACA,eAAA;AACA,eAAA,EAAA,IAAA,IAAA,KAAA,CAAA,EAAA,CAAA,EAAA,CAAA,EAAA;;AAEA,OAAA,CAAA,SAAA,EAAA;AARF,GAAA;AASI,eAAA;;;AAGF,OAAA,CAAA,SAAA,EAAA;AAZF,GAAA;AAaI,eAAA;;;AAIJ,CAAA;AACE,aAAA;AACA,SAAA;AACA,UAAA;AACA,eAAA;AACA,aAAA;AACA,UAAA,EAAA;AACA,eAAA;;AAEA,OAAA,CAAA,SAAA,EAAA;AATF,GAAA;AAUI,eAAA;;;",
+  "names": []
+}

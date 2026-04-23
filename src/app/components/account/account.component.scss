@@ -1,0 +1,41 @@
+// ============================================================
+// Dashboard Layout — Premium Redesign
+// ============================================================
+
+$da-ink:        #0F1720;
+$da-blue:       #1E7FC9;
+$da-surface:    #F8F9FB;
+$da-bg:         #EEF1F6;
+$da-line:       #E6E8EC;
+
+.kf-dashboard {
+  background:
+    radial-gradient(ellipse at 10% 0%, rgba($da-blue, 0.06) 0%, transparent 50%),
+    $da-bg;
+  padding: 36px 0 72px;
+  min-height: 80vh;
+  font-family: inherit;
+}
+
+.kf-dash-layout {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 28px;
+  align-items: start;
+
+  @media (max-width: 991px) {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}
+
+.kf-dash-sidebar {
+  position: sticky;
+  top: 90px;
+  @media (max-width: 991px) { position: static; }
+}
+
+.kf-dash-content {
+  min-width: 0;
+  position: relative;
+}

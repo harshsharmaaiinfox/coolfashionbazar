@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/shared/components/widgets/title/title.component.scss"],
+  "sourcesContent": ["/* Custom font size for h1 tags */\r\n.title h1 {\r\n  font-size: calc(22px + 6 * (100vw - 320px) / 1600);\r\n  font-weight: 700;\r\n  color: inherit;\r\n  margin: 0;\r\n  line-height: 1.2;\r\n}\r\n\r\n/* Maintain existing h2 styling */\r\n.title h2 {\r\n  font-weight: 700;\r\n  color: inherit;\r\n  margin: 0;\r\n  line-height: 1.2;\r\n}\r\n"],
+  "mappings": ";AACA,CAAA,MAAA;AACE,aAAA,KAAA,KAAA,EAAA,EAAA,EAAA,CAAA,MAAA,EAAA,OAAA,EAAA;AACA,eAAA;AACA,SAAA;AACA,UAAA;AACA,eAAA;;AAIF,CATA,MASA;AACE,eAAA;AACA,SAAA;AACA,UAAA;AACA,eAAA;;",
+  "names": []
+}

@@ -1,0 +1,254 @@
+// ============================================
+// Category widget — scoped overrides
+// Paris horizontal: "Category Coin" design
+// Circular logo disc + small uppercase label beneath
+// ============================================
+
+$brand-blue:      #1E7FC9;
+$brand-blue-dark: #135a95;
+$brand-blue-soft: #E7F2FB;
+$brand-ink:       #0F1720;
+$text:            #1A1A1A;
+$muted:           #6B7280;
+$bg:              #FFFFFF;
+$surface:         #F7F8FA;
+$line:            #E6E8EC;
+
+.non-clickable {
+  cursor: default;
+  pointer-events: none;
+  opacity: 0.6;
+
+  &:hover { text-decoration: none; }
+}
+
+// ---------------------------------------------------------
+// Paris horizontal category — redesigned as logo coins
+// ---------------------------------------------------------
+:host ::ng-deep .category-slider .category-box.category-dark {
+  background: transparent !important;
+  border-radius: 0 !important;
+  padding: 10px 6px !important;
+  overflow: visible !important;
+  display: flex !important;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  position: relative;
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+
+  // Nuke the old hover fill overlay and background image
+  &::after { display: none !important; }
+
+  .background-image {
+    display: none !important;
+  }
+
+  // The category icon becomes a circular "coin" disc
+  img:not(.background-image) {
+    width: 84px !important;
+    height: 84px !important;
+    max-width: 84px !important;
+    padding: 18px !important;
+    border-radius: 50% !important;
+    background: linear-gradient(135deg, $brand-blue-soft 0%, #fff 100%) !important;
+    box-shadow:
+      0 1px 2px rgba($brand-ink, 0.04),
+      0 8px 22px rgba($brand-ink, 0.1),
+      inset 0 0 0 1px rgba($brand-blue, 0.08) !important;
+    object-fit: contain !important;
+    margin: 0 !important;
+    transition: transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1),
+                background 0.35s ease,
+                box-shadow 0.4s ease,
+                filter 0.35s ease !important;
+    box-sizing: border-box !important;
+    filter: none !important;
+  }
+
+  // Small uppercase label beneath the coin
+  h5 {
+    margin: 0 !important;
+    padding: 0 4px;
+    font-size: 11.5px !important;
+    font-weight: 700 !important;
+    text-transform: uppercase;
+    letter-spacing: 1.4px;
+    color: $text !important;
+    text-align: center;
+    line-height: 1.35;
+    transition: color 0.3s ease;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    max-width: 100%;
+  }
+
+  // Hover state — coin lifts, turns brand-blue, icon flips to white
+  &:hover,
+  &.active {
+    background: transparent !important;
+    transform: translateY(-3px);
+
+    img:not(.background-image) {
+      transform: translateY(-2px) scale(1.06);
+      background: linear-gradient(135deg, $brand-blue 0%, $brand-blue-dark 100%) !important;
+      box-shadow:
+        0 2px 6px rgba($brand-blue, 0.2),
+        0 14px 30px rgba($brand-blue, 0.4) !important;
+      filter: brightness(0) invert(1) !important; // turn dark icon into white
+    }
+
+    h5 {
+      color: $brand-blue !important;
+    }
+  }
+}
+
+// ---------------------------------------------------------
+// Rome / Classic horizontal circle category
+// (shop-category-box with circle-1) — same coin treatment
+// ---------------------------------------------------------
+:host ::ng-deep .shop-category-box {
+  background: transparent !important;
+  border: none !important;
+  text-align: center;
+  padding: 8px 4px !important;
+
+  .circle-1 {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    width: 84px;
+    height: 84px;
+    padding: 16px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, $brand-blue-soft 0%, #fff 100%) !important;
+    box-shadow:
+      0 1px 2px rgba($brand-ink, 0.04),
+      0 8px 22px rgba($brand-ink, 0.1),
+      inset 0 0 0 1px rgba($brand-blue, 0.08) !important;
+    transition: transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1),
+                background 0.35s ease,
+                box-shadow 0.4s ease !important;
+    overflow: hidden;
+    box-sizing: border-box;
+    margin: 0 auto;
+
+    img {
+      width: 100% !important;
+      height: 100% !important;
+      max-width: 100% !important;
+      object-fit: contain !important;
+      transition: filter 0.35s ease;
+    }
+
+    &:hover {
+      transform: translateY(-3px) scale(1.05);
+      background: linear-gradient(135deg, $brand-blue 0%, $brand-blue-dark 100%) !important;
+      box-shadow:
+        0 2px 6px rgba($brand-blue, 0.2),
+        0 14px 30px rgba($brand-blue, 0.4) !important;
+
+      img { filter: brightness(0) invert(1); }
+    }
+  }
+
+  .category-name {
+    margin-top: 10px !important;
+
+    h6 {
+      margin: 0 !important;
+      font-size: 11.5px !important;
+      font-weight: 700 !important;
+      text-transform: uppercase;
+      letter-spacing: 1.4px;
+      color: $text !important;
+      transition: color 0.3s ease;
+    }
+  }
+
+  &:hover .category-name h6 { color: $brand-blue !important; }
+}
+
+// ---------------------------------------------------------
+// Dark mode
+// ---------------------------------------------------------
+html.dark {
+  :host ::ng-deep .category-slider .category-box.category-dark {
+    img:not(.background-image) {
+      background: linear-gradient(135deg, #1e2530 0%, #161B22 100%) !important;
+      box-shadow:
+        0 2px 6px rgba(#000, 0.35),
+        0 10px 24px rgba(#000, 0.45),
+        inset 0 0 0 1px rgba($brand-blue, 0.25) !important;
+      filter: brightness(0) invert(1) !important; // default to white in dark mode
+    }
+
+    h5 { color: #ECECEC !important; }
+
+    &:hover {
+      img:not(.background-image) {
+        background: linear-gradient(135deg, $brand-blue 0%, $brand-blue-dark 100%) !important;
+        box-shadow: 0 14px 30px rgba($brand-blue, 0.5) !important;
+      }
+
+      h5 { color: lighten($brand-blue, 20%) !important; }
+    }
+  }
+
+  :host ::ng-deep .shop-category-box {
+    .circle-1 {
+      background: linear-gradient(135deg, #1e2530 0%, #161B22 100%) !important;
+
+      img { filter: brightness(0) invert(1); }
+    }
+
+    .category-name h6 { color: #ECECEC !important; }
+
+    &:hover .category-name h6 { color: lighten($brand-blue, 20%) !important; }
+  }
+}
+
+// ---------------------------------------------------------
+// Responsive
+// ---------------------------------------------------------
+@media (max-width: 991px) {
+  :host ::ng-deep .category-slider .category-box.category-dark {
+    img:not(.background-image) {
+      width: 72px !important;
+      height: 72px !important;
+      padding: 15px !important;
+    }
+
+    h5 { font-size: 11px !important; letter-spacing: 1.2px; }
+  }
+
+  :host ::ng-deep .shop-category-box .circle-1 {
+    width: 72px;
+    height: 72px;
+    padding: 14px;
+  }
+}
+
+@media (max-width: 575px) {
+  :host ::ng-deep .category-slider .category-box.category-dark {
+    padding: 8px 4px !important;
+
+    img:not(.background-image) {
+      width: 64px !important;
+      height: 64px !important;
+      padding: 13px !important;
+    }
+
+    h5 { font-size: 10.5px !important; letter-spacing: 1px; }
+  }
+
+  :host ::ng-deep .shop-category-box {
+    .circle-1 { width: 64px; height: 64px; padding: 12px; }
+    .category-name h6 { font-size: 10.5px !important; letter-spacing: 1px; }
+  }
+}

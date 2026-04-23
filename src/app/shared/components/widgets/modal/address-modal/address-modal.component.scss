@@ -1,0 +1,488 @@
+// ============================================================
+// Address Modal — Premium Redesign
+// Add / Edit address form modal
+// ============================================================
+
+$am-ink:          #0F1720;
+$am-ink-soft:     #2B3240;
+$am-muted:        #6B7280;
+$am-bg:           #FFFFFF;
+$am-surface:      #F8F9FB;
+$am-line:         #E6E8EC;
+$am-line-strong:  #D1D5DB;
+$am-blue:         #1E7FC9;
+$am-blue-dark:    #135a95;
+$am-blue-soft:    #EAF3FB;
+$am-gold:         #B38A48;
+$am-gold-soft:    #F6EFDE;
+$am-rose:         #E7475A;
+$am-rose-soft:    #FDECEE;
+
+// ---- NgbModal dialog overrides ----
+::ng-deep .address-modal-class {
+  .modal-dialog {
+    max-width: 680px;
+    margin: 2rem auto;
+  }
+
+  .modal-content {
+    border: none !important;
+    border-radius: 24px !important;
+    box-shadow:
+      0 4px 10px rgba($am-ink, 0.08),
+      0 40px 100px rgba($am-ink, 0.3) !important;
+    overflow: hidden !important;
+    animation: amModalIn 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .modal-backdrop.show {
+    opacity: 0.6 !important;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+  }
+}
+
+@keyframes amModalIn {
+  from { transform: translateY(32px) scale(0.97); opacity: 0; }
+  to   { transform: translateY(0) scale(1);       opacity: 1; }
+}
+
+// ============================================================
+// MODAL HEADER — dark premium band
+// ============================================================
+.modern-modal-header {
+  position: relative;
+  padding: 24px 28px;
+  background: linear-gradient(135deg, $am-ink 0%, $am-ink-soft 100%);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  overflow: hidden;
+
+  &::after {
+    content: '\ef3b'; // ri-map-pin-line watermark
+    font-family: 'remixicon';
+    position: absolute;
+    right: -10px;
+    top: -8px;
+    font-size: 100px;
+    color: rgba($am-bg, 0.04);
+    line-height: 1;
+    pointer-events: none;
+  }
+}
+
+.modal-header-content {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  position: relative;
+  z-index: 1;
+}
+
+.modal-icon-wrapper {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  background: rgba(#fff, 0.1);
+  border: 1px solid rgba(#fff, 0.15);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+
+  i { font-size: 22px !important; color: $am-gold !important; }
+}
+
+.modal-title-content {
+  .modal-title {
+    font-size: 16px !important;
+    font-weight: 800 !important;
+    color: #fff !important;
+    margin: 0 0 4px !important;
+    letter-spacing: -0.2px;
+  }
+
+  .modal-subtitle {
+    font-size: 12.5px !important;
+    color: rgba(#fff, 0.6) !important;
+    margin: 0 !important;
+  }
+}
+
+.btn-close-modal {
+  position: relative;
+  z-index: 1;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: rgba(#fff, 0.1);
+  border: 1px solid rgba(#fff, 0.18);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  flex-shrink: 0;
+
+  i { font-size: 18px !important; color: #fff !important; transition: transform 0.35s ease; }
+
+  &:hover {
+    background: $am-rose;
+    border-color: $am-rose;
+    transform: rotate(90deg);
+    box-shadow: 0 6px 16px rgba($am-rose, 0.45);
+  }
+}
+
+// ============================================================
+// MODAL BODY
+// ============================================================
+.modern-modal-body {
+  padding: 28px;
+  background: $am-bg;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+
+  @media (max-width: 575px) { padding: 20px; }
+}
+
+.address-form-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+// Two-column row
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+
+  @media (max-width: 575px) { grid-template-columns: 1fr; gap: 18px; }
+}
+
+// Single field wrapper
+.form-field-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+// Label with icon
+.form-label-modern {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 10.5px !important;
+  font-weight: 800 !important;
+  letter-spacing: 2px !important;
+  text-transform: uppercase;
+  color: $am-ink !important;
+  margin: 0 !important;
+  cursor: default;
+
+  i {
+    width: 24px;
+    height: 24px;
+    border-radius: 7px;
+    background: $am-blue-soft;
+    color: $am-blue !important;
+    font-size: 13px !important;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .form-field-wrapper:focus-within & i {
+    background: $am-blue;
+    color: #fff !important;
+    transform: scale(1.08) rotate(-6deg);
+  }
+}
+
+// Premium input
+.form-input-modern {
+  width: 100%;
+  height: 48px;
+  padding: 0 16px !important;
+  border: 1.5px solid $am-line-strong !important;
+  border-radius: 12px !important;
+  font-size: 14px !important;
+  font-weight: 600;
+  color: $am-ink !important;
+  background: $am-surface !important;
+  font-family: inherit;
+  transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1) !important;
+  box-shadow: 0 1px 3px rgba($am-ink, 0.04) !important;
+  outline: none !important;
+
+  &::placeholder { color: $am-line-strong !important; font-size: 13px !important; }
+
+  &:focus {
+    border-color: $am-blue !important;
+    background: $am-bg !important;
+    box-shadow:
+      0 0 0 4px rgba($am-blue, 0.12),
+      0 4px 12px rgba($am-blue, 0.08) !important;
+    transform: translateY(-1px);
+  }
+
+  &.is-invalid {
+    border-color: $am-rose !important;
+    background: $am-rose-soft !important;
+  }
+}
+
+// Textarea
+.form-textarea-modern {
+  width: 100%;
+  padding: 12px 16px !important;
+  border: 1.5px solid $am-line-strong !important;
+  border-radius: 12px !important;
+  font-size: 14px !important;
+  font-weight: 600;
+  color: $am-ink !important;
+  background: $am-surface !important;
+  font-family: inherit;
+  resize: vertical;
+  min-height: 80px;
+  transition: all 0.3s ease !important;
+  outline: none !important;
+  line-height: 1.6;
+  box-shadow: 0 1px 3px rgba($am-ink, 0.04) !important;
+
+  &::placeholder { color: $am-line-strong !important; font-size: 13px !important; }
+
+  &:focus {
+    border-color: $am-blue !important;
+    background: $am-bg !important;
+    box-shadow:
+      0 0 0 4px rgba($am-blue, 0.12),
+      0 4px 12px rgba($am-blue, 0.08) !important;
+  }
+
+  &.is-invalid { border-color: $am-rose !important; background: $am-rose-soft !important; }
+}
+
+// Phone input
+.phone-input-wrapper {
+  display: flex;
+  align-items: center;
+  border: 1.5px solid $am-line-strong;
+  border-radius: 12px;
+  overflow: hidden;
+  background: $am-surface;
+  transition: all 0.3s ease;
+  box-shadow: 0 1px 3px rgba($am-ink, 0.04);
+
+  &:focus-within {
+    border-color: $am-blue;
+    background: $am-bg;
+    box-shadow:
+      0 0 0 4px rgba($am-blue, 0.12),
+      0 4px 12px rgba($am-blue, 0.08);
+  }
+
+  .phone-prefix {
+    padding: 0 14px;
+    height: 46px;
+    display: inline-flex;
+    align-items: center;
+    font-size: 14px;
+    font-weight: 800;
+    color: $am-blue;
+    background: $am-blue-soft;
+    border-right: 1.5px solid $am-line;
+    flex-shrink: 0;
+    letter-spacing: 0.3px;
+  }
+
+  .phone-input {
+    flex: 1;
+    height: 46px;
+    border: none !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    padding-left: 14px !important;
+    transform: none !important;
+
+    &:focus { box-shadow: none !important; }
+  }
+}
+
+// Select2 overrides
+.custom-select-modern {
+  ::ng-deep .select2-container {
+    width: 100% !important;
+
+    .select2-selection {
+      border: 1.5px solid $am-line-strong !important;
+      border-radius: 12px !important;
+      padding: 0 36px 0 14px !important;
+      font-size: 14px !important;
+      font-weight: 600 !important;
+      color: $am-ink !important;
+      min-height: 48px !important;
+      display: flex !important;
+      align-items: center !important;
+      background: $am-surface !important;
+      transition: all 0.3s ease !important;
+      box-shadow: 0 1px 3px rgba($am-ink, 0.04) !important;
+
+      &:hover { border-color: $am-blue !important; background: $am-bg !important; }
+    }
+
+    &.select2-container--open .select2-selection {
+      border-color: $am-blue !important;
+      background: $am-bg !important;
+      box-shadow:
+        0 0 0 4px rgba($am-blue, 0.12),
+        0 4px 12px rgba($am-blue, 0.08) !important;
+    }
+  }
+
+  ::ng-deep .select2-dropdown {
+    border: 1.5px solid $am-line !important;
+    border-radius: 12px !important;
+    box-shadow: 0 14px 40px rgba($am-ink, 0.14) !important;
+    margin-top: 4px !important;
+    overflow: hidden;
+    border-top: 3px solid $am-blue !important;
+
+    .select2-results__option {
+      padding: 11px 16px !important;
+      font-size: 13.5px !important;
+      font-weight: 600;
+      color: $am-ink-soft !important;
+      transition: all 0.2s ease !important;
+
+      &:hover {
+        background: $am-blue-soft !important;
+        color: $am-blue !important;
+      }
+
+      &[aria-selected="true"] {
+        background: $am-ink !important;
+        color: #fff !important;
+      }
+    }
+  }
+}
+
+// Error messages
+.error-message {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  color: $am-rose;
+  padding: 6px 12px;
+  background: $am-rose-soft;
+  border: 1px solid rgba($am-rose, 0.25);
+  border-radius: 8px;
+  animation: amFadeIn 0.3s ease;
+
+  i { font-size: 13px !important; color: $am-rose !important; flex-shrink: 0; }
+}
+
+@keyframes amFadeIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+// ============================================================
+// MODAL FOOTER — action buttons
+// ============================================================
+.modern-modal-footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  padding-top: 24px;
+  margin-top: 8px;
+  border-top: 1px solid $am-line;
+
+  @media (max-width: 575px) { flex-direction: column; padding-top: 20px; }
+}
+
+.btn-cancel {
+  padding: 12px 26px;
+  border-radius: 999px;
+  background: $am-bg;
+  color: $am-ink;
+  border: 1.5px solid $am-line-strong;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+
+  &:hover {
+    background: $am-surface;
+    border-color: $am-ink;
+    transform: translateY(-1px);
+  }
+
+  @media (max-width: 575px) { width: 100%; text-align: center; }
+}
+
+// Submit button via app-button
+::ng-deep .btn-submit,
+::ng-deep button.btn-submit {
+  position: relative;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 10px !important;
+  height: 50px !important;
+  padding: 0 32px !important;
+  background: linear-gradient(135deg, $am-blue 0%, $am-blue-dark 100%) !important;
+  color: #fff !important;
+  border: none !important;
+  border-radius: 999px !important;
+  font-size: 12px !important;
+  font-weight: 800 !important;
+  letter-spacing: 2px !important;
+  text-transform: uppercase;
+  cursor: pointer;
+  overflow: hidden;
+  transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1) !important;
+  box-shadow:
+    0 4px 12px rgba($am-blue, 0.28),
+    0 14px 32px rgba($am-blue, 0.2) !important;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, $am-ink 0%, $am-ink-soft 100%);
+    transform: translateX(-101%);
+    transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+    z-index: 0;
+  }
+
+  > * { position: relative; z-index: 1; }
+
+  i { font-size: 17px !important; transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); }
+
+  &:hover {
+    transform: translateY(-2px) !important;
+    box-shadow:
+      0 6px 16px rgba($am-ink, 0.25),
+      0 18px 40px rgba($am-ink, 0.2) !important;
+
+    &::before { transform: translateX(0); }
+    i { transform: scale(1.1) rotate(-6deg); }
+  }
+
+  @media (max-width: 575px) { width: 100% !important; }
+}

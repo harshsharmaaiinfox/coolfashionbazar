@@ -1,0 +1,139 @@
+// ============================================================
+// Collection Sort Bar — Premium redesign
+// ============================================================
+
+$sb-ink:         #0F1720;
+$sb-ink-soft:    #2B3240;
+$sb-muted:       #6B7280;
+$sb-bg:          #FFFFFF;
+$sb-surface:     #F8F9FB;
+$sb-line:        #E6E8EC;
+$sb-blue:        #1E7FC9;
+$sb-blue-dark:   #135a95;
+$sb-blue-soft:   #EAF3FB;
+$sb-gold:        #B38A48;
+
+:host { display: block; font-family: inherit; }
+
+.sort-top-bar-wrapper {
+  padding: 14px 0 20px;
+  margin-bottom: 4px;
+}
+
+.sort-top-bar-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px 22px;
+  background: $sb-bg;
+  border: 1px solid $sb-line;
+  border-radius: 14px;
+  box-shadow:
+    0 2px 4px rgba($sb-ink, 0.03),
+    0 10px 22px rgba($sb-ink, 0.06);
+  flex-wrap: wrap;
+}
+
+.sort-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 11.5px;
+  font-weight: 800;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: $sb-muted;
+
+  &::before {
+    content: '\ef5e'; // ri-sort-asc
+    font-family: 'remixicon';
+    font-size: 16px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: $sb-blue-soft;
+    color: $sb-blue;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 400;
+    letter-spacing: 0;
+  }
+}
+
+// Select2 inside sort bar
+select2 {
+  width: 220px;
+
+  ::ng-deep .select2-container {
+    width: 100% !important;
+
+    .select2-selection {
+      border: 1.5px solid $sb-line !important;
+      border-radius: 10px !important;
+      padding: 9px 36px 9px 14px !important;
+      font-size: 13.5px !important;
+      font-weight: 700 !important;
+      color: $sb-ink !important;
+      min-height: 44px !important;
+      display: flex !important;
+      align-items: center !important;
+      background: $sb-surface !important;
+      transition: all 0.25s ease !important;
+      box-shadow: none !important;
+
+      &:hover {
+        border-color: $sb-blue !important;
+        background: $sb-bg !important;
+      }
+
+      .select2-selection__arrow {
+        right: 12px !important;
+        height: 100% !important;
+
+        b {
+          border-color: $sb-ink transparent transparent transparent !important;
+          border-width: 5px 4px 0 4px !important;
+          margin-top: -2px !important;
+        }
+      }
+    }
+
+    &.select2-container--open .select2-selection {
+      border-color: $sb-blue !important;
+      background: $sb-bg !important;
+      box-shadow: 0 0 0 3px rgba($sb-blue, 0.12) !important;
+    }
+  }
+
+  ::ng-deep .select2-dropdown {
+    border: 1.5px solid $sb-line !important;
+    border-radius: 12px !important;
+    box-shadow: 0 12px 36px rgba($sb-ink, 0.14) !important;
+    margin-top: 4px !important;
+    overflow: hidden;
+    border-top: 3px solid $sb-blue !important;
+
+    .select2-results__option {
+      padding: 11px 16px !important;
+      font-size: 13.5px !important;
+      font-weight: 600;
+      color: $sb-ink-soft !important;
+      transition: all 0.2s ease !important;
+      border-radius: 0;
+
+      &:hover {
+        background: $sb-blue-soft !important;
+        color: $sb-blue !important;
+        padding-left: 22px !important;
+      }
+
+      &[aria-selected="true"] {
+        background: $sb-ink !important;
+        color: #fff !important;
+        font-weight: 700 !important;
+      }
+    }
+  }
+}

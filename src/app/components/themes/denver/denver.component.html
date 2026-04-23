@@ -1,0 +1,303 @@
+<!-- Home Section Start -->
+
+<!-- Hero Slider Start -->
+<section class="hero-slider-section full-width-hero">
+  <div class="hero-slider" #heroSlider>
+    <div class="slider-container">
+      <div class="slider-track" #sliderTrack>
+        <div class="slide active" *ngFor="let slide of heroSlides; let i = index" [class.active]="currentSlide === i">
+          <div class="hero-slide-wrapper">
+            <a [href]="slide.link">
+              <img [src]="slide.image" [alt]="slide.alt" class="img-fluid w-100 hero-image" loading="lazy">
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Dots Indicator -->
+      <div class="slider-dots">
+        <button *ngFor="let slide of heroSlides; let i = index" [class.active]="currentSlide === i"
+          (click)="goToSlide(i)" [attr.aria-label]="'Go to slide ' + (i + 1)">
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Featured Products Section Start (Top) -->
+<section class="product-section featured-products-section" *ngIf="featuredProductIds?.length">
+  <div class="container-fluid-lg">
+    <div class="product-section-content">
+      <div class="product-list-wrapper">
+        <app-theme-product [productIds]="featuredProductIds" [style]="'horizontal'" [slider]="true"
+          [sliderOption]="productSlider4Item" [productStyle]="'product-solid'" [boxClass]="'product-box-bg'">
+        </app-theme-product>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Featured Products Section End (Top) -->
+
+<!-- Collections Showcase Section Start -->
+<section class="kfd-collections">
+  <div class="kfd-collections-grid">
+
+    <a href="/collections" class="kfd-col-card">
+      <div class="kfd-col-img">
+        <img src="assets/images/modal-1.png" alt="Lehengas" loading="lazy">
+      </div>
+      <div class="kfd-col-info">
+        <span class="kfd-col-num">01</span>
+        <div class="kfd-col-text">
+          <p class="kfd-col-eyebrow">New Collection</p>
+          <h3 class="kfd-col-title">Weightless<br>Lehengas</h3>
+        </div>
+        <span class="kfd-col-arrow"><i class="ri-arrow-right-line"></i></span>
+      </div>
+    </a>
+
+    <a href="/collections" class="kfd-col-card kfd-col-card--tall">
+      <div class="kfd-col-img">
+        <img src="assets/images/modal-2.png" alt="Sarees" loading="lazy">
+      </div>
+      <div class="kfd-col-info">
+        <span class="kfd-col-num">02</span>
+        <div class="kfd-col-text">
+          <p class="kfd-col-eyebrow">Bestseller</p>
+          <h3 class="kfd-col-title">Stellar<br>Sarees</h3>
+        </div>
+        <span class="kfd-col-arrow"><i class="ri-arrow-right-line"></i></span>
+      </div>
+    </a>
+
+    <a href="/collections" class="kfd-col-card">
+      <div class="kfd-col-img">
+        <img src="assets/images/modal-3.png" alt="Suits" loading="lazy">
+      </div>
+      <div class="kfd-col-info">
+        <span class="kfd-col-num">03</span>
+        <div class="kfd-col-text">
+          <p class="kfd-col-eyebrow">Timeless Style</p>
+          <h3 class="kfd-col-title">Classic<br>Suits</h3>
+        </div>
+        <span class="kfd-col-arrow"><i class="ri-arrow-right-line"></i></span>
+      </div>
+    </a>
+
+  </div>
+</section>
+<!-- Collections Showcase Section End -->
+
+<!-- Featured Products Section Start -->
+<section class="product-section featured-products-section mb-3" *ngIf="featuredProductIds2?.length">
+  <div class="container-fluid-lg">
+    <div class="product-section-content">
+      <div class="product-list-wrapper">
+        <app-theme-product [productIds]="featuredProductIds2" [style]="'horizontal'" [slider]="true"
+          [sliderOption]="productSlider4Item" [productStyle]="'product-solid'" [boxClass]="'product-box-bg'">
+        </app-theme-product>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Featured Products Section End -->
+
+<!-- Festive Spotlight Banner -->
+<section class="kfb-hero">
+
+  <!-- Scrolling keyword marquee -->
+  <div class="kfb-hero-marquee">
+    <div class="kfb-hero-track">
+      <span class="kfb-hero-tick">Handwoven</span>
+      <span class="kfb-hero-star">&#10022;</span>
+      <span class="kfb-hero-tick">Free Shipping</span>
+      <span class="kfb-hero-star">&#10022;</span>
+      <span class="kfb-hero-tick">Limited Drop</span>
+      <span class="kfb-hero-star">&#10022;</span>
+      <span class="kfb-hero-tick">Made in India</span>
+      <span class="kfb-hero-star">&#10022;</span>
+      <span class="kfb-hero-tick">Festive Vol 06</span>
+      <span class="kfb-hero-star">&#10022;</span>
+      <span class="kfb-hero-tick">Handwoven</span>
+      <span class="kfb-hero-star">&#10022;</span>
+      <span class="kfb-hero-tick">Free Shipping</span>
+      <span class="kfb-hero-star">&#10022;</span>
+      <span class="kfb-hero-tick">Limited Drop</span>
+      <span class="kfb-hero-star">&#10022;</span>
+      <span class="kfb-hero-tick">Made in India</span>
+      <span class="kfb-hero-star">&#10022;</span>
+      <span class="kfb-hero-tick">Festive Vol 06</span>
+      <span class="kfb-hero-star">&#10022;</span>
+    </div>
+  </div>
+
+  <!-- Big watermark brand mark -->
+  <span class="kfb-hero-mark">KAHUA</span>
+
+  <div class="kfb-hero-inner">
+
+    <!-- LEFT — Content column -->
+    <div class="kfb-hero-copy">
+      <span class="kfb-hero-eyebrow">
+        <span class="kfb-eye-dot"></span>
+        Festive · Vol 06 · 2026
+      </span>
+
+      <h1 class="kfb-hero-title">
+        <span class="kfb-title-line">Weekend</span>
+        <span class="kfb-title-line kfb-title-accent">Muse<span class="kfb-title-swirl">&#10022;</span></span>
+      </h1>
+
+      <p class="kfb-hero-sub">
+        Thirty hand-finished pieces from our atelier in Jaipur &mdash;
+        lightweight silks, gilded borders, and shapes that move the way you do.
+      </p>
+
+      <!-- Social proof rating ribbon -->
+      <div class="kfb-hero-rating">
+        <div class="kfb-rating-stars">
+          <i class="ri-star-fill"></i>
+          <i class="ri-star-fill"></i>
+          <i class="ri-star-fill"></i>
+          <i class="ri-star-fill"></i>
+          <i class="ri-star-fill"></i>
+        </div>
+        <span class="kfb-rating-score">4.9</span>
+        <span class="kfb-rating-text">Based on 12,400+ reviews</span>
+      </div>
+
+      <!-- Dual CTAs -->
+      <div class="kfb-hero-ctas">
+        <a href="/collections" class="kfb-cta kfb-cta-solid">
+          <span>Shop the Edit</span>
+          <span class="kfb-cta-arrow"><i class="ri-arrow-right-up-line"></i></span>
+        </a>
+        <a href="/collections" class="kfb-cta kfb-cta-ghost">
+          <span class="kfb-cta-play"><i class="ri-play-fill"></i></span>
+          <span>Watch the reel</span>
+        </a>
+      </div>
+
+      <!-- Stat strip -->
+      <div class="kfb-hero-stats">
+        <div class="kfb-stat">
+          <strong>30</strong>
+          <span>Curated pieces</span>
+        </div>
+        <div class="kfb-stat">
+          <strong>48h</strong>
+          <span>Express delivery</span>
+        </div>
+        <div class="kfb-stat">
+          <strong>100%</strong>
+          <span>Handcrafted</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT — Image showcase with floating elements -->
+    <div class="kfb-hero-showcase">
+      <!-- Bestseller corner ribbon -->
+      <span class="kfb-showcase-ribbon">
+        <i class="ri-fire-fill"></i>
+        Bestseller
+      </span>
+
+      <!-- Image frame with offset gold ring -->
+      <div class="kfb-showcase-frame">
+        <img src="assets/images/modal-2.png" alt="Weekend Muse look" loading="lazy">
+
+        <!-- "Sold" stamp -->
+        <span class="kfb-showcase-stamp">
+          <strong>18 / 30</strong>
+          <span>Already picked</span>
+        </span>
+      </div>
+
+      <!-- Dangling hang-tag price -->
+      <div class="kfb-hangtag">
+        <span class="kfb-hangtag-string"></span>
+        <span class="kfb-hangtag-body">
+          <span class="kfb-hangtag-eyebrow">Starting at</span>
+          <span class="kfb-hangtag-price">&#8377; 3,490</span>  
+        </span>
+      </div>
+
+      <!-- Floating sparkle decorations -->
+      <span class="kfb-sparkle kfb-sparkle--1">&#10022;</span>
+      <span class="kfb-sparkle kfb-sparkle--2">&#10022;</span>
+      <span class="kfb-sparkle kfb-sparkle--3">&#10022;</span>
+    </div>
+
+  </div>
+</section>
+<!-- End Festive Spotlight Banner -->
+
+<!-- <section class="home-section-2 home-section-bg pt-md-0 pt-3 overflow-hidden" *ngIf="data?.content?.home_banner">
+  <app-theme-home-banner [theme]="'denver'" [data]="data?.content?.home_banner"></app-theme-home-banner>
+</section> -->
+<!-- Home Section End -->
+
+
+<!-- Kahuafashionclub Banner End -->
+<!-- Category Section Start -->
+<!-- <section *ngIf="data?.content?.categories_icon_list?.status">
+    <div class=" mt-4 container-fluid-lg">
+        <app-theme-categories [style]="'horizontal'" [theme]="'paris'" [sliderOption]="categorySlider"
+            [categoryIds]="data?.content?.categories_icon_list?.category_ids || []"
+            [image]="data?.content?.categories_icon_list?.image_url">
+        </app-theme-categories>
+    </div>
+</section> -->
+<!-- Category Section End -->
+
+<!-- Deal Section Start -->
+<section class="product-section product-section-3">
+  <div class=" mt-4 container-fluid-lg">
+    <div class="product-section-content">
+      <app-title [title]="data?.content?.products_list_1?.title" [style]="'simple'" [headingLevel]="'h1'"
+        class="h1-text">
+      </app-title>
+
+      <div class="product-list-wrapper">
+        <app-theme-product [productIds]="dealProductIds" [style]="'horizontal'" [slider]="true"
+          [sliderOption]="productSlider6ItemMargin" [productStyle]="'product-solid'" [boxClass]="'product-box-bg'">
+        </app-theme-product>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Deal Section End -->
+
+
+
+
+
+
+<!-- Top Selling Section Start -->
+<section class=" mt-4 product-section product-section-3">
+  <div class="container-fluid-lg">
+    <div>
+      <app-title [title]="data?.content?.products_list_2?.title " [style]="'simple'" class="mb-5">
+      </app-title>
+      <app-theme-product [productIds]="topSellingIds" [style]="'horizontal'" [slider]="true"
+        [sliderOption]="productSlider6ItemMargin" [productStyle]="'product-solid'" [boxClass]="'product-box-bg'">
+      </app-theme-product>
+    </div>
+  </div>
+</section>
+<!-- Top Selling Section End -->
+
+<!-- Top Selling Section Start -->
+<!-- <section class="product-section product-section-3 mt-5">
+    <div class="container-fluid-lg">
+        <div>
+
+            <app-theme-product [productIds]="topSellingIds2" [style]="'horizontal'"
+                [slider]="true" [sliderOption]="productSlider6ItemMargin" [productStyle]="'product-solid'"
+                [boxClass]="'product-box-bg'">
+            </app-theme-product>
+        </div>
+    </div>
+</section> -->
+<!-- Top Selling Section End -->

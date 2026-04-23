@@ -1,0 +1,153 @@
+// ============================================================
+// Category filter — Premium List Style
+// ============================================================
+
+$cc-ink:        #0F1720;
+$cc-ink-soft:   #2B3240;
+$cc-muted:      #6B7280;
+$cc-bg:         #FFFFFF;
+$cc-surface:    #F8F9FB;
+$cc-line:       #E6E8EC;
+$cc-blue:       #1E7FC9;
+$cc-blue-dark:  #135a95;
+$cc-blue-soft:  #EAF3FB;
+
+:host { display: block; }
+
+.category-filter-wrapper {
+  padding: 10px 18px 18px; // Balanced padding
+
+  // Search box
+  .theme-form {
+    margin-bottom: 20px; // More breathing room
+
+    .search-box .form-control {
+      height: 44px; // Taller
+      padding: 0 14px 0 38px !important;
+      border: 1.5px solid $cc-line !important;
+      border-radius: 12px !important;
+      font-size: 13.5px !important;
+      background: $cc-surface !important;
+      color: $cc-ink !important;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%236B7280' viewBox='0 0 24 24'%3E%3Cpath d='M18.031 16.617l4.283 4.282-1.415 1.415-4.282-4.283A8.96 8.96 0 0 1 11 20c-4.968 0-9-4.032-9-9s4.032-9 9-9 9 4.032 9 9a8.96 8.96 0 0 1-1.969 5.617zm-2.006-.742A6.977 6.977 0 0 0 18 11c0-3.868-3.133-7-7-7-3.868 0-7 3.132-7 7 0 3.867 3.132 7 7 7a6.977 6.977 0 0 0 4.875-1.975l.15-.15z'/%3E%3C/svg%3E") !important;
+      background-repeat: no-repeat !important;
+      background-position: 12px center !important;
+      transition: all 0.25s ease !important;
+      box-shadow: none !important;
+
+      &:focus {
+        outline: none !important;
+        border-color: $cc-blue !important;
+        background-color: #fff !important;
+        box-shadow: 0 4px 12px rgba($cc-blue, 0.08) !important;
+      }
+    }
+  }
+
+  .category-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px; // Increased gap for clarity
+    padding: 0 !important;
+    margin: 0 !important;
+    list-style: none !important;
+    max-height: 320px;
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    &::-webkit-scrollbar { width: 5px; }
+    &::-webkit-scrollbar-track { background: transparent; }
+    &::-webkit-scrollbar-thumb { background: #e0e0e0; border-radius: 10px; }
+    &::-webkit-scrollbar-thumb:hover { background: $cc-blue; }
+
+    li {
+      list-style: none !important;
+      margin: 0 !important;
+      display: flex !important;
+      flex-direction: column;
+
+      &::before, &::marker { display: none !important; content: none !important; }
+    }
+  }
+
+  // Category item
+  .category-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 11px 16px;
+    cursor: pointer;
+    border-radius: 12px;
+    border: 1.5px solid transparent;
+    transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+    background: transparent;
+
+    .category-name {
+      font-size: 14px;
+      font-weight: 600;
+      color: $cc-muted;
+      transition: all 0.25s ease;
+      letter-spacing: 0.1px;
+    }
+
+    &:hover {
+      background: $cc-surface;
+      border-color: $cc-line;
+      transform: translateX(4px);
+
+      .category-name { color: $cc-blue; }
+    }
+
+    &.selected {
+      background: linear-gradient(135deg, $cc-blue 0%, $cc-blue-dark 100%);
+      border-color: transparent;
+      box-shadow: 0 6px 16px rgba($cc-blue, 0.25);
+      padding: 11px 18px;
+
+      &::before { display: none; } // Remove left bar
+
+      .category-name {
+        color: #fff;
+        font-weight: 800;
+      }
+
+      &::after {
+        content: '\eb7b'; // ri-check-line
+        font-family: 'remixicon';
+        font-size: 16px;
+        color: #fff;
+        margin-left: auto;
+        flex-shrink: 0;
+      }
+    }
+
+    &.non-clickable {
+      cursor: not-allowed !important;
+      pointer-events: none;
+      opacity: 0.4;
+    }
+  }
+
+  // Sub-categories
+  .sub-category-list {
+    padding: 4px 0 0 18px !important; // More indent
+    margin: 4px 0 0 !important;
+    list-style: none !important;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+
+    li::before, li::marker { display: none !important; content: none !important; }
+
+    .category-item {
+      padding: 9px 14px;
+      .category-name { font-size: 13px; }
+    }
+  }
+
+  .search-not-found-box {
+    padding: 30px 20px;
+    text-align: center;
+    h5 { color: $cc-muted; font-size: 14px; font-weight: 500; margin: 0; opacity: 0.7; }
+  }
+}

@@ -1,0 +1,109 @@
+<header class="cfb-header" [class.is-sticky]="stick && sticky" [ngClass]="!stick && sticky ? class : ''">
+
+  <!-- Tier 1 — Utility Strip -->
+  <div class="cfb-utility">
+    <div class="container-fluid-lg">
+      <div class="cfb-utility__row">
+        <div class="cfb-utility__left">
+          <span class="cfb-utility__item"><i class="ri-customer-service-2-line"></i> +91 85455 65854</span>
+        </div>
+        <div class="cfb-utility__right d-none d-md-flex">
+          <a class="cfb-utility__link" href="javascript:void(0)"><i class="ri-map-pin-line"></i> Store Locator</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tier 2 — Main Row (Logo + Search + Icons) -->
+  <div class="cfb-main">
+    <div class="container-fluid-lg">
+      <div class="cfb-main__row">
+
+        <!-- LEFT: logo + mobile menu trigger -->
+        <div class="cfb-main__brand">
+          <button class="cfb-menu-trigger d-xl-none" (click)="toggle(true)" aria-label="Open menu">
+            <span></span><span></span><span></span>
+          </button>
+          <app-logo class="cfb-logo" [textClass]="'cfb-logo__text'" [data]="data" [logo]="logo"></app-logo>
+        </div>
+
+        <!-- CENTER: prominent search bar -->
+        <div class="cfb-main__search d-none d-md-flex">
+          <div class="cfb-search">
+            <i class="ri-search-line cfb-search__icon"></i>
+            <input type="text" class="cfb-search__input" placeholder="Search for clothing, accessories and more..." />
+            <button class="cfb-search__btn" type="button">
+              <span class="d-none d-lg-inline">Search</span>
+              <i class="ri-arrow-right-line d-lg-none"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- RIGHT: action icons -->
+        <div class="cfb-main__actions">
+          <button class="cfb-search-icon d-md-none" aria-label="Search">
+            <i class="ri-search-line"></i>
+          </button>
+          <div class="cfb-actions">
+            <div class="cfb-action d-none d-sm-flex">
+              <app-header-wishlist></app-header-wishlist>
+              <span class="cfb-action__label d-none d-lg-inline">Wishlist</span>
+            </div>
+            <div class="cfb-action">
+              <app-header-cart></app-header-cart>
+              <span class="cfb-action__label d-none d-lg-inline">Bag</span>
+            </div>
+            <div class="cfb-action onhover-dropdown">
+              <app-my-account></app-my-account>
+              <span class="cfb-action__label d-none d-lg-inline">Account</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Tier 3 — Primary Navigation -->
+  <div class="cfb-nav-row d-none d-xl-block">
+    <div class="container-fluid-lg">
+      <nav class="cfb-nav">
+        <app-menu></app-menu>
+      </nav>
+    </div>
+  </div>
+
+  <!-- Mobile Drawer -->
+  <div class="d-xl-none">
+    <aside class="cfb-drawer offcanvas offcanvas-collapse" [class.show]="active">
+      <div class="cfb-drawer__header">
+        <div class="cfb-drawer__brand">
+          <i class="ri-shirt-line"></i>
+          <span>Cool Fashion Bazar</span>
+        </div>
+        <button class="cfb-drawer__close" (click)="toggle(false)" aria-label="Close menu">
+          <i class="ri-close-line"></i>
+        </button>
+      </div>
+      <div class="cfb-drawer__search">
+        <i class="ri-search-line"></i>
+        <input type="text" placeholder="Search products..." />
+      </div>
+      <div class="cfb-drawer__body">
+        <app-menu></app-menu>
+      </div>
+      <div class="cfb-drawer__footer">
+        <div class="cfb-drawer__contact">
+          <i class="ri-mail-line"></i>
+          <span>hello&#64;coolfashionbazar.com</span>
+        </div>
+        <div class="cfb-drawer__contact">
+          <i class="ri-phone-line"></i>
+          <span>+91 85455 65854</span>
+        </div>
+      </div>
+    </aside>
+    <div class="offcanvas-backdrop fade" *ngIf="active" [class.show]="active" (click)="toggle(false)"></div>
+  </div>
+
+</header>

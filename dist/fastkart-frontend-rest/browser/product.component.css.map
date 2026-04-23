@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/components/themes/widgets/product/product.component.scss"],
+  "sourcesContent": [".test{\r\n    width: 100%;\r\n    height: 100px;\r\n    background-color: aqua;\r\n    border-radius: 10px;\r\n}"],
+  "mappings": ";AAAA,CAAA;AACI,SAAA;AACA,UAAA;AACA,oBAAA;AACA,iBAAA;;",
+  "names": []
+}

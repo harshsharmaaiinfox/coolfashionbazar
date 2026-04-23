@@ -1,0 +1,487 @@
+// ============================================================
+// Contact Us — Premium Redesign
+// Hero · 3 contact cards · form + company info
+// ============================================================
+
+$c-ink:          #0F1720;
+$c-ink-soft:     #2B3240;
+$c-muted:        #6B7280;
+$c-bg:           #FFFFFF;
+$c-surface:      #F8F9FB;
+$c-line:         #E6E8EC;
+$c-line-strong:  #D1D5DB;
+$c-blue:         #1E7FC9;
+$c-blue-dark:    #135a95;
+$c-blue-soft:    #EAF3FB;
+$c-gold:         #B38A48;
+$c-gold-soft:    #F6EFDE;
+$c-rose:         #E7475A;
+$c-rose-soft:    #FDECEE;
+$c-success:      #16A34A;
+
+:host { display: block; font-family: inherit; }
+
+// ============================================================
+// HERO — cinematic dark gradient with glows
+// ============================================================
+.kfc-hero {
+  position: relative;
+  padding: 80px 0 72px;
+  background: linear-gradient(135deg, $c-ink 0%, $c-ink-soft 100%);
+  overflow: hidden;
+
+  // Blue ambient glow top-right
+  &::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: 5%;
+    width: 360px; height: 360px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba($c-blue, 0.26) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  // Gold ambient glow bottom-left
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -40px; left: -20px;
+    width: 260px; height: 260px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba($c-gold, 0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  @media (max-width: 768px) { padding: 56px 0 52px; }
+}
+
+.kfc-hero-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 640px;
+}
+
+// Eyebrow — shared across page
+.kfc-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 10.5px;
+  font-weight: 800;
+  letter-spacing: 3.5px;
+  text-transform: uppercase;
+  color: $c-gold;
+  margin: 0 0 18px;
+
+  &::before {
+    content: '';
+    display: inline-block;
+    width: 22px; height: 2px;
+    background: $c-gold;
+    border-radius: 2px;
+  }
+}
+
+.kfc-hero .kfc-eyebrow { color: $c-gold; }
+
+.kfc-hero h1 {
+  font-size: 56px !important;
+  font-weight: 900 !important;
+  color: #fff !important;
+  line-height: 1.0 !important;
+  margin: 0 0 20px !important;
+  letter-spacing: -2px;
+
+  @media (max-width: 768px) { font-size: 38px !important; letter-spacing: -1.2px; }
+  @media (max-width: 480px) { font-size: 30px !important; }
+}
+
+.kfc-hero-sub {
+  font-size: 15.5px;
+  color: rgba(#fff, 0.6);
+  line-height: 1.72;
+  margin: 0;
+  max-width: 520px;
+}
+
+// ============================================================
+// CONTACT CARDS — 3-column floating pills
+// ============================================================
+.kfc-cards {
+  padding: 0;
+  background: $c-surface;
+  position: relative;
+  z-index: 2;
+  margin-top: -40px; // overlap the hero bottom
+}
+
+.kfc-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  padding: 0 0 60px;
+
+  @media (max-width: 768px) { grid-template-columns: 1fr; gap: 14px; padding-bottom: 48px; }
+}
+
+.kfc-card {
+  background: $c-bg;
+  border: 1px solid $c-line;
+  border-radius: 20px;
+  padding: 28px 26px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  box-shadow:
+    0 2px 4px rgba($c-ink, 0.03),
+    0 14px 36px rgba($c-ink, 0.09);
+  transition: all 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  position: relative;
+  overflow: hidden;
+
+  // Top accent line animates in on hover
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 24px; right: 24px;
+    height: 3px;
+    background: linear-gradient(90deg, $c-blue, $c-gold);
+    border-radius: 0 0 3px 3px;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  &:hover {
+    transform: translateY(-6px);
+    border-color: rgba($c-blue, 0.25);
+    box-shadow:
+      0 4px 10px rgba($c-ink, 0.05),
+      0 24px 56px rgba($c-blue, 0.18);
+
+    &::before { transform: scaleX(1); }
+
+    i {
+      background: $c-blue !important;
+      border-color: $c-blue-dark !important;
+      color: #fff !important;
+      transform: scale(1.1) rotate(-8deg);
+      box-shadow: 0 8px 20px rgba($c-blue, 0.4);
+    }
+
+    h4 { color: $c-blue !important; }
+  }
+
+  i {
+    font-size: 22px !important;
+    width: 52px;
+    height: 52px;
+    border-radius: 16px;
+    background: $c-blue-soft;
+    border: 1px solid rgba($c-blue, 0.2);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: $c-blue !important;
+    transition: all 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+    flex-shrink: 0;
+  }
+
+  h4 {
+    font-size: 15px !important;
+    font-weight: 800 !important;
+    color: $c-ink !important;
+    margin: 0 !important;
+    letter-spacing: -0.2px;
+    transition: color 0.3s ease;
+  }
+
+  a, span {
+    font-size: 14px;
+    font-weight: 600;
+    color: $c-muted;
+    text-decoration: none;
+    line-height: 1.5;
+    white-space: pre-line;
+
+    &:hover { color: $c-blue; }
+  }
+}
+
+// ============================================================
+// MAIN SECTION — form + company info
+// ============================================================
+.kfc-main {
+  padding: 0 0 80px;
+  background: $c-surface;
+
+  @media (max-width: 768px) { padding: 0 0 60px; }
+}
+
+.kfc-layout {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 36px;
+  align-items: start;
+
+  @media (max-width: 900px) { grid-template-columns: 1fr; gap: 28px; }
+}
+
+// ── Form Side ────────────────────────────────────────────────
+.kfc-form-side {
+  background: $c-bg;
+  border: 1px solid $c-line;
+  border-radius: 22px;
+  padding: 36px 36px 32px;
+  box-shadow: 0 2px 4px rgba($c-ink, 0.03), 0 14px 36px rgba($c-ink, 0.08);
+
+  .kfc-eyebrow { margin-bottom: 10px; }
+
+  h2 {
+    font-size: 30px !important;
+    font-weight: 800 !important;
+    color: $c-ink !important;
+    letter-spacing: -0.7px;
+    margin: 0 0 28px !important;
+
+    @media (max-width: 480px) { font-size: 24px !important; }
+  }
+
+  form { display: flex; flex-direction: column; gap: 18px; }
+
+  @media (max-width: 575px) { padding: 24px 20px 22px; border-radius: 18px; }
+}
+
+// Field label
+.kfc-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  label {
+    font-size: 11px !important;
+    font-weight: 800 !important;
+    letter-spacing: 2px !important;
+    text-transform: uppercase;
+    color: $c-ink;
+    display: flex;
+    align-items: center;
+    gap: 0;
+  }
+
+  input, textarea {
+    width: 100%;
+    height: 50px;
+    padding: 0 16px !important;
+    border: 1.5px solid $c-line-strong !important;
+    border-radius: 12px !important;
+    font-size: 14px !important;
+    font-weight: 600;
+    color: $c-ink !important;
+    background: $c-surface !important;
+    font-family: inherit;
+    outline: none !important;
+    transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1) !important;
+    box-shadow: 0 1px 3px rgba($c-ink, 0.04) !important;
+
+    &::placeholder { color: $c-line-strong !important; font-size: 13.5px !important; }
+
+    &:focus {
+      border-color: $c-blue !important;
+      background: $c-bg !important;
+      box-shadow:
+        0 0 0 4px rgba($c-blue, 0.12),
+        0 4px 12px rgba($c-blue, 0.08) !important;
+      transform: translateY(-1px);
+    }
+  }
+
+  textarea {
+    height: auto;
+    padding: 14px 16px !important;
+    resize: vertical;
+    min-height: 120px;
+    line-height: 1.65;
+  }
+}
+
+// Two-column field row
+.kfc-field-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+
+  @media (max-width: 480px) { grid-template-columns: 1fr; }
+}
+
+// Inline error
+.kfc-error {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  color: $c-rose;
+  padding: 6px 12px;
+  background: $c-rose-soft;
+  border: 1px solid rgba($c-rose, 0.25);
+  border-radius: 8px;
+  animation: kfcErrIn 0.3s ease;
+
+  &::before {
+    content: '\ec07';
+    font-family: 'remixicon';
+    font-size: 13px;
+    flex-shrink: 0;
+  }
+}
+
+@keyframes kfcErrIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+// Submit button
+.kfc-submit {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  height: 56px;
+  padding: 0 36px;
+  background: linear-gradient(135deg, $c-blue 0%, $c-blue-dark 100%);
+  color: #fff;
+  border: none;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  cursor: pointer;
+  overflow: hidden;
+  align-self: flex-start;
+  transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  box-shadow:
+    0 4px 12px rgba($c-blue, 0.28),
+    0 14px 32px rgba($c-blue, 0.2);
+
+  // Ink slide-over on hover
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, $c-ink 0%, $c-ink-soft 100%);
+    transform: translateX(-101%);
+    transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  // Send icon via pseudo
+  &::after {
+    content: '\ed30'; // ri-send-plane-fill
+    font-family: 'remixicon';
+    font-size: 16px;
+    position: relative;
+    z-index: 1;
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  > * { position: relative; z-index: 1; }
+
+  &:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow:
+      0 6px 16px rgba($c-ink, 0.25),
+      0 18px 40px rgba($c-ink, 0.2);
+
+    &::before { transform: translateX(0); }
+    &::after  { transform: translateX(4px) rotate(-8deg); }
+  }
+
+  &:disabled { opacity: 0.55; cursor: not-allowed; }
+
+  @media (max-width: 480px) { width: 100%; }
+}
+
+// ── Company Info Side ────────────────────────────────────────
+.kfc-info-side {
+  background: $c-bg;
+  border: 1px solid $c-line;
+  border-radius: 22px;
+  padding: 36px 36px 32px;
+  box-shadow: 0 2px 4px rgba($c-ink, 0.03), 0 14px 36px rgba($c-ink, 0.08);
+
+  .kfc-eyebrow { margin-bottom: 10px; }
+
+  h2 {
+    font-size: 22px !important;
+    font-weight: 800 !important;
+    color: $c-ink !important;
+    letter-spacing: -0.4px;
+    margin: 0 0 24px !important;
+  }
+
+  @media (max-width: 575px) { padding: 24px 20px 22px; border-radius: 18px; }
+}
+
+// Company info table
+.kfc-table {
+  width: 100%;
+  border-collapse: collapse;
+
+  tr {
+    border-bottom: 1px solid $c-line;
+    transition: background 0.2s ease;
+
+    &:last-child { border-bottom: none; }
+    &:hover { background: rgba($c-blue, 0.025); }
+  }
+
+  td {
+    padding: 14px 6px;
+    font-size: 13.5px;
+    vertical-align: top;
+    line-height: 1.65;
+    white-space: pre-line;
+    color: $c-ink-soft;
+  }
+
+  .kfc-td-label {
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: $c-muted;
+    width: 90px;
+    padding-top: 16px;
+    white-space: nowrap;
+    vertical-align: top;
+  }
+
+  a {
+    color: $c-blue;
+    text-decoration: none;
+    font-weight: 700;
+
+    &:hover { text-decoration: underline; }
+  }
+}
+
+// ============================================================
+// RESPONSIVE
+// ============================================================
+@media (max-width: 768px) {
+  .kfc-cards { margin-top: -28px; }
+  .kfc-cards-grid { padding-bottom: 36px; }
+
+  .kfc-hero h1 { font-size: 34px !important; }
+  .kfc-hero-sub { font-size: 14.5px; }
+}
+
+@media (max-width: 480px) {
+  .kfc-card { padding: 22px 20px; border-radius: 16px; }
+  .kfc-card i { width: 44px; height: 44px; border-radius: 12px; font-size: 19px !important; }
+
+  .kfc-submit { height: 52px; font-size: 11.5px; }
+}

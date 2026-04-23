@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/components/shop/checkout/my-react-component/MyReactComponent.scss"],
+  "sourcesContent": ["$border-radius: 4px;\r\n\r\n@mixin with-border($radius: $border-radius, $border-color: black) {\r\n  border: 1px solid $border-color;\r\n  border-radius: $radius;\r\n}\r\n\r\n.my-graph-component {\r\n  @include with-border($border-radius, blue);\r\n\r\n  filter: drop-shadow(2px 4px 6px black);\r\n  background-color: #1eb4d1;\r\n  border: 1px solid #198aa2;\r\n  display: inline-block;\r\n  user-select: none;\r\n  padding: 20px;\r\n\r\n  .comp-props {\r\n    color: white;\r\n\r\n    .increase-button {\r\n      @include with-border($border-radius, #3e3e3e);\r\n      background-color: white;\r\n      margin-left: 40px;\r\n      padding: 4px 6px;\r\n      cursor: pointer;\r\n      color: black;\r\n\r\n      &:hover {\r\n        filter: drop-shadow(2px 4px 6px black);\r\n      }\r\n    }\r\n  }\r\n\r\n  .comp-state {\r\n    color: yellow;\r\n    margin-top: 20px;\r\n  }\r\n}"],
+  "mappings": ";AAOA,CAAA;AAJE,UAAA,IAAA,MAAA;AACA,iBAJc;AAUd,UAAA,YAAA,IAAA,IAAA,IAAA;AACA,oBAAA;AACA,UAAA,IAAA,MAAA;AACA,WAAA;AACA,uBAAA;AAAA,eAAA;AACA,WAAA;;AAEA,CAVF,mBAUE,CAAA;AACE,SAAA;;AAEA,CAbJ,mBAaI,CAHF,WAGE,CAAA;AAjBF,UAAA,IAAA,MAAA;AACA,iBAJc;AAsBV,oBAAA;AACA,eAAA;AACA,WAAA,IAAA;AACA,UAAA;AACA,SAAA;;AAEA,CArBN,mBAqBM,CAXJ,WAWI,CARF,eAQE;AACE,UAAA,YAAA,IAAA,IAAA,IAAA;;AAKN,CA3BF,mBA2BE,CAAA;AACE,SAAA;AACA,cAAA;;",
+  "names": []
+}

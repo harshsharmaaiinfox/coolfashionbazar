@@ -1,0 +1,179 @@
+// ============================================================
+// Collection Sidebar — "Editorial Filter Studio" Premium redesign
+// ============================================================
+
+$sd-ink:         #0F1720;
+$sd-ink-soft:    #2B3240;
+$sd-muted:       #6B7280;
+$sd-bg:          #FFFFFF;
+$sd-surface:     #F8F9FB;
+$sd-line:        #E6E8EC;
+$sd-blue:        #1E7FC9;
+$sd-blue-dark:   #135a95;
+$sd-blue-soft:   #EAF3FB;
+$sd-gold:        #B38A48;
+$sd-gold-soft:   #F6EFDE;
+$sd-rose:        #E7475A;
+$white:          #FFFFFF;
+
+:host { display: block; font-family: inherit; }
+
+// ---- Sidebar outer card ----
+.shop-left-sidebar {
+  background: $sd-bg;
+  border-radius: 20px;
+  border: 1px solid $sd-line;
+  overflow: hidden;
+  box-shadow:
+    0 2px 4px rgba($sd-ink, 0.03),
+    0 14px 36px rgba($sd-ink, 0.08);
+  position: sticky;
+  top: 90px;
+}
+
+// ---- Back button (mobile off-canvas) ----
+.back-button {
+  display: none;
+  padding: 16px 30px;
+  border-bottom: 1px solid $sd-line;
+
+  h3 { margin: 0; }
+
+  a {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+    font-weight: 700;
+    color: $sd-ink;
+    text-decoration: none;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+
+    i { font-size: 18px !important; color: $sd-ink !important; }
+  }
+
+  @media (max-width: 991px) { display: block; }
+}
+
+// ---- Accordion overrides ----
+:host ::ng-deep {
+  .custome-accordion {
+    border: none !important;
+    border-radius: 0 !important;
+    background: transparent;
+  }
+
+  .accordion-item {
+    border: none !important;
+    border-bottom: 1px solid $sd-line !important;
+    border-radius: 0 !important;
+    background: transparent;
+
+    &:last-child { border-bottom: none !important; }
+  }
+
+  // Section header button
+  .accordion-header {
+    margin: 0 !important;
+  }
+
+  .accordion-button {
+    padding: 18px 22px !important; // Reduced padding
+    background: transparent !important;
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    width: 100% !important;
+    cursor: pointer;
+    transition: background 0.25s ease !important;
+    gap: 15px;
+    position: relative;
+    min-height: 64px; // Ensure stable height for centering
+
+    // Left accent bar
+    &::before {
+      content: '' !important;
+      position: absolute;
+      left: 0; // Move back to edge
+      top: 50% !important;
+      transform: translateY(-50%) scaleY(0) !important;
+      width: 4px !important;
+      height: 20px !important;
+      background: $sd-blue !important;
+      border-radius: 99px;
+      opacity: 0;
+      transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+      z-index: 2;
+    }
+
+    // Expand chevron
+    &::after {
+      content: '\ea4e' !important; // ri-arrow-down-s-line
+      font-family: 'remixicon' !important;
+      width: 24px !important;
+      height: 24px !important;
+      border-radius: 0 !important;
+      background: transparent !important;
+      border: none !important;
+      color: $sd-muted !important;
+      font-size: 20px !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      transition: all 0.3s ease !important;
+      background-image: none !important;
+      transform: none !important;
+      flex-shrink: 0;
+      line-height: 1 !important;
+    }
+
+    > span,
+    > .text-content {
+      font-size: 13px !important;
+      font-weight: 800 !important;
+      letter-spacing: 2px !important;
+      text-transform: uppercase !important;
+      color: $sd-ink !important;
+      flex: 1;
+      line-height: 1.4 !important; // Fix cut-off issue
+      padding-top: 2px; // Fine-tune vertical center
+      border: none !important; // Remove any global underlines
+      text-decoration: none !important;
+      position: relative;
+    }
+
+    &:hover {
+      background: $sd-surface !important;
+      &::after { color: $sd-blue !important; }
+    }
+
+    &[aria-expanded="true"],
+    &:not(.collapsed) {
+      &::before {
+        opacity: 1;
+        transform: translateY(-50%) scaleY(1) !important;
+      }
+
+      &::after {
+        content: '\ea76' !important; // ri-arrow-up-s-line
+        color: $sd-blue !important;
+      }
+
+      > span,
+      > .text-content {
+        color: $sd-blue !important;
+      }
+    }
+  }
+
+  .accordion-collapse { background: transparent; }
+
+  .accordion-body {
+    padding: 10px 22px 24px !important;
+    background: transparent;
+  }
+}

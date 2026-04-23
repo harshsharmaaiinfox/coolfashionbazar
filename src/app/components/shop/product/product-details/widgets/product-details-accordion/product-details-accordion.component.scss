@@ -1,0 +1,439 @@
+// ============================================================
+// Product Details Accordion — Premium Tab redesign
+// Modern card style · icon tabs · refined content hierarchy
+// ============================================================
+
+$pa-ink:          #0F1720;
+$pa-ink-soft:     #2B3240;
+$pa-muted:        #6B7280;
+$pa-bg:           #FFFFFF;
+$pa-surface:      #F8F9FB;
+$pa-line:         #E6E8EC;
+$pa-line-strong:  #D1D5DB;
+$pa-blue:         #1E7FC9;
+$pa-blue-dark:    #135a95;
+$pa-blue-soft:    #EAF3FB;
+$pa-gold:         #B38A48;
+
+:host { display: block; font-family: inherit; }
+
+// ------------------------------------------------------------
+// Outer accordion — premium card shell
+// ------------------------------------------------------------
+:host ::ng-deep [ngbAccordion],
+:host ::ng-deep .accordion-box {
+  display: block;
+  background: $pa-bg;
+  border: 1px solid $pa-line;
+  border-radius: 20px !important;
+  overflow: hidden;
+  box-shadow:
+    0 2px 4px rgba($pa-ink, 0.03),
+    0 14px 34px rgba($pa-ink, 0.06);
+  margin-top: 32px !important;
+}
+
+// ------------------------------------------------------------
+// Each accordion item
+// ------------------------------------------------------------
+:host ::ng-deep [ngbAccordionItem] {
+  border-bottom: 1px solid $pa-line;
+  background: $pa-bg;
+  transition: background 0.3s ease;
+
+  &:last-child { border-bottom: none; }
+}
+
+// ------------------------------------------------------------
+// Accordion header button
+// ------------------------------------------------------------
+:host ::ng-deep [ngbAccordionHeader] {
+  margin: 0 !important;
+  padding: 0 !important;
+  background: transparent;
+  border: none;
+}
+
+:host ::ng-deep button[ngbAccordionButton],
+:host ::ng-deep .accordion-button {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 16px;
+  width: 100%;
+  padding: 22px 28px !important;
+  background: transparent !important;
+  border: none !important;
+  cursor: pointer !important;
+  box-shadow: none !important;
+  outline: none !important;
+  position: relative;
+  transition: background 0.3s ease !important;
+
+  // Left edge accent rail — appears on expanded state
+  &::before {
+    content: '' !important;
+    position: absolute;
+    left: 0;
+    top: 16px;
+    bottom: 16px;
+    width: 3px !important;
+    background: $pa-blue !important;
+    border-radius: 0 3px 3px 0;
+    opacity: 0;
+    transform: scaleY(0.3);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    background-image: none !important;
+  }
+
+  // Expand chevron — replace default bootstrap chevron
+  &::after {
+    content: '\ea4e' !important; // ri-arrow-down-s-line
+    font-family: 'remixicon' !important;
+    width: 38px !important;
+    height: 38px !important;
+    border-radius: 50% !important;
+    background: $pa-surface !important;
+    border: 1px solid $pa-line !important;
+    color: $pa-ink !important;
+    font-size: 18px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1) !important;
+    background-image: none !important;
+    transform: none !important;
+    flex-shrink: 0;
+  }
+
+  > span {
+    font-size: 15px !important;
+    font-weight: 800 !important;
+    letter-spacing: 1.4px !important;
+    color: $pa-ink !important;
+    text-transform: uppercase;
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    line-height: 1;
+    flex: 1;
+
+    // Icon prefix badge
+    &::before {
+      content: '\f1f9'; // ri-information-line
+      font-family: 'remixicon';
+      width: 32px;
+      height: 32px;
+      border-radius: 10px;
+      background: $pa-blue-soft;
+      color: $pa-blue;
+      font-size: 16px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 400;
+      letter-spacing: 0;
+      flex-shrink: 0;
+      transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+  }
+
+  &:hover {
+    background: $pa-surface !important;
+
+    &::after {
+      border-color: $pa-blue !important;
+      color: $pa-blue !important;
+    }
+
+    > span::before {
+      background: $pa-blue;
+      color: #fff;
+      transform: scale(1.06);
+    }
+  }
+
+  // Expanded state
+  &[aria-expanded="true"] {
+    &::before {
+      opacity: 1;
+      transform: scaleY(1);
+    }
+
+    &::after {
+      background: $pa-ink !important;
+      border-color: $pa-ink !important;
+      color: #fff !important;
+      transform: rotate(180deg) !important;
+      box-shadow: 0 6px 14px rgba($pa-ink, 0.22) !important;
+    }
+
+    > span {
+      color: $pa-blue !important;
+
+      &::before {
+        background: $pa-blue;
+        color: #fff;
+      }
+    }
+  }
+}
+
+// ------------------------------------------------------------
+// Collapsible body
+// ------------------------------------------------------------
+:host ::ng-deep [ngbAccordionCollapse] {
+  background: transparent;
+}
+
+:host ::ng-deep [ngbAccordionBody],
+:host ::ng-deep .accordion-body {
+  padding: 6px 28px 28px 28px !important;
+  background: transparent;
+  border: none;
+}
+
+// ------------------------------------------------------------
+// Description content styling
+// ------------------------------------------------------------
+:host ::ng-deep .product-description {
+  padding: 24px 28px !important;
+  background: $pa-surface;
+  border-radius: 14px;
+  border-left: 3px solid $pa-blue;
+  margin-left: 14px;
+  position: relative;
+
+  // Decorative corner accent dot
+  &::before {
+    content: '';
+    position: absolute;
+    top: -8px;
+    left: -17px;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: $pa-blue;
+    box-shadow: 0 0 0 4px rgba($pa-blue, 0.18);
+  }
+}
+
+:host ::ng-deep .ckeditor-content,
+:host ::ng-deep .nav-desh {
+  font-family: inherit;
+  color: $pa-ink-soft;
+
+  // Section headings (Product Details, Size & Fit, Material & Care, etc.)
+  h1, h2, h3, h4 {
+    font-size: 15px !important;
+    font-weight: 800 !important;
+    letter-spacing: 0.4px;
+    color: $pa-ink !important;
+    margin: 28px 0 14px !important;
+    padding-left: 20px;
+    position: relative;
+    text-transform: uppercase;
+    line-height: 1.3;
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 6px;
+      bottom: 6px;
+      width: 4px;
+      background: linear-gradient(180deg, $pa-blue 0%, $pa-gold 100%);
+      border-radius: 2px;
+    }
+
+    &:first-child { margin-top: 0 !important; }
+  }
+
+  // Sub-heading / bold
+  h5, h6, strong {
+    font-size: 13px !important;
+    font-weight: 800 !important;
+    color: $pa-ink !important;
+    letter-spacing: 0.3px;
+    margin: 20px 0 10px !important;
+    display: inline-block;
+  }
+
+  p {
+    font-size: 14px !important;
+    line-height: 1.75 !important;
+    color: $pa-ink-soft !important;
+    margin: 0 0 12px !important;
+    letter-spacing: 0.1px;
+
+    strong {
+      display: inline;
+      margin: 0 !important;
+    }
+  }
+
+  // List items — styled as check cards
+  ul {
+    list-style: none !important;
+    padding: 0 !important;
+    margin: 0 0 16px !important;
+
+    li {
+      position: relative;
+      padding: 10px 12px 10px 38px !important;
+      margin-bottom: 6px !important;
+      background: $pa-bg;
+      border: 1px solid $pa-line;
+      border-radius: 10px;
+      font-size: 13.5px !important;
+      font-weight: 500;
+      color: $pa-ink-soft !important;
+      line-height: 1.5;
+      transition: all 0.25s ease;
+
+      &::before {
+        content: '\eb7b' !important;
+        font-family: 'remixicon' !important;
+        position: absolute;
+        left: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background: $pa-blue-soft;
+        color: $pa-blue;
+        font-size: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      &:hover {
+        border-color: rgba($pa-blue, 0.35);
+        background: lighten($pa-blue-soft, 3%);
+      }
+
+      &:empty {
+        display: none !important;
+      }
+    }
+  }
+
+  ol {
+    padding-left: 20px !important;
+    margin-bottom: 16px !important;
+
+    li {
+      font-size: 13.5px !important;
+      color: $pa-ink-soft !important;
+      line-height: 1.7 !important;
+      padding: 4px 0;
+    }
+  }
+
+  a {
+    color: $pa-blue !important;
+    text-decoration: none;
+    border-bottom: 1px solid rgba($pa-blue, 0.35);
+    transition: all 0.25s ease;
+
+    &:hover {
+      color: $pa-blue-dark !important;
+      border-bottom-color: $pa-blue;
+    }
+  }
+
+  img {
+    max-width: 100%;
+    border-radius: 12px;
+    margin: 16px 0;
+    box-shadow: 0 8px 22px rgba($pa-ink, 0.1);
+  }
+
+  blockquote {
+    margin: 16px 0;
+    padding: 16px 20px;
+    border-left: 3px solid $pa-gold;
+    background: linear-gradient(90deg, rgba($pa-gold, 0.08), transparent);
+    border-radius: 0 10px 10px 0;
+    font-style: italic;
+    color: $pa-ink-soft;
+  }
+}
+
+// ------------------------------------------------------------
+// Responsive
+// ------------------------------------------------------------
+@media (max-width: 768px) {
+  :host ::ng-deep [ngbAccordion],
+  :host ::ng-deep .accordion-box {
+    border-radius: 16px !important;
+    margin-top: 24px !important;
+  }
+
+  :host ::ng-deep button[ngbAccordionButton],
+  :host ::ng-deep .accordion-button {
+    padding: 18px 20px !important;
+
+    > span {
+      font-size: 13px !important;
+      letter-spacing: 1.2px !important;
+      gap: 10px;
+
+      &::before {
+        width: 28px;
+        height: 28px;
+        font-size: 14px;
+      }
+    }
+
+    &::after {
+      width: 34px !important;
+      height: 34px !important;
+      font-size: 16px !important;
+    }
+  }
+
+  :host ::ng-deep [ngbAccordionBody],
+  :host ::ng-deep .accordion-body {
+    padding: 4px 20px 22px 20px !important;
+  }
+
+  :host ::ng-deep .product-description {
+    padding: 20px 20px !important;
+    margin-left: 8px;
+  }
+
+  :host ::ng-deep .ckeditor-content,
+  :host ::ng-deep .nav-desh {
+    h1, h2, h3, h4 { font-size: 13.5px !important; }
+    p { font-size: 13px !important; }
+  }
+}
+
+@media (max-width: 480px) {
+  :host ::ng-deep button[ngbAccordionButton],
+  :host ::ng-deep .accordion-button {
+    padding: 16px 14px !important;
+
+    > span {
+      font-size: 12px !important;
+      letter-spacing: 1px !important;
+    }
+  }
+
+  :host ::ng-deep [ngbAccordionBody],
+  :host ::ng-deep .accordion-body {
+    padding: 4px 14px 20px 14px !important;
+  }
+
+  :host ::ng-deep .product-description {
+    padding: 16px !important;
+    margin-left: 0;
+    border-left: none;
+    border-top: 3px solid $pa-blue;
+
+    &::before { display: none; }
+  }
+}

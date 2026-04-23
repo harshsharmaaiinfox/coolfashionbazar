@@ -1,0 +1,348 @@
+// ============================================================
+// Wishlist Page — "Saved Favourites" Premium Redesign
+// Consistent with the site-wide blue/ink/gold design system
+// ============================================================
+
+$wl-ink:          #0F1720;
+$wl-ink-soft:     #2B3240;
+$wl-muted:        #6B7280;
+$wl-bg:           #F8F9FB;
+$wl-white:        #FFFFFF;
+$wl-surface:      #F2F4F7;
+$wl-line:         #E6E8EC;
+$wl-blue:         #1E7FC9;
+$wl-blue-dark:    #135a95;
+$wl-blue-soft:    #EAF3FB;
+$wl-gold:         #B38A48;
+$wl-gold-soft:    #F6EFDE;
+$wl-rose:         #E7475A;
+$wl-rose-soft:    #FDECEE;
+
+// ============================================================
+// HERO — premium gradient hero banner
+// ============================================================
+.kfw-hero {
+  position: relative;
+  padding: 72px 0 60px;
+  overflow: hidden;
+  background: linear-gradient(135deg, $wl-ink 0%, $wl-ink-soft 100%);
+
+  // Ambient blue radial glow top-right
+  &::before {
+    content: '';
+    position: absolute;
+    top: -60px;
+    right: 10%;
+    width: 360px;
+    height: 360px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba($wl-blue, 0.28) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  // Gold glow bottom-left
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -40px;
+    left: -30px;
+    width: 280px;
+    height: 280px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba($wl-gold, 0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  // Diagonal grain overlay
+  > * { position: relative; z-index: 1; }
+
+  .container-fluid-lg {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 30px;
+    flex-wrap: wrap;
+  }
+
+  @media (max-width: 768px) {
+    padding: 52px 0 44px;
+
+    .container-fluid-lg {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+
+  @media (max-width: 480px) { padding: 40px 0 36px; }
+}
+
+// Eyebrow pill
+.kfw-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  background: rgba($wl-white, 0.08);
+  border: 1px solid rgba($wl-white, 0.14);
+  border-radius: 999px;
+  font-size: 10.5px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  color: $wl-gold;
+  margin: 0 0 20px;
+  width: fit-content;
+  backdrop-filter: blur(8px);
+
+  &::before {
+    content: '\ecd2'; // ri-heart-fill
+    font-family: 'remixicon';
+    font-size: 13px;
+    color: $wl-rose;
+    animation: wlHeartPulse 1.8s ease-in-out infinite;
+  }
+}
+
+@keyframes wlHeartPulse {
+  0%, 100% { transform: scale(1); }
+  50%      { transform: scale(1.25); }
+}
+
+.kfw-hero-inner {
+  h1 {
+    font-size: 52px;
+    font-weight: 900;
+    color: $wl-white;
+    line-height: 1.0;
+    margin: 0 0 18px;
+    letter-spacing: -2px;
+
+    em {
+      font-style: italic;
+      font-weight: 300;
+      background: linear-gradient(135deg, $wl-gold 0%, lighten($wl-gold, 14%) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    @media (max-width: 768px) { font-size: 36px; letter-spacing: -1.2px; }
+    @media (max-width: 480px) { font-size: 30px; }
+  }
+
+  .kfw-hero-sub {
+    font-size: 14.5px;
+    color: rgba($wl-white, 0.58);
+    line-height: 1.7;
+    margin: 0;
+    max-width: 440px;
+    letter-spacing: 0.1px;
+  }
+}
+
+// Count badge — floating premium card
+.kfw-hero-badge {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+  padding: 20px 26px;
+  background: rgba($wl-white, 0.06);
+  border: 1px solid rgba($wl-white, 0.1);
+  border-radius: 20px;
+  backdrop-filter: saturate(180%) blur(14px);
+  -webkit-backdrop-filter: saturate(180%) blur(14px);
+  text-align: right;
+  min-width: 140px;
+  box-shadow: 0 8px 30px rgba($wl-ink, 0.3);
+
+  .kfw-badge-count {
+    display: block;
+    font-size: 56px;
+    font-weight: 900;
+    color: $wl-white;
+    line-height: 1;
+    letter-spacing: -2.5px;
+
+    // First digit in gold
+    background: linear-gradient(135deg, $wl-gold 0%, lighten($wl-gold, 15%) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+    @media (max-width: 768px) { font-size: 42px; }
+  }
+
+  .kfw-badge-label {
+    font-size: 10.5px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 2.5px;
+    color: rgba($wl-white, 0.5);
+  }
+
+  @media (max-width: 768px) {
+    align-items: flex-start;
+    text-align: left;
+    padding: 16px 22px;
+    min-width: 120px;
+  }
+}
+
+// ============================================================
+// CONTENT SECTION
+// ============================================================
+.kfw-content {
+  background: $wl-bg;
+  padding: 52px 0 80px;
+
+  @media (max-width: 768px) { padding: 36px 0 60px; }
+}
+
+// ============================================================
+// EMPTY STATE — premium centered card
+// ============================================================
+.kfw-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 80px 32px;
+  background: $wl-white;
+  border: 1px solid $wl-line;
+  border-radius: 24px;
+  box-shadow:
+    0 2px 4px rgba($wl-ink, 0.03),
+    0 14px 36px rgba($wl-ink, 0.08);
+  position: relative;
+  overflow: hidden;
+
+  // Soft gradient radial glow
+  &::before {
+    content: '';
+    position: absolute;
+    top: -40px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba($wl-rose, 0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  // Empty heart icon container
+  .kfw-empty-icon {
+    position: relative;
+    width: 96px;
+    height: 96px;
+    border-radius: 50%;
+    background: $wl-rose-soft;
+    border: 2px solid rgba($wl-rose, 0.22);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 28px;
+    box-shadow:
+      0 4px 14px rgba($wl-rose, 0.15),
+      0 0 0 8px rgba($wl-rose, 0.06);
+    animation: wlEmptyPulse 3s ease-in-out infinite;
+
+    i {
+      font-size: 40px !important;
+      color: $wl-rose !important;
+    }
+  }
+
+  @keyframes wlEmptyPulse {
+    0%, 100% { box-shadow: 0 4px 14px rgba($wl-rose, 0.15), 0 0 0 8px rgba($wl-rose, 0.06); }
+    50%      { box-shadow: 0 4px 14px rgba($wl-rose, 0.25), 0 0 0 16px rgba($wl-rose, 0); }
+  }
+
+  .kfw-eyebrow {
+    background: none;
+    border: none;
+    padding: 0;
+    backdrop-filter: none;
+    color: $wl-rose;
+    letter-spacing: 3.5px;
+    margin-bottom: 12px;
+
+    &::before { display: none; }
+  }
+
+  h2 {
+    font-size: 28px !important;
+    font-weight: 800 !important;
+    color: $wl-ink !important;
+    margin: 0 0 14px !important;
+    letter-spacing: -0.6px;
+    line-height: 1.2;
+
+    @media (max-width: 480px) { font-size: 22px !important; }
+  }
+
+  .kfw-empty-desc {
+    font-size: 14.5px;
+    color: $wl-muted;
+    line-height: 1.75;
+    max-width: 420px;
+    margin: 0 auto 36px;
+    letter-spacing: 0.1px;
+  }
+
+  .kfw-btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 16px 36px;
+    background: linear-gradient(135deg, $wl-blue 0%, $wl-blue-dark 100%);
+    color: $wl-white;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 2.5px;
+    text-decoration: none;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    box-shadow:
+      0 6px 16px rgba($wl-blue, 0.32),
+      0 16px 36px rgba($wl-blue, 0.2);
+
+    // Gold slide-over on hover
+    &::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, $wl-gold 0%, darken($wl-gold, 12%) 100%);
+      transform: translateX(-101%);
+      transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    > * { position: relative; z-index: 1; }
+
+    i {
+      font-size: 18px !important;
+      color: inherit !important;
+      transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    &:hover {
+      transform: translateY(-2px);
+      color: $wl-white;
+      box-shadow:
+        0 8px 22px rgba($wl-gold, 0.4),
+        0 18px 42px rgba($wl-gold, 0.28);
+
+      &::before { transform: translateX(0); }
+      i { transform: translateX(5px); }
+    }
+
+    @media (max-width: 480px) { width: 100%; justify-content: center; }
+  }
+
+  @media (max-width: 768px) { padding: 60px 24px; border-radius: 18px; }
+  @media (max-width: 480px) { padding: 48px 18px; }
+}

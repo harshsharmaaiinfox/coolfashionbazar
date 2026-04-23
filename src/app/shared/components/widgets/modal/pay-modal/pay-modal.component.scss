@@ -1,0 +1,305 @@
+// ============================================================
+// Kahua Fashion — Pay Now Modal  (Premium Redesign)
+// Unified design tokens: blue palette, rounded UI
+// ============================================================
+
+$ink:         #0F1720;
+$ink-soft:    #2B3240;
+$muted:       #6B7280;
+$bg:          #F8F9FB;
+$white:       #FFFFFF;
+$surface:     #F2F4F7;
+$line:        #E6E8EC;
+$line-strong: #D1D5DB;
+$blue:        #1E7FC9;
+$blue-dark:   #135a95;
+$blue-soft:   #EAF3FB;
+$gold:        #B38A48;
+$rose:        #E7475A;
+$rose-soft:   #FDECEE;
+
+// ============================================================
+// HEADER
+// ============================================================
+.kfpm-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 26px 30px 22px;
+  background: linear-gradient(135deg, $ink 0%, $ink-soft 100%);
+  position: relative;
+  overflow: hidden;
+
+  &::after {
+    content: '\f170'; // ri-secure-payment-line
+    font-family: 'remixicon';
+    position: absolute;
+    right: -10px;
+    top: -14px;
+    font-size: 110px;
+    color: rgba($white, 0.03);
+    line-height: 1;
+    pointer-events: none;
+  }
+
+  .kfpm-header-text { position: relative; z-index: 1; }
+
+  .kfpm-eyebrow {
+    font-size: 10px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 3.5px;
+    color: $gold;
+    margin: 0 0 6px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+
+    &::before {
+      content: '';
+      display: inline-block;
+      width: 16px;
+      height: 2px;
+      background: $gold;
+      border-radius: 2px;
+    }
+  }
+
+  h3 {
+    font-size: 22px;
+    font-weight: 900;
+    color: $white;
+    margin: 0;
+    letter-spacing: -0.5px;
+  }
+}
+
+.kfpm-close {
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1.5px solid rgba($white, 0.25);
+  background: rgba($white, 0.06);
+  color: rgba($white, 0.6);
+  cursor: pointer;
+  font-size: 18px;
+  border-radius: 10px;
+  transition: all 0.25s ease;
+  flex-shrink: 0;
+  margin-top: 2px;
+  position: relative;
+  z-index: 1;
+
+  &:hover {
+    border-color: $rose;
+    color: $rose;
+    background: rgba($rose, 0.12);
+    transform: rotate(90deg);
+  }
+}
+
+// ============================================================
+// BODY
+// ============================================================
+.kfpm-body {
+  padding: 24px 30px;
+  background: $bg;
+
+  .kfpm-instruction {
+    font-size: 13px;
+    font-weight: 600;
+    color: $muted;
+    margin: 0 0 18px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+
+    &::before {
+      content: '\eb79'; // ri-bank-card-line
+      font-family: 'remixicon';
+      font-size: 15px;
+      color: $blue;
+    }
+  }
+}
+
+// ============================================================
+// PAYMENT METHOD LIST
+// ============================================================
+.kfpm-methods {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.kfpm-method {
+  display: block;
+  cursor: pointer;
+  margin: 0;
+
+  .kfpm-radio {
+    display: none;
+
+    &:checked + .kfpm-method-inner {
+      border-color: $blue;
+      background: $blue-soft;
+      box-shadow: 0 0 0 3px rgba($blue, 0.1);
+
+      .kfpm-method-name {
+        color: $blue;
+        font-weight: 800;
+      }
+
+      .kfpm-method-check {
+        opacity: 1;
+        background: $blue;
+        border-color: $blue-dark;
+        color: $white;
+        box-shadow: 0 3px 8px rgba($blue, 0.4);
+        transform: scale(1.1);
+      }
+    }
+  }
+
+  .kfpm-method-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 18px;
+    border: 1.5px solid $line-strong;
+    border-radius: 14px;
+    background: $white;
+    transition: all 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+    box-shadow: 0 1px 3px rgba($ink, 0.04);
+
+    &:hover {
+      border-color: $blue;
+      background: $blue-soft;
+      box-shadow: 0 0 0 3px rgba($blue, 0.08);
+      transform: translateY(-1px);
+    }
+  }
+}
+
+.kfpm-method-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: $ink;
+  transition: all 0.2s ease;
+}
+
+.kfpm-method-check {
+  width: 22px;
+  height: 22px;
+  border: 1.5px solid $line-strong;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  color: transparent;
+  transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+  opacity: 0.4;
+  background: $surface;
+  flex-shrink: 0;
+}
+
+// ============================================================
+// ERROR
+// ============================================================
+.kfpm-error {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: 14px;
+  font-size: 12px;
+  font-weight: 700;
+  color: $rose;
+  border: 1px solid rgba($rose, 0.25);
+  padding: 8px 14px;
+  background: $rose-soft;
+  border-radius: 10px;
+  animation: kfpmErrIn 0.25s ease;
+
+  i { font-size: 14px; flex-shrink: 0; }
+}
+
+@keyframes kfpmErrIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+// ============================================================
+// FOOTER
+// ============================================================
+.kfpm-footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 18px 30px;
+  border-top: 1px solid $line;
+  background: $white;
+
+  @media (max-width: 480px) {
+    flex-direction: column-reverse;
+    button { width: 100%; justify-content: center; }
+  }
+}
+
+.kfpm-btn-cancel {
+  height: 44px;
+  padding: 0 22px;
+  background: $surface;
+  border: 1.5px solid $line-strong;
+  color: $muted;
+  font-size: 11.5px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  cursor: pointer;
+  border-radius: 999px;
+  transition: all 0.25s ease;
+
+  &:hover {
+    border-color: $ink;
+    color: $ink;
+    background: $white;
+  }
+}
+
+.kfpm-btn-submit {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 44px;
+  padding: 0 26px;
+  background: linear-gradient(135deg, $blue 0%, $blue-dark 100%);
+  border: none;
+  color: $white;
+  font-size: 11.5px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  cursor: pointer;
+  border-radius: 999px;
+  transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  box-shadow: 0 4px 14px rgba($blue, 0.3);
+
+  i { font-size: 15px; }
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 22px rgba($blue, 0.45);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+  }
+}

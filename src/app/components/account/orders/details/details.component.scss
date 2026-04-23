@@ -1,0 +1,873 @@
+// ============================================================
+// Kahua Fashion — Account Order Details  (Premium Redesign)
+// Unified design tokens: blue palette, rounded UI
+// ============================================================
+
+$ink:          #0F1720;
+$ink-soft:     #2B3240;
+$muted:        #6B7280;
+$bg:           #F8F9FB;
+$white:        #FFFFFF;
+$surface:      #F2F4F7;
+$line:         #E6E8EC;
+$line-strong:  #D1D5DB;
+$blue:         #1E7FC9;
+$blue-dark:    #135a95;
+$blue-soft:    #EAF3FB;
+$gold:         #B38A48;
+$gold-soft:    #F6EFDE;
+$rose:         #E7475A;
+$rose-soft:    #FDECEE;
+$success:      #16A34A;
+$success-soft: #E7F6EC;
+$warn:         #D97706;
+$warn-soft:    #FEF3C7;
+
+// ============================================================
+// PAGE CONTAINER
+// ============================================================
+.order-details-page-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 4px 0 24px;
+}
+
+// ============================================================
+// LOADING STATE
+// ============================================================
+.loading-container {
+  min-height: 220px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  background: $white;
+  border-radius: 20px;
+  border: 1px solid $line;
+
+  .spinner-border {
+    color: $blue;
+    width: 28px;
+    height: 28px;
+    border-width: 2.5px;
+  }
+
+  h5 {
+    font-size: 15px;
+    font-weight: 700;
+    color: $ink;
+    margin: 0;
+  }
+
+  p { font-size: 13px; color: $muted; margin: 0; }
+}
+
+// ============================================================
+// PAGE HEADER
+// ============================================================
+.order-details-header {
+  background: linear-gradient(135deg, $ink 0%, $ink-soft 100%);
+  padding: 22px 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  border-radius: 20px;
+  position: relative;
+  overflow: hidden;
+
+  &::after {
+    content: '\f11d'; // ri-shopping-bag-line
+    font-family: 'remixicon';
+    position: absolute;
+    right: -10px;
+    top: -20px;
+    font-size: 130px;
+    color: rgba($white, 0.03);
+    line-height: 1;
+    pointer-events: none;
+  }
+
+  .header-content {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .header-icon-wrapper {
+    width: 48px;
+    height: 48px;
+    background: linear-gradient(135deg, $blue 0%, $blue-dark 100%);
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    box-shadow: 0 4px 14px rgba($blue, 0.4);
+
+    i { font-size: 22px; color: $white; }
+  }
+
+  .header-text-content {
+    .page-title {
+      font-size: 18px;
+      font-weight: 800;
+      color: $white;
+      margin: 0 0 3px;
+      letter-spacing: -0.4px;
+    }
+
+    .page-subtitle {
+      font-size: 12.5px;
+      color: rgba($white, 0.6);
+      margin: 0;
+      font-weight: 500;
+    }
+  }
+
+  .header-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    position: relative;
+    z-index: 1;
+  }
+
+  @media (max-width: 576px) {
+    padding: 18px 20px;
+    flex-direction: column;
+    align-items: flex-start;
+    border-radius: 16px;
+
+    .header-actions {
+      width: 100%;
+      a { flex: 1; justify-content: center; }
+    }
+  }
+}
+
+// ── Header action buttons ────────────────────────────────────
+%btn-header-base {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 38px;
+  padding: 0 16px;
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+  border-radius: 999px;
+
+  i { font-size: 14px; }
+}
+
+.btn-back-orders {
+  @extend %btn-header-base;
+  border: 1.5px solid rgba($white, 0.3);
+  color: rgba($white, 0.85);
+  background: transparent;
+
+  &:hover {
+    border-color: $white;
+    color: $white;
+    background: rgba($white, 0.08);
+  }
+}
+
+.btn-pay-now {
+  @extend %btn-header-base;
+  background: linear-gradient(135deg, $blue 0%, $blue-dark 100%);
+  border: none;
+  color: $white;
+  box-shadow: 0 4px 12px rgba($blue, 0.35);
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba($blue, 0.45);
+  }
+}
+
+.btn-download-invoice {
+  @extend %btn-header-base;
+  border: 1.5px solid rgba($gold, 0.6);
+  color: $gold;
+  background: rgba($gold, 0.08);
+
+  &:hover {
+    background: $gold;
+    color: $white;
+    border-color: $gold;
+    box-shadow: 0 4px 12px rgba($gold, 0.35);
+  }
+}
+
+// ============================================================
+// SHARED CARD STYLES
+// ============================================================
+%card-base {
+  background: $white;
+  border: 1px solid $line;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow:
+    0 2px 4px rgba($ink, 0.03),
+    0 12px 28px rgba($ink, 0.07);
+}
+
+.card-header-modern {
+  padding: 18px 24px;
+  background: linear-gradient(135deg, $ink 0%, $ink-soft 100%);
+  position: relative;
+  overflow: hidden;
+
+  &::after {
+    content: '';
+    position: absolute;
+    right: -16px;
+    bottom: -16px;
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background: rgba($white, 0.04);
+  }
+
+  .section-title {
+    font-size: 12px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: $white;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    position: relative;
+    z-index: 1;
+
+    i {
+      width: 30px;
+      height: 30px;
+      border-radius: 9px;
+      background: rgba($white, 0.1);
+      border: 1px solid rgba($white, 0.15);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 15px !important;
+      color: $gold !important;
+      flex-shrink: 0;
+    }
+  }
+}
+
+.card-body-modern {
+  padding: 22px 24px;
+
+  @media (max-width: 576px) { padding: 16px 18px; }
+}
+
+// ============================================================
+// ORDER TRACKING
+// ============================================================
+.order-tracking-section {
+  .tracking-card { @extend %card-base; }
+
+  .tracking-header {
+    padding: 18px 24px;
+    background: linear-gradient(135deg, $ink 0%, $ink-soft 100%);
+    position: relative;
+    overflow: hidden;
+
+    &::after {
+      content: '';
+      position: absolute;
+      right: -16px;
+      bottom: -16px;
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      background: rgba($white, 0.04);
+    }
+
+    .tracking-title {
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: $white;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      position: relative;
+      z-index: 1;
+
+      i {
+        width: 30px;
+        height: 30px;
+        border-radius: 9px;
+        background: rgba($white, 0.1);
+        border: 1px solid rgba($white, 0.15);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 15px !important;
+        color: $gold !important;
+      }
+    }
+  }
+
+  .tracking-steps {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding: 32px 28px;
+    position: relative;
+    gap: 8px;
+    background: $bg;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 52px;
+      left: 56px;
+      right: 56px;
+      height: 2px;
+      background: linear-gradient(90deg, $line 0%, $line 100%);
+      border-radius: 2px;
+      z-index: 0;
+    }
+
+    @media (max-width: 575px) {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 16px;
+      padding: 20px;
+      &::before { display: none; }
+    }
+  }
+
+  .tracking-step {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    position: relative;
+    z-index: 1;
+
+    .step-icon-wrapper {
+      width: 44px;
+      height: 44px;
+      border: 2px solid $line;
+      background: $white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+      box-shadow: 0 2px 8px rgba($ink, 0.06);
+
+      .step-icon {
+        width: 20px;
+        height: 20px;
+        opacity: 0.2;
+        filter: grayscale(1);
+        transition: all 0.3s ease;
+      }
+
+      &.cancelled {
+        background: $rose;
+        border-color: $rose;
+        box-shadow: 0 4px 12px rgba($rose, 0.35);
+
+        .step-icon { opacity: 1; filter: brightness(0) invert(1); }
+      }
+    }
+
+    .step-label {
+      font-size: 10.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: $line-strong;
+      text-align: center;
+      line-height: 1.3;
+      transition: color 0.3s ease;
+    }
+
+    &.active {
+      .step-icon-wrapper {
+        background: linear-gradient(135deg, $blue 0%, $blue-dark 100%);
+        border-color: $blue-dark;
+        box-shadow: 0 4px 14px rgba($blue, 0.4);
+
+        .step-icon { opacity: 1; filter: brightness(0) invert(1); }
+      }
+
+      .step-label { color: $ink; font-weight: 800; }
+    }
+
+    &.completed {
+      .step-icon-wrapper {
+        background: $success-soft;
+        border-color: $success;
+
+        .step-icon { opacity: 1; filter: none; }
+      }
+
+      .step-label { color: $success; }
+    }
+
+    &.cancelled-step .step-label { color: $rose; font-weight: 800; }
+
+    @media (max-width: 575px) {
+      flex-direction: row;
+      flex: unset;
+      width: 100%;
+      align-items: center;
+      gap: 14px;
+
+      .step-label { text-align: left; }
+    }
+  }
+}
+
+// ============================================================
+// PRODUCTS SECTION
+// ============================================================
+.order-products-section {
+  .products-card { @extend %card-base; }
+}
+
+.products-list {
+  .product-item-card {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    padding: 18px 24px;
+    border-bottom: 1px solid $line;
+    transition: background 0.2s ease;
+
+    &:last-child { border-bottom: none; }
+    &:hover { background: $bg; }
+
+    @media (max-width: 640px) { flex-wrap: wrap; gap: 14px; padding: 16px 18px; }
+  }
+
+  .product-image-wrapper {
+    width: 76px;
+    height: 76px;
+    flex-shrink: 0;
+    border: 1px solid $line;
+    border-radius: 14px;
+    overflow: hidden;
+    background: $surface;
+    box-shadow: 0 2px 8px rgba($ink, 0.08);
+
+    .product-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+  }
+
+  .product-details {
+    flex: 1;
+    min-width: 0;
+
+    .product-name {
+      font-size: 14px;
+      font-weight: 700;
+      color: $ink;
+      margin: 0 0 10px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .product-info-grid {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .product-info-item {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+
+      .info-label {
+        font-size: 9.5px;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        color: $muted;
+      }
+
+      .info-value {
+        font-size: 13.5px;
+        font-weight: 600;
+        color: $ink;
+
+        &.amount {
+          font-weight: 800;
+          color: $blue;
+        }
+      }
+    }
+  }
+
+  .product-refund-section {
+    flex-shrink: 0;
+    margin-left: auto;
+
+    @media (max-width: 640px) { margin-left: 0; width: 100%; }
+  }
+}
+
+// ── Refund button ────────────────────────────────────────────
+.btn-refund {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 36px;
+  padding: 0 16px;
+  border: 1.5px solid $blue;
+  color: $blue;
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+  background: $blue-soft;
+  border-radius: 999px;
+
+  i { font-size: 13px; }
+
+  &:hover {
+    background: $blue;
+    color: $white;
+    box-shadow: 0 4px 12px rgba($blue, 0.35);
+    transform: translateY(-1px);
+  }
+
+  &.disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
+  @media (max-width: 640px) { width: 100%; justify-content: center; }
+}
+
+// ── Refund status badges ─────────────────────────────────────
+.refund-status-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 5px 12px;
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border-radius: 999px;
+  border: 1.5px solid $line;
+  color: $muted;
+  background: $surface;
+
+  &.non-refundable { color: $muted; border-color: $line; background: $surface; }
+  &.status-pending  { border-color: $warn; color: $warn; background: $warn-soft; }
+  &.status-approved { border-color: $success; color: $success; background: $success-soft; }
+  &.status-rejected { border-color: $rose; color: $rose; background: $rose-soft; }
+}
+
+// ============================================================
+// ORDER INFO SECTION
+// ============================================================
+.order-info-section {
+  .consumer-details-card,
+  .order-summary-card {
+    @extend %card-base;
+    height: 100%;
+  }
+
+  // ── Detail items ───────────────────────────────────────────
+  .details-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .detail-item {
+    display: flex;
+    gap: 14px;
+    padding: 16px 0;
+    border-bottom: 1px solid $line;
+
+    &:first-child { padding-top: 0; }
+    &:last-child  { border-bottom: none; padding-bottom: 0; }
+  }
+
+  .detail-icon-wrapper {
+    width: 36px;
+    height: 36px;
+    background: $blue-soft;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 2px;
+    border: 1px solid rgba($blue, 0.2);
+
+    i { font-size: 16px; color: $blue; }
+  }
+
+  .detail-content {
+    flex: 1;
+    min-width: 0;
+
+    .detail-label {
+      display: block;
+      font-size: 10px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: $muted;
+      margin-bottom: 5px;
+    }
+
+    .detail-value {
+      font-size: 13.5px;
+      color: $ink;
+      font-weight: 500;
+      line-height: 1.7;
+      margin: 0;
+
+      .phone-text {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        font-size: 12.5px;
+        color: $blue;
+        font-weight: 600;
+        margin-top: 2px;
+      }
+    }
+  }
+
+  // ── Summary card ───────────────────────────────────────────
+  .summary-list {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .summary-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 11px 0;
+    border-bottom: 1px solid $line;
+
+    &:last-child { border-bottom: none; }
+
+    .summary-label {
+      font-size: 13.5px;
+      color: $muted;
+      font-weight: 500;
+    }
+
+    .summary-value {
+      font-size: 13.5px;
+      font-weight: 700;
+      color: $ink;
+    }
+
+    &.discount {
+      .summary-label { color: $success; font-weight: 600; }
+      .summary-value { color: $success; }
+    }
+
+    &.total {
+      border-bottom: none;
+      padding-top: 16px;
+      margin-top: 4px;
+      border-top: 2px solid rgba($blue, 0.15);
+
+      .summary-label {
+        font-size: 11px;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        color: $ink;
+      }
+
+      .summary-value {
+        font-size: 24px;
+        font-weight: 900;
+        color: $blue;
+        letter-spacing: -0.8px;
+      }
+    }
+  }
+
+  // ── Payment status badge ────────────────────────────────────
+  .payment-status-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 5px 12px;
+    font-size: 10px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-radius: 999px;
+    border: 1.5px solid $line;
+    color: $muted;
+    background: $surface;
+
+    &.status-completed,
+    &.status-paid    { border-color: $success; color: $success; background: $success-soft; }
+    &.status-pending { border-color: $warn; color: $warn; background: $warn-soft; }
+    &.status-failed  { border-color: $rose; color: $rose; background: $rose-soft; }
+  }
+}
+
+// ============================================================
+// SUB ORDERS SECTION
+// ============================================================
+.sub-orders-section {
+  .sub-orders-card { @extend %card-base; }
+
+  .sub-orders-list {
+    .sub-order-card {
+      border-bottom: 1px solid $line;
+      transition: background 0.2s ease;
+
+      &:last-child { border-bottom: none; }
+      &:hover { background: $bg; }
+    }
+
+    .sub-order-content {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 18px 24px;
+      flex-wrap: wrap;
+
+      @media (max-width: 576px) { padding: 16px 18px; }
+    }
+
+    .sub-order-info {
+      flex: 1;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+
+      @media (max-width: 640px) { grid-template-columns: 1fr 1fr; }
+    }
+
+    .info-row {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+
+      .info-label {
+        font-size: 9.5px;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        color: $muted;
+      }
+
+      .info-value {
+        font-size: 13.5px;
+        color: $ink;
+        font-weight: 600;
+
+        &.amount { color: $blue; font-weight: 800; }
+      }
+    }
+  }
+}
+
+// ── Status badges ────────────────────────────────────────────
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 12px;
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border-radius: 999px;
+  border: 1.5px solid $line;
+  color: $muted;
+  background: $surface;
+  width: fit-content;
+
+  &.status-delivered  { border-color: $success; color: $success; background: $success-soft; }
+  &.status-cancelled  { border-color: $rose;    color: $rose;    background: $rose-soft; }
+  &.status-pending    { border-color: $warn;    color: $warn;    background: $warn-soft; }
+  &.status-processing { border-color: $blue;    color: $blue;    background: $blue-soft; }
+  &.status-shipped    { border-color: $ink;     color: $ink;     background: $surface; }
+}
+
+// ── View sub-order button ────────────────────────────────────
+.btn-view-sub-order {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 38px;
+  padding: 0 18px;
+  border: 1.5px solid $line-strong;
+  color: $ink;
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  text-decoration: none;
+  transition: all 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+  flex-shrink: 0;
+  white-space: nowrap;
+  border-radius: 999px;
+  background: $surface;
+
+  i { font-size: 14px; }
+
+  &:hover {
+    background: $blue;
+    border-color: $blue;
+    color: $white;
+    box-shadow: 0 4px 14px rgba($blue, 0.35);
+    transform: translateY(-1px);
+  }
+
+  @media (max-width: 640px) { width: 100%; justify-content: center; }
+}
+
+// ============================================================
+// TOOLTIP
+// ============================================================
+.black-tooltip {
+  .tooltip-inner {
+    background: $ink;
+    color: $white;
+    font-size: 11px;
+    font-weight: 600;
+    border-radius: 8px;
+    padding: 6px 12px;
+  }
+}

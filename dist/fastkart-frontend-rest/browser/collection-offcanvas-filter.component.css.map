@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/components/shop/collection/collection-offcanvas-filter/collection-offcanvas-filter.component.scss"],
+  "sourcesContent": ["// Invisible overlay for desktop click-outside functionality\r\n.overlay-desktop {\r\n  position: fixed;\r\n  left: 0;\r\n  top: 0;\r\n  width: 100vw;\r\n  height: 100vh;\r\n  z-index: 8; // Behind sidebar (z-index: 9) so sidebar stays on top\r\n  opacity: 0;\r\n  visibility: hidden;\r\n  transition: all 0.3s ease;\r\n  cursor: pointer;\r\n\r\n  &.show {\r\n    visibility: visible;\r\n  }\r\n}"],
+  "mappings": ";AACA,CAAA;AACE,YAAA;AACA,QAAA;AACA,OAAA;AACA,SAAA;AACA,UAAA;AACA,WAAA;AACA,WAAA;AACA,cAAA;AACA,cAAA,IAAA,KAAA;AACA,UAAA;;AAEA,CAZF,eAYE,CAAA;AACE,cAAA;;",
+  "names": []
+}
