@@ -31,10 +31,10 @@ export class DenverComponent implements OnInit, OnDestroy, AfterViewInit {
   public productSlider4Item = data.productSlider;
 
   // Featured Products by ID (4-5 products in a row)
-  public featuredProductIds: number[] = [12544, 12545, 12546, 12548];
-  public featuredProductIds2: number[] = [12549, 12550, 12551, 12544];
-  public dealProductIds: number[] = [12587, 12588, 12589, 12590,];
-  public topSellingIds: number[] = [12546, 12548, 12587, 12588];
+  public featuredProductIds: number[] = [10850, 11446, 10853, 10847];
+  public featuredProductIds2: number[] = [10645, 11433, 10652, 11425];
+  public dealProductIds: number[] = [10873, 11324, 11336, 13255];
+  public topSellingIds: number[] = [10649, 13160, 13161, 13430];
   public topSellingIds2: number[] = [12591, 12592, 12549, 12550];
 
   // Hero Slider Properties

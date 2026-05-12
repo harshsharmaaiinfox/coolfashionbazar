@@ -10,7 +10,7 @@ import { ProductState } from '../../../shared/state/product.state';
 import { ThemeOptionState } from '../../../shared/state/theme-option.state';
 import { Option } from '../../../shared/interface/theme-option.interface';
 import { Title, Meta } from '@angular/platform-browser';
- 
+
 @Component({
   selector: 'app-collection',
   templateUrl: './collection.component.html',
@@ -40,7 +40,7 @@ export class CollectionComponent {
     'sortBy': 'asc',
     'rating': '',
     'attribute': '',
-    store_id: 28,
+    store_id: 26,
   };
 
   public totalItems: number = 0;
@@ -67,7 +67,7 @@ export class CollectionComponent {
         'sortBy': queryParams['sortBy'] ? queryParams['sortBy'] : this.filter['sortBy'],
         'rating': queryParams['rating'] ? queryParams['rating'] : '',
         'attribute': queryParams['attribute'] ? queryParams['attribute'] : '',
-        store_id: 28,
+        store_id: 26,
       }
 
       this.store.dispatch(new GetProducts(this.filter));
@@ -95,7 +95,7 @@ export class CollectionComponent {
     let title = '';
     let description = '';
     let keywords = '';
-    
+
     switch (categoryLower) {
       case 'activewear':
         title = 'Activewear Collection | Gym Wear, Sportswear & Fitness Clothes | CoolFashionBazar';
@@ -124,7 +124,7 @@ export class CollectionComponent {
 
     // Force title update using multiple methods to ensure it works
     this.forceUpdateTitle(title);
-    
+
     // Update meta tags
     this.meta.updateTag({ name: 'description', content: description });
     this.meta.updateTag({ name: 'keywords', content: keywords });
@@ -136,7 +136,7 @@ export class CollectionComponent {
 
     // Update canonical URL
     this.meta.updateTag({ rel: 'canonical', href: `https://CoolFashionBazar.in/collections/${category}` });
-    
+
     // Update breadcrumb
     this.breadcrumb.title = `${category.charAt(0).toUpperCase() + category.slice(1)} Collection`;
     this.breadcrumb.items = [
@@ -156,7 +156,7 @@ export class CollectionComponent {
 
     // Force title update
     this.forceUpdateTitle(title);
-    
+
     // Update meta tags
     this.meta.updateTag({ name: 'description', content: description });
     this.meta.updateTag({ name: 'keywords', content: keywords });
@@ -166,7 +166,7 @@ export class CollectionComponent {
     this.meta.updateTag({ name: 'twitter:title', content: title });
     this.meta.updateTag({ name: 'twitter:description', content: description });
     this.meta.updateTag({ rel: 'canonical', href: 'https://CoolFashionBazar.in/collections' });
-    
+
     // Reset breadcrumb to default
     this.breadcrumb.title = 'Collections';
     this.breadcrumb.items = [
@@ -181,19 +181,19 @@ export class CollectionComponent {
   private forceUpdateTitle(title: string): void {
     // Method 1: Angular Title service
     this.title.setTitle(title);
-    
+
     // Method 2: Update meta title tag as backup
     this.meta.updateTag({ name: 'title', content: title });
-    
+
     // Method 3: Direct DOM manipulation
     document.title = title;
-    
+
     // Method 4: Force update with setTimeout to ensure it takes effect
     setTimeout(() => {
       this.title.setTitle(title);
       document.title = title;
     }, 0);
-    
+
     // Method 5: Additional timeout for browser compatibility
     setTimeout(() => {
       this.title.setTitle(title);

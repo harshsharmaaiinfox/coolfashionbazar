@@ -28,7 +28,7 @@ export class AuthInterceptor implements HttpInterceptor {
   ): Observable<any> {
 
     // If Maintenance Mode On
-    if(this.isMaintenanceModeOn) {
+    if (this.isMaintenanceModeOn) {
       this.ngZone.run(() => {
         this.router.navigate(['/maintenance']);
       })
@@ -39,13 +39,13 @@ export class AuthInterceptor implements HttpInterceptor {
       req = req.clone({
         setHeaders: {
           Authorization: `Bearer ${token}`,
-          'store-id': '28',
+          'store-id': '26',
         },
       });
     } else {
       req = req.clone({
         setHeaders: {
-          'store-id': '28',
+          'store-id': '26',
         },
       });
     }
