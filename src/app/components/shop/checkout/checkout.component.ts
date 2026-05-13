@@ -113,10 +113,19 @@ export class CheckoutComponent {
       delivery_interval: new FormControl(),
       payment_method: new FormControl('', [Validators.required]),
       create_account: new FormControl(false),
-      name: new FormControl('', [Validators.required]),
-      email: new FormControl('', [Validators.required, Validators.email]),
+      name: new FormControl('', [
+        Validators.required,
+        Validators.pattern(/^[a-zA-Z\s]+$/)
+      ]),
+      email: new FormControl('', [
+        Validators.required,
+        Validators.pattern(/^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$/)
+      ]),
       country_code: new FormControl('91', [Validators.required]),
-      phone: new FormControl('', [Validators.required]),
+      phone: new FormControl('', [
+        Validators.required,
+        Validators.pattern(/^[0-9]{10}$/)
+      ]),
       password: new FormControl(),
       shipping_address: new FormGroup({
         title: new FormControl('', [Validators.required]),
@@ -269,8 +278,10 @@ export class CheckoutComponent {
     });
 
     this.form.controls['phone']?.valueChanges.subscribe((value) => {
-      if (value && value.toString().length > 10) {
-        this.form.controls['phone']?.setValue(+value.toString().slice(0, 10));
+      const strVal = (value ?? '').toString().replace(/[^0-9]/g, '');
+      const trimmed = strVal.slice(0, 10);
+      if ((value ?? '').toString() !== trimmed) {
+        this.form.controls['phone']?.setValue(trimmed, { emitEvent: false });
       }
     });
 
@@ -1074,8 +1085,14 @@ export class CheckoutComponent {
   filterSpecialCharacters(event: any, fieldName: string) {
     const input = event.target;
     const value = input.value;
-    // Allow only letters, numbers, spaces, dots, hyphens, and apostrophes
-    const filteredValue = value.replace(/[^a-zA-Z0-9\s\.\-\']/g, '');
+    let filteredValue: string;
+    if (fieldName === 'name') {
+      // Name: allow only alphabetic characters and spaces
+      filteredValue = value.replace(/[^a-zA-Z\s]/g, '');
+    } else {
+      // Generic: allow letters, numbers, spaces, dots, hyphens, apostrophes
+      filteredValue = value.replace(/[^a-zA-Z0-9\s\.\-\']/g, '');
+    }
     if (value !== filteredValue) {
       input.value = filteredValue;
       // Handle nested form controls
@@ -1091,11 +1108,22 @@ export class CheckoutComponent {
   filterEmailCharacters(event: any) {
     const input = event.target;
     const value = input.value;
-    // Allow only email-allowed characters: letters, numbers, dot, underscore, hyphen, plus, @
+    // Allow only valid email characters: letters, numbers, dot, underscore, hyphen, plus, @
     const filteredValue = value.replace(/[^a-zA-Z0-9._\-+@]/g, '');
     if (value !== filteredValue) {
       input.value = filteredValue;
       this.form.get('email')?.setValue(filteredValue);
+    }
+  }
+
+  filterPhoneCharacters(event: any) {
+    const input = event.target;
+    const value = input.value;
+    // Allow only digits, max 10 characters
+    const filteredValue = value.replace(/[^0-9]/g, '').slice(0, 10);
+    if (value !== filteredValue) {
+      input.value = filteredValue;
+      this.form.get('phone')?.setValue(filteredValue, { emitEvent: false });
     }
   }
 
@@ -1105,9 +1133,13 @@ export class CheckoutComponent {
     const phoneCtrl = this.form.get('phone');
     const passwordCtrl = this.form.get('password');
 
-    nameCtrl?.setValidators([Validators.required]);
+    nameCtrl?.setValidators([Validators.required, Validators.pattern(/^[a-zA-Z\s]+$/)]);
+    emailCtrl?.setValidators([Validators.required, Validators.pattern(/^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$/)]);
+    phoneCtrl?.setValidators([Validators.required, Validators.pattern(/^[0-9]{10}$/)]);
     passwordCtrl?.setValidators([Validators.required]);
     nameCtrl?.updateValueAndValidity();
+    emailCtrl?.updateValueAndValidity();
+    phoneCtrl?.updateValueAndValidity();
     passwordCtrl?.updateValueAndValidity();
 
     nameCtrl?.markAsTouched();

@@ -1512,22 +1512,20 @@
       }
     }
 
-    // Product Information and Delivery Details Row Layout
+    // Product Information and Delivery Details — full-width row above description
     .product-info-delivery-row {
-      margin-top: 20px;
-      gap: 12px;
-      /* Reduced gap between columns */
+      margin-top: 0;
 
       .pickup-box,
       .delivery-info {
-        margin-top: 0;
+        margin-top: 0 !important;
         height: 100%;
         display: flex;
         flex-direction: column;
       }
 
       @include mq-max(md) {
-        .col-md-6 {
+        > [class*="col-"] {
           margin-bottom: 15px;
         }
       }

@@ -67,15 +67,6 @@
           <div class="right-box-contain">
             <app-product-contain [product]="product" [option]="option"></app-product-contain>
             <app-product-action [product]="product"></app-product-action>
-            <!-- Product Information and Delivery Details in Row -->
-            <div class="row g-2 product-info-delivery-row">
-              <div class="col-md-6">
-                <app-product-information [product]="product"></app-product-information>
-              </div>
-              <div class="col-md-6">
-                <app-product-delivery-information [product]="product"></app-product-delivery-information>
-              </div>
-            </div>
             <app-payment-option [product]="product" [option]="option"></app-payment-option>
             <app-product-social-share [product]="product" [option]="option"></app-product-social-share>
           </div>
@@ -83,6 +74,17 @@
         <div class="col-12 related-product-2"
           *ngIf="product?.cross_sell_products && product?.cross_sell_products?.length">
           <app-product-bundle [product]="product"></app-product-bundle>
+        </div>
+        <!-- Product Information and Delivery Details — full width, aligned with Description -->
+        <div class="col-12">
+          <div class="row g-3 product-info-delivery-row">
+            <div class="col-md-6">
+              <app-product-information [product]="product"></app-product-information>
+            </div>
+            <div class="col-md-6">
+              <app-product-delivery-information [product]="product"></app-product-delivery-information>
+            </div>
+          </div>
         </div>
         <div class="m-auto col-lg-9">
           <app-product-details-tabs [product]="product"></app-product-details-tabs>

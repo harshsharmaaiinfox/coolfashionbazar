@@ -29,10 +29,14 @@
                     <input type="text" formControlName="name"
                       placeholder="{{ 'Enter Name' | translate }}"
                       (input)="filterSpecialCharacters($event, 'name')"
-                      pattern="[a-zA-Z0-9\s\.\-\']+">
+                      pattern="[a-zA-Z\s]+">
                     <span class="kfc-error"
                       *ngIf="form?.controls?.['name']?.touched && form.controls['name']?.errors?.['required']">
                       {{ 'Name Is Required' | translate }}
+                    </span>
+                    <span class="kfc-error"
+                      *ngIf="form?.controls?.['name']?.touched && form.controls['name']?.errors?.['pattern']">
+                      {{ 'Name must contain only alphabetic characters and spaces' | translate }}
                     </span>
                   </div>
                   <div class="kfc-field">
@@ -40,23 +44,30 @@
                     <input type="email" formControlName="email"
                       placeholder="{{ 'Enter Email Address' | translate }}"
                       (input)="filterEmailCharacters($event)"
-                      pattern="[a-zA-Z0-9._\-+@]+">
+                      pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}">
                     <span class="kfc-error"
                       *ngIf="form?.controls?.['email']?.touched && form.controls['email']?.errors?.['required']">
                       {{ 'Email is Required' | translate }}
                     </span>
                     <span class="kfc-error"
-                      *ngIf="form.controls['email'].touched && form.controls['email'].errors?.['email']">
-                      {{ 'Invalid Email' | translate }}
+                      *ngIf="form.controls['email'].touched && form.controls['email'].errors?.['pattern']">
+                      {{ 'Please enter a valid email address (e.g. example@gmail.com)' | translate }}
                     </span>
                   </div>
                   <div class="kfc-field">
                     <label>{{ 'Phone Number' | translate }}</label>
-                    <input type="number" formControlName="phone"
-                      placeholder="{{ 'enter_phone' | translate }}">
+                    <input type="text" formControlName="phone"
+                      placeholder="{{ 'enter_phone' | translate }}"
+                      (input)="filterPhoneCharacters($event)"
+                      inputmode="numeric"
+                      maxlength="10">
                     <span class="kfc-error"
                       *ngIf="form?.controls?.['phone']?.touched && form.controls['phone']?.errors?.['required']">
                       {{ 'Phone is Required' | translate }}
+                    </span>
+                    <span class="kfc-error"
+                      *ngIf="form?.controls?.['phone']?.touched && form.controls['phone']?.errors?.['pattern']">
+                      {{ 'Phone number must be exactly 10 digits (numbers only)' | translate }}
                     </span>
                   </div>
                 </div>
