@@ -238,42 +238,6 @@ $ft-line:      rgba($ft-white, 0.08);
 }
 
 // ---------------------------------------------------
-// Social Icons
-// ---------------------------------------------------
-.footer-social {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-top: 30px;
-
-  a {
-    width: 38px;
-    height: 38px;
-    border-radius: 12px;
-    background: rgba($ft-white, 0.05);
-    border: 1px solid $ft-line;
-    color: $ft-white !important;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-
-    svg {
-      width: 18px;
-      height: 18px;
-      color: inherit;
-    }
-
-    &:hover {
-      background: $ft-blue;
-      border-color: $ft-blue;
-      transform: translateY(-5px) rotate(8deg);
-      box-shadow: 0 10px 20px rgba($ft-blue, 0.3);
-    }
-  }
-}
-
-// ---------------------------------------------------
 // Copyright Bar
 // ---------------------------------------------------
 .kf-copyright-bar {
