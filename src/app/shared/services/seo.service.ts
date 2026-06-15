@@ -264,11 +264,13 @@ export class SeoService {
       "legalName": "KISMATECH SOFTWARE PVT LTD",
       "url": "https://coolfashionbazar.com",
       "logo": "https://coolfashionbazar.com/assets/images/logo.png",
-      "email": "info@coolfashionbazar.com",
+      "email": "kismatech.info@gmail.com",
+      "telephone": "+91-99715-82112",
+      "taxID": "09AALCK5505C1ZN",
       "address": {
         "@type": "PostalAddress",
-        "streetAddress": "FF-202, Gaur City Center",
-        "addressLocality": "Greater Noida, Gautam Buddh Nagar",
+        "streetAddress": "Shop No SF-92, Gaur City Center, Sector 4 Greater Noida West",
+        "addressLocality": "Noida, Gautambuddha Nagar",
         "addressRegion": "Uttar Pradesh",
         "postalCode": "201301",
         "addressCountry": "IN"
@@ -280,7 +282,8 @@ export class SeoService {
       ],
       "contactPoint": {
         "@type": "ContactPoint",
-        "email": "info@coolfashionbazar.com",
+        "email": "kismatech.info@gmail.com",
+        "telephone": "+91-99715-82112",
         "contactType": "customer service"
       }
     };
