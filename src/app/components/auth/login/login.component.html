@@ -11,6 +11,14 @@
           <h2>Sign in to your account</h2>
         </div>
 
+        <!-- Post sign-up notice -->
+        <div class="kfa-notice" *ngIf="justRegistered">
+          <i class="ri-checkbox-circle-line"></i>
+          <span>
+            {{ 'Your email is verified and your account is ready. Please sign in with the email and password you created during sign up.' | translate }}
+          </span>
+        </div>
+
         <form [formGroup]="form" (ngSubmit)="submit()" class="kfa-form">
 
           <!-- Email -->

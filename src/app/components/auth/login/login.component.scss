@@ -17,6 +17,8 @@ $a-gold:        #B38A48;
 $a-gold-soft:   #F6EFDE;
 $a-rose:        #E7475A;
 $a-rose-soft:   #FDECEE;
+$a-green:       #1F9D6B;
+$a-green-soft:  #E8F7F0;
 
 :host { display: block; }
 
@@ -107,6 +109,30 @@ section.kfa-page { padding-top: 0 !important; }
     letter-spacing: -0.8px;
 
     @media (max-width: 480px) { font-size: 26px !important; }
+  }
+}
+
+// Post sign-up success notice
+.kfa-notice {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-bottom: 24px;
+  padding: 14px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.5;
+  color: darken($a-green, 8%);
+  background: $a-green-soft;
+  border: 1px solid rgba($a-green, 0.28);
+  border-radius: 14px;
+  animation: kfaErrIn 0.35s ease;
+
+  i {
+    font-size: 18px;
+    line-height: 1.4;
+    color: $a-green;
+    flex-shrink: 0;
   }
 }
 

@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Store, Select } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { Cart, CartAddOrUpdate } from '../../../shared/interface/cart.interface';
@@ -17,7 +17,7 @@ import { SettingState } from '../../../shared/state/setting.state';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
 
   @Select(CartState.cartItems) cartItem$: Observable<Cart[]>;
   @Select(SettingState.setting) setting$: Observable<Values>;
@@ -28,10 +28,12 @@ export class LoginComponent {
     items: [{ label: 'Log in', active: true }]
   }
   public reCaptcha: boolean = true;
+  public justRegistered: boolean = false;
 
   constructor(
     private store: Store,
     private router: Router,
+    private route: ActivatedRoute,
     private formBuilder: FormBuilder,
     private authService: AuthService
   ) {
@@ -49,6 +51,12 @@ export class LoginComponent {
         this.reCaptcha = true;
       }
     });
+  }
+
+  ngOnInit() {
+    // Show a confirmation notice when the user lands here right after
+    // verifying their email during sign up (redirected with ?registered=true).
+    this.justRegistered = this.route.snapshot.queryParamMap.get('registered') === 'true';
   }
 
   filterEmailCharacters(event: any) {
