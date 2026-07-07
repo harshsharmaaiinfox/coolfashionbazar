@@ -5,7 +5,9 @@ import {
   AuthVerifyNumberOTPState, 
   RegisterModal, 
   UpdatePasswordModel, 
-  VerifyEmailOtpModel 
+  VerifyEmailOtpModel,
+  VerifyLoginOtpModel,
+  VerifyRegistrationOtpModel
 } from "../interface/auth.interface";
 
 export class Register {
@@ -16,6 +18,11 @@ export class Register {
 export class Login {
   static readonly type = "[Auth] Login";
   constructor(public payload: AuthUserStateModel) {}
+}
+
+export class LoginWithEmailOtp {
+  static readonly type = "[Auth] Login With Email OTP";
+  constructor(public payload: { email: string }) {}
 }
 
 export class LoginWithNumber {
@@ -31,6 +38,16 @@ export class ForgotPassWord {
 export class VerifyEmailOtp {
   static readonly type = "[Auth] VerifyEmailOtp";
   constructor(public payload: VerifyEmailOtpModel) {}
+}
+
+export class VerifyRegistrationOtp {
+  static readonly type = "[Auth] VerifyRegistrationOtp";
+  constructor(public payload: VerifyRegistrationOtpModel) {}
+}
+
+export class VerifyLoginOtp {
+  static readonly type = "[Auth] VerifyLoginOtp";
+  constructor(public payload: VerifyLoginOtpModel) {}
 }
 
 export class VerifyNumberOTP{
@@ -50,4 +67,3 @@ export class Logout {
 export class AuthClear {
   static readonly type = "[Auth] Clear";
 }
-

@@ -88,6 +88,9 @@
               <span class="kfa-error" *ngIf="form.controls['password'].touched && form.controls['password'].errors?.['required']">
                 {{ 'password_is_required' | translate }}
               </span>
+              <span class="kfa-error" *ngIf="form.controls['password'].touched && form.controls['password'].errors?.['strong']">
+                Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one number, and one special character.
+              </span>
             </div>
             <div class="kfa-field">
               <label for="password_confirmation">{{ 'Confirm Password' | translate }}</label>

@@ -36,29 +36,25 @@ export class CollectionCategoryFilterComponent {
       return;
     }
 
-    const index = this.selectedCategories.indexOf(slug);
-
-    if (index === -1) {
-      // Add category if not selected
-      this.selectedCategories.push(slug);
+    if (this.selectedCategories.includes(slug)) {
+      // Unselect if already selected
+      this.selectedCategories = [];
     } else {
-      // Remove category if already selected
-      this.selectedCategories.splice(index, 1);
+      // Select new one, replacing any existing selection
+      this.selectedCategories = [slug];
     }
 
-    const categoryPath = this.selectedCategories.length ? this.selectedCategories.join(',') : null;
+    const categoryPath = this.selectedCategories.length ? this.selectedCategories[0] : null;
     this.router.navigate([categoryPath ? `/collections/${categoryPath}` : '/collections']);
   }
 
   applyFilter(event: Event) {
-    const index = this.selectedCategories.indexOf((<HTMLInputElement>event?.target)?.value);  // checked and unchecked value
-
     if ((<HTMLInputElement>event?.target)?.checked)
-      this.selectedCategories.push((<HTMLInputElement>event?.target)?.value); // push in array cheked value
+      this.selectedCategories = [(<HTMLInputElement>event?.target)?.value]; // replace array with single checked value
     else
-      this.selectedCategories.splice(index,1);  // removed in array unchecked value
+      this.selectedCategories = [];  // removed from array if unchecked
 
-    const categoryPath = this.selectedCategories.length ? this.selectedCategories.join(',') : null;
+    const categoryPath = this.selectedCategories.length ? this.selectedCategories[0] : null;
     this.router.navigate([categoryPath ? `/collections/${categoryPath}` : '/collections']);
   }
 

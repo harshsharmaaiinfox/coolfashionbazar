@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { environment } from "../../../environments/environment";
-import { AuthNumberLoginState, AuthStateModal, AuthUserForgotModel, AuthUserStateModel, AuthVerifyNumberOTPState, RegisterModal, UpdatePasswordModel, VerifyEmailOtpModel } from "../interface/auth.interface";
+import { AuthNumberLoginState, AuthStateModal, AuthUserForgotModel, AuthUserStateModel, AuthVerifyNumberOTPState, RegisterModal, UpdatePasswordModel, VerifyEmailOtpModel, VerifyLoginOtpModel, VerifyRegistrationOtpModel } from "../interface/auth.interface";
 
 @Injectable({
   providedIn: "root",
@@ -22,6 +22,14 @@ export class AuthService {
     return this.http.post(`${environment.URL}/login`, payload);
   }
 
+  loginWithOtp(payload: { email: string }): Observable<any> {
+    return this.http.post(`${environment.URL}/login`, { email: payload.email });
+  }
+
+  verifyLoginOtp(payload: VerifyLoginOtpModel): Observable<any> {
+    return this.http.post(`${environment.URL}/verify-login-otp`, payload);
+  }
+
   loginWithNumber(payload: AuthNumberLoginState): Observable<AuthStateModal>{
     return this.http.post<AuthStateModal>(`${environment.URL}/login/number`,payload)
   }
@@ -32,6 +40,10 @@ export class AuthService {
 
   verifyEmailOtp(payload: VerifyEmailOtpModel): Observable<any> {
     return this.http.post(`${environment.URL}/verify-token`, payload);
+  }
+
+  verifyRegistrationOtp(payload: VerifyRegistrationOtpModel): Observable<any> {
+    return this.http.post(`${environment.URL}/verify-register-otp`, payload);
   }
 
   verifyNumberOtp(payload: AuthVerifyNumberOTPState): Observable<AuthStateModal> {

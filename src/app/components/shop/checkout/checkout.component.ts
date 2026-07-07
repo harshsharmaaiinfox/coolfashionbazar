@@ -1,4 +1,4 @@
-import { Component, ElementRef, TemplateRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, TemplateRef, ViewChild, ViewChildren, QueryList } from '@angular/core';
 import { Store, Select } from '@ngxs/store';
 import { FormBuilder, FormControl, FormGroup, Validators, FormArray } from '@angular/forms';
 import { Select2Data, Select2UpdateEvent } from 'ng-select2-component';
@@ -10,10 +10,13 @@ import { AccountState } from '../../../shared/state/account.state';
 import { CartState } from '../../../shared/state/cart.state';
 import { OrderState } from '../../../shared/state/order.state';
 import { Checkout, PlaceOrder } from '../../../shared/action/order.action';
-import { Register } from '../../../shared/action/auth.action';
 import { ClearCart, GetCartItems, SyncCart } from '../../../shared/action/cart.action';
+import { Register, Login, VerifyRegistrationOtp, VerifyLoginOtp } from '../../../shared/action/auth.action';
+import { CartAddOrUpdate } from '../../../shared/interface/cart.interface';
 import { AddressModalComponent } from '../../../shared/components/widgets/modal/address-modal/address-modal.component';
-import { Cart, CartAddOrUpdate } from '../../../shared/interface/cart.interface';
+import { CustomValidators } from '../../../shared/validator/password-match';
+import { NotificationService } from '../../../shared/services/notification.service';
+import { Cart } from '../../../shared/interface/cart.interface';
 import { SettingState } from '../../../shared/state/setting.state';
 import { GetSettingOption } from '../../../shared/action/setting.action';
 import { OrderCheckout } from '../../../shared/interface/order.interface';
@@ -56,16 +59,37 @@ export class CheckoutComponent {
   @ViewChild("addressModal") AddressModal: AddressModalComponent;
   @ViewChild('cpn', { static: false }) cpnRef: ElementRef<HTMLInputElement>;
   @ViewChild("payByQRModal") payByQRModal: TemplateRef<any>;
+  @ViewChild("checkoutOtpModal") checkoutOtpModal: TemplateRef<any>;
+  @ViewChildren('otpBox') otpBoxes: QueryList<ElementRef<HTMLInputElement>>;
+
+  public otpDigits: string[] = ['', '', '', '', '', ''];
+  public otpEmail: string = '';
+  public otpType: 'register' | 'login' = 'register';
+  public otpError: boolean = false;
+  public otpLoading: boolean = false;
+  public otpErrorMsg: string | null = null;
+  public otpSuccessMsg: string | null = null;
+  public otpModalRef: any;
+  public justRegistered: boolean = false;
+
+  get passwordMatchError() {
+    return (
+      this.form.getError('mismatch') &&
+      this.form.get('password_confirmation')?.touched
+    );
+  }
 
   public form: FormGroup;
+  public loginForm: FormGroup;
+  public authMode: 'register' | 'login' = 'register';
+  public authLoading: boolean = false;
+  public authError: string | null = null;
   public coupon: boolean = true;
   public couponCode: string;
   public appliedCoupon: boolean = false;
   public couponError: string | null;
   public checkoutTotal: OrderCheckout;
   public loading: boolean = false;
-  public registering: boolean = false;
-  public registerError: string | null = null;
   private checkoutInProgress: boolean = false;
 
   public shippingStates$: Observable<Select2Data>;
@@ -98,7 +122,8 @@ export class CheckoutComponent {
     private formBuilder: FormBuilder, public cartService: CartService,
     private modalService: NgbModal,
     private sanitizer: DomSanitizer,
-    private orderService: OrderService
+    private orderService: OrderService,
+    private notificationService: NotificationService
   ) {
     this.store.dispatch(new GetSettingOption());
 
@@ -113,20 +138,12 @@ export class CheckoutComponent {
       delivery_interval: new FormControl(),
       payment_method: new FormControl('', [Validators.required]),
       create_account: new FormControl(false),
-      name: new FormControl('', [
-        Validators.required,
-        Validators.pattern(/^[a-zA-Z\s]+$/)
-      ]),
-      email: new FormControl('', [
-        Validators.required,
-        Validators.pattern(/^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$/)
-      ]),
+      name: new FormControl('', [Validators.required]),
+      email: new FormControl('', [Validators.required, Validators.email]),
       country_code: new FormControl('91', [Validators.required]),
-      phone: new FormControl('', [
-        Validators.required,
-        Validators.pattern(/^[0-9]{10}$/)
-      ]),
-      password: new FormControl(),
+      phone: new FormControl('', [Validators.required]),
+      password: new FormControl('', [Validators.required, CustomValidators.StrongPassword()]),
+      password_confirmation: new FormControl('', [Validators.required]),
       shipping_address: new FormGroup({
         title: new FormControl('', [Validators.required]),
         floor_no: new FormControl(''),
@@ -156,6 +173,11 @@ export class CheckoutComponent {
         country_id: new FormControl('', [Validators.required]),
         state_id: new FormControl('', [Validators.required]),
       })
+    }, { validator: CustomValidators.MatchValidator('password', 'password_confirmation') });
+
+    this.loginForm = this.formBuilder.group({
+      email: new FormControl('', [Validators.required, Validators.email]),
+      password: new FormControl('', [Validators.required]),
     });
 
     this.store.selectSnapshot(state => state.setting).setting.activation.guest_checkout = true;
@@ -191,17 +213,12 @@ export class CheckoutComponent {
         this.form.removeControl('points_amount');
         this.form.removeControl('wallet_balance');
 
-        this.form.controls['create_account'].valueChanges.subscribe(value => {
-          if (value) {
-            this.form.controls['name'].setValidators([Validators.required]);
-            this.form.controls['password'].setValidators([Validators.required]);
-          } else {
-            this.form.controls['name'].clearValidators();
-            this.form.controls['password'].clearValidators();
-          }
-          this.form.controls['name'].updateValueAndValidity();
-          this.form.controls['password'].updateValueAndValidity();
-        });
+        this.form.controls['password'].setValidators([Validators.required, CustomValidators.StrongPassword()]);
+        this.form.controls['password_confirmation'].setValidators([Validators.required]);
+        this.form.controls['password'].updateValueAndValidity();
+        this.form.controls['password_confirmation'].updateValueAndValidity();
+        this.form.setValidators(CustomValidators.MatchValidator('password', 'password_confirmation'));
+        this.form.updateValueAndValidity();
 
         this.form.valueChanges.pipe(
           debounceTime(300), // Wait 300ms after user stops typing/changing
@@ -278,10 +295,8 @@ export class CheckoutComponent {
     });
 
     this.form.controls['phone']?.valueChanges.subscribe((value) => {
-      const strVal = (value ?? '').toString().replace(/[^0-9]/g, '');
-      const trimmed = strVal.slice(0, 10);
-      if ((value ?? '').toString() !== trimmed) {
-        this.form.controls['phone']?.setValue(trimmed, { emitEvent: false });
+      if (value && value.toString().length > 10) {
+        this.form.controls['phone']?.setValue(+value.toString().slice(0, 10));
       }
     });
 
@@ -794,7 +809,7 @@ export class CheckoutComponent {
     });
   }
 
-  // Transaction Status Check for CoolFashionBazar Nabu (and other payment gateways)
+  // Transaction Status Check for Aorian Lifestyle Nabu (and other payment gateways)
   checkTransactionStatusSleekSynergy(uuid: any, paymentWindow: Window | null, payment_method: string) {
     this.pollingSubscription = interval(this.pollingInterval).pipe(
       switchMap(() => this.cartService.checkTransectionStatusNeoKred(uuid, payment_method)),
@@ -1085,13 +1100,27 @@ export class CheckoutComponent {
   filterSpecialCharacters(event: any, fieldName: string) {
     const input = event.target;
     const value = input.value;
-    let filteredValue: string;
-    if (fieldName === 'name') {
-      // Name: allow only alphabetic characters and spaces
-      filteredValue = value.replace(/[^a-zA-Z\s]/g, '');
-    } else {
-      // Generic: allow letters, numbers, spaces, dots, hyphens, apostrophes
-      filteredValue = value.replace(/[^a-zA-Z0-9\s\.\-\']/g, '');
+    // Allow only letters and spaces
+    const filteredValue = value.replace(/[^a-zA-Z\s]/g, '');
+    if (value !== filteredValue) {
+      input.value = filteredValue;
+      // Handle nested form controls
+      if (fieldName.includes('.')) {
+        const [parent, child] = fieldName.split('.');
+        this.form.get(parent)?.get(child)?.setValue(filteredValue);
+      } else {
+        this.form.get(fieldName)?.setValue(filteredValue);
+      }
+    }
+  }
+
+  filterPhoneCharacters(event: any, fieldName: string) {
+    const input = event.target;
+    const value = input.value;
+    // Allow only numeric digits
+    let filteredValue = value.replace(/\D/g, '');
+    if (filteredValue.length > 10) {
+      filteredValue = filteredValue.substring(0, 10);
     }
     if (value !== filteredValue) {
       input.value = filteredValue;
@@ -1108,7 +1137,7 @@ export class CheckoutComponent {
   filterEmailCharacters(event: any) {
     const input = event.target;
     const value = input.value;
-    // Allow only valid email characters: letters, numbers, dot, underscore, hyphen, plus, @
+    // Allow only email-allowed characters: letters, numbers, dot, underscore, hyphen, plus, @
     const filteredValue = value.replace(/[^a-zA-Z0-9._\-+@]/g, '');
     if (value !== filteredValue) {
       input.value = filteredValue;
@@ -1116,106 +1145,223 @@ export class CheckoutComponent {
     }
   }
 
-  filterPhoneCharacters(event: any) {
-    const input = event.target;
-    const value = input.value;
-    // Allow only digits, max 10 characters
-    const filteredValue = value.replace(/[^0-9]/g, '').slice(0, 10);
-    if (value !== filteredValue) {
-      input.value = filteredValue;
-      this.form.get('phone')?.setValue(filteredValue, { emitEvent: false });
+  registerUser() {
+    this.authError = null;
+    ['name', 'email', 'phone', 'password', 'password_confirmation'].forEach(c =>
+      this.form.controls[c]?.markAsTouched()
+    );
+    const f = this.form.value;
+    if (this.form.controls['name'].invalid || this.form.controls['email'].invalid ||
+      this.form.controls['phone'].invalid || this.form.controls['password'].invalid ||
+      this.form.controls['password_confirmation'].invalid) {
+      return;
+    }
+    if (f.password !== f.password_confirmation) {
+      this.authError = 'Passwords do not match';
+      return;
+    }
+    this.authLoading = true;
+    const payload: any = {
+      name: f.name,
+      email: f.email,
+      phone: Number(f.phone),
+      country_code: Number(f.country_code || '91'),
+      password: f.password,
+      password_confirmation: f.password_confirmation,
+    };
+    this.store.dispatch(new Register(payload)).subscribe({
+      next: () => {
+        this.authLoading = false;
+        this.otpEmail = payload.email;
+        this.otpType = 'register';
+        this.otpDigits = ['', '', '', '', '', ''];
+        this.otpError = false;
+        this.otpErrorMsg = null;
+        this.otpSuccessMsg = null;
+        this.otpModalRef = this.modalService.open(this.checkoutOtpModal, {
+          centered: true,
+          backdrop: 'static',
+          keyboard: false,
+          windowClass: 'otp-verify-modal'
+        });
+      },
+      error: (err: any) => {
+        this.authLoading = false;
+        this.authError = err?.message || 'Registration failed';
+      }
+    });
+  }
+
+  loginUser() {
+    this.authError = null;
+    this.loginForm.markAllAsTouched();
+    if (this.loginForm.invalid) return;
+    this.authLoading = true;
+    this.store.dispatch(new Login(this.loginForm.value)).subscribe({
+      next: () => this.afterAuthSuccess(),
+      error: (err: any) => {
+        this.authLoading = false;
+        this.authError = err?.message || 'Login failed';
+      }
+    });
+  }
+
+  trackByIndex(index: number): number {
+    return index;
+  }
+
+  onOtpDigitInput(index: number, event: Event): void {
+    const input = event.target as HTMLInputElement;
+    const val = input.value.replace(/[^0-9]/g, '');
+    const digit = val ? val[val.length - 1] : '';
+
+    this.otpDigits[index] = digit;
+    input.value = digit;
+
+    this.otpError = this.otpDigits.join('').length < 6;
+
+    if (digit && index < 5) {
+      const container = input.closest('.otp-boxes-container');
+      const inputs = container ? Array.from(container.querySelectorAll('.otp-box')) as HTMLInputElement[] : [];
+      requestAnimationFrame(() => {
+        inputs[index + 1]?.focus();
+      });
     }
   }
 
-  registerAndContinue() {
-    const nameCtrl = this.form.get('name');
-    const emailCtrl = this.form.get('email');
-    const phoneCtrl = this.form.get('phone');
-    const passwordCtrl = this.form.get('password');
-
-    nameCtrl?.setValidators([Validators.required, Validators.pattern(/^[a-zA-Z\s]+$/)]);
-    emailCtrl?.setValidators([Validators.required, Validators.pattern(/^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$/)]);
-    phoneCtrl?.setValidators([Validators.required, Validators.pattern(/^[0-9]{10}$/)]);
-    passwordCtrl?.setValidators([Validators.required]);
-    nameCtrl?.updateValueAndValidity();
-    emailCtrl?.updateValueAndValidity();
-    phoneCtrl?.updateValueAndValidity();
-    passwordCtrl?.updateValueAndValidity();
-
-    nameCtrl?.markAsTouched();
-    emailCtrl?.markAsTouched();
-    phoneCtrl?.markAsTouched();
-    passwordCtrl?.markAsTouched();
-
-    if (nameCtrl?.invalid || emailCtrl?.invalid || phoneCtrl?.invalid || passwordCtrl?.invalid) {
+  onOtpKeyDown(index: number, event: KeyboardEvent): void {
+    if (event.key === 'Backspace') {
+      event.preventDefault();
+      const input = event.target as HTMLInputElement;
+      if (this.otpDigits[index]) {
+        this.otpDigits[index] = '';
+        input.value = '';
+      } else if (index > 0) {
+        const container = input.closest('.otp-boxes-container');
+        const inputs = container ? Array.from(container.querySelectorAll('.otp-box')) as HTMLInputElement[] : [];
+        this.otpDigits[index - 1] = '';
+        const prev = inputs[index - 1];
+        if (prev) {
+          prev.value = '';
+          prev.focus();
+        }
+      }
+      this.otpError = this.otpDigits.join('').length < 6;
       return;
     }
 
-    const payload: any = {
-      name: nameCtrl?.value,
-      email: emailCtrl?.value,
-      phone: phoneCtrl?.value,
-      country_code: this.form.get('country_code')?.value || '91',
-      password: passwordCtrl?.value,
-      password_confirmation: passwordCtrl?.value
-    };
+    if (event.key.length === 1 && !/[0-9]/.test(event.key)) {
+      event.preventDefault();
+    }
+  }
 
-    this.registering = true;
-    this.registerError = null;
+  onOtpPaste(event: ClipboardEvent): void {
+    event.preventDefault();
+    const input = event.target as HTMLInputElement;
+    const pasted = (event.clipboardData?.getData('text') ?? '').replace(/[^0-9]/g, '').slice(0, 6);
+    for (let i = 0; i < 6; i++) {
+      this.otpDigits[i] = pasted[i] ?? '';
+    }
+    this.otpError = this.otpDigits.join('').length < 6;
+    const focusIndex = Math.min(pasted.length, 5);
+    const container = input.closest('.otp-boxes-container');
+    const inputs = container ? Array.from(container.querySelectorAll('.otp-box')) as HTMLInputElement[] : [];
+    requestAnimationFrame(() => {
+      inputs[focusIndex]?.focus();
+    });
+  }
 
-    this.store.dispatch(new Register(payload)).subscribe({
-      complete: () => {
-        // Sync the guest cart to the newly created account so items aren't lost
-        const syncCartItems: CartAddOrUpdate[] = [];
-        this.cartItem$.subscribe(items => {
-          (items || []).forEach(item => {
-            if (item) {
-              syncCartItems.push({
-                id: null,
-                product: item?.product,
-                product_id: item?.product_id,
-                variation: item?.variation ? item.variation : null,
-                variation_id: item?.variation_id ? item.variation_id : null,
-                quantity: item.quantity
-              });
+  verifyOtpCheckout() {
+    const otp = this.otpDigits.join('');
+    if (otp.length < 6) {
+      this.otpError = true;
+      return;
+    }
+    this.otpError = false;
+    this.otpLoading = true;
+    this.otpErrorMsg = null;
+    this.otpSuccessMsg = null;
+
+    if (this.otpType === 'register') {
+      this.store.dispatch(new VerifyRegistrationOtp({ email: this.otpEmail, token: otp })).subscribe({
+        next: () => {
+          this.otpLoading = false;
+          this.otpSuccessMsg = 'Verification successful! Redirecting to login...';
+          this.notificationService.showSuccess('Registration successful! Now you have to login again to checkout');
+          setTimeout(() => {
+            if (this.otpModalRef) {
+              this.otpModalRef.close();
             }
-          });
+            this.authMode = 'login';
+            this.justRegistered = true;
+            this.loginForm.patchValue({ email: this.otpEmail });
+          }, 1500);
+        },
+        error: (err: any) => {
+          this.otpLoading = false;
+          this.otpErrorMsg = err?.message || 'OTP verification failed';
+        }
+      });
+    } else if (this.otpType === 'login') {
+      this.store.dispatch(new VerifyLoginOtp({ email: this.otpEmail, token: otp })).subscribe({
+        next: () => {
+          this.otpLoading = false;
+          this.otpSuccessMsg = 'Login successful!';
+          setTimeout(() => {
+            if (this.otpModalRef) {
+              this.otpModalRef.close();
+            }
+            this.afterAuthSuccess();
+          }, 1000);
+        },
+        error: (err: any) => {
+          this.otpLoading = false;
+          this.otpErrorMsg = err?.message || 'OTP verification failed';
+        }
+      });
+    }
+  }
+
+  private afterAuthSuccess() {
+    // Sync guest cart items into the user's account so the checkout
+    // continues with the same items.
+    const items = this.store.selectSnapshot(CartState.cartItems) || [];
+    const syncCartItems: CartAddOrUpdate[] = [];
+    items.forEach((item: any) => {
+      if (item) {
+        syncCartItems.push({
+          id: null,
+          product: item?.product,
+          product_id: item?.product_id,
+          variation: item?.variation ? item.variation : null,
+          variation_id: item?.variation_id ? item.variation_id : null,
+          quantity: item.quantity,
         });
-
-        if (syncCartItems.length) {
-          this.store.dispatch(new SyncCart(syncCartItems)).subscribe({
-            complete: () => {
-              window.location.href = '/checkout';
-            },
-            error: () => {
-              this.registering = false;
-            }
-          });
-        } else {
-          this.store.dispatch(new GetCartItems()).subscribe({
-            complete: () => {
-              window.location.href = '/checkout';
-            },
-            error: () => {
-              this.registering = false;
-            }
-          });
-        }
-      },
-      error: (err: any) => {
-        this.registering = false;
-        // Try to extract a user-friendly message from various shapes
-        const apiError = err?.error?.error || err?.error;
-        const fieldErrors = apiError?.errors || err?.errors;
-        if (fieldErrors && typeof fieldErrors === 'object') {
-          const firstKey = Object.keys(fieldErrors)[0];
-          const firstMsg = Array.isArray(fieldErrors[firstKey]) ? fieldErrors[firstKey][0] : fieldErrors[firstKey];
-          this.registerError = firstMsg || err?.message || 'Registration failed. Please try again.';
-        } else {
-          this.registerError = apiError?.message || err?.message || 'Registration failed. Please try again.';
-        }
       }
     });
+    const after = () => {
+      this.authLoading = false;
+      // Re-init form controls for logged-in checkout flow
+      ['create_account', 'name', 'email', 'country_code', 'phone', 'password', 'password_confirmation', 'shipping_address', 'billing_address']
+        .forEach(c => this.form.contains(c) && this.form.removeControl(c));
+      if (!this.form.contains('shipping_address_id')) {
+        this.form.addControl('shipping_address_id', new FormControl('', [Validators.required]));
+      }
+      if (!this.form.contains('billing_address_id')) {
+        this.form.addControl('billing_address_id', new FormControl('', [Validators.required]));
+      }
+      if (!this.form.contains('points_amount')) {
+        this.form.addControl('points_amount', new FormControl(false));
+      }
+      if (!this.form.contains('wallet_balance')) {
+        this.form.addControl('wallet_balance', new FormControl(false));
+      }
+    };
+    if (syncCartItems.length) {
+      this.store.dispatch(new SyncCart(syncCartItems)).subscribe({ complete: after, error: after });
+    } else {
+      this.store.dispatch(new GetCartItems()).subscribe({ complete: after, error: after });
+    }
   }
 
   ngOnDestroy() {

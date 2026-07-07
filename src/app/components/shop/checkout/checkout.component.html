@@ -18,11 +18,11 @@
         <ng-container *ngIf="(setting$ | async)?.activation?.guest_checkout && !(accessToken$ | async)">
           <div class="kfc-step">
             <div class="kfc-step-head">
-              <span class="kfc-step-num">01</span>
+              <span class="kfc-step-num">1</span>
               <h3>{{ 'Account Details' | translate }}</h3>
             </div>
             <div class="kfc-step-body">
-              <form [formGroup]="form" class="kfc-form">
+              <form [formGroup]="form" class="kfc-form" *ngIf="authMode === 'register'">
                 <div class="kfc-form-row">
                   <div class="kfc-field">
                     <label>{{ 'Name' | translate }}</label>
@@ -43,8 +43,7 @@
                     <label>{{ 'Email' | translate }}</label>
                     <input type="email" formControlName="email"
                       placeholder="{{ 'Enter Email Address' | translate }}"
-                      (input)="filterEmailCharacters($event)"
-                      pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}">
+                      (input)="filterEmailCharacters($event)">
                     <span class="kfc-error"
                       *ngIf="form?.controls?.['email']?.touched && form.controls['email']?.errors?.['required']">
                       {{ 'Email is Required' | translate }}
@@ -58,7 +57,7 @@
                     <label>{{ 'Phone Number' | translate }}</label>
                     <input type="text" formControlName="phone"
                       placeholder="{{ 'enter_phone' | translate }}"
-                      (input)="filterPhoneCharacters($event)"
+                      (input)="filterPhoneCharacters($event, 'phone')"
                       inputmode="numeric"
                       maxlength="10">
                     <span class="kfc-error"
@@ -80,71 +79,76 @@
                       *ngIf="form?.controls?.['password']?.touched && form.controls['password']?.errors?.['required']">
                       {{ 'Password is Required' | translate }}
                     </span>
+                    <span class="kfc-error"
+                      *ngIf="form?.controls?.['password']?.touched && form.controls['password']?.errors?.['strong']">
+                      {{ 'Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one number, and one special character.' | translate }}
+                    </span>
+                  </div>
+                  <div class="kfc-field">
+                    <label>{{ 'Confirm Password' | translate }}</label>
+                    <input type="password" formControlName="password_confirmation"
+                      placeholder="{{ 'Confirm Password' | translate }}">
+                    <span class="kfc-error"
+                      *ngIf="form?.controls?.['password_confirmation']?.touched && form.controls['password_confirmation']?.errors?.['required']">
+                      {{ 'Confirm Password is Required' | translate }}
+                    </span>
+                    <span class="kfc-error" *ngIf="passwordMatchError">
+                      {{ 'Passwords do not match' | translate }}
+                    </span>
                   </div>
                 </div>
                 <div class="kfc-account-actions" style="display:flex;align-items:center;gap:16px;margin-top:12px;flex-wrap:wrap;">
                   <button type="button" class="btn btn-animation btn-md fw-bold"
-                          (click)="registerAndContinue()" [disabled]="registering">
-                    <span *ngIf="!registering">{{ 'Register & Continue' | translate }}</span>
-                    <span *ngIf="registering">
+                          (click)="registerUser()" [disabled]="authLoading">
+                    <span *ngIf="!authLoading">{{ 'Register & Continue' | translate }}</span>
+                    <span *ngIf="authLoading">
                       <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
                       {{ 'Registering...' | translate }}
                     </span>
                   </button>
                   <span>
                     {{ 'Already have an account?' | translate }}
-                    <a [routerLink]="['/auth/login']" class="text-primary">{{ 'Login' | translate }}</a>
+                    <a href="javascript:void(0)" class="text-primary" (click)="authMode = 'login'">{{ 'Login' | translate }}</a>
                   </span>
                 </div>
-                <div class="kfc-error mt-2" *ngIf="registerError" style="color:#dc3545;font-size:14px;">
-                  {{ registerError }}
+                <div class="kfc-error mt-2" *ngIf="authError" style="color:#dc3545;font-size:14px;">
+                  {{ authError }}
                 </div>
               </form>
-            </div>
-          </div>
 
-          <!-- GUEST: Shipping Address -->
-          <div class="kfc-step" *ngIf="!(cartDigital$ | async)">
-            <div class="kfc-step-head">
-              <span class="kfc-step-num">02</span>
-              <h3>{{ 'Shipping Address' | translate }}</h3>
-              <a href="javascript:void(0)" class="kfc-btn-add" (click)="AddressModal.openModal()">
-                <i class="ri-add-line"></i> {{ 'Add Address' | translate }}
-              </a>
-            </div>
-            <div class="kfc-step-body">
-              <app-address-block [addresses]="(user$ | async)?.address || []"
-                [type]="'shipping'" (selectAddress)="selectShippingAddress($event)">
-              </app-address-block>
-            </div>
-          </div>
+              <div class="kfc-alert" *ngIf="justRegistered && authMode === 'login'" style="background: rgba(30, 127, 201, 0.08); border: 1px solid rgba(30, 127, 201, 0.2); color: #1E7FC9; display: flex; align-items: center; gap: 8px; padding: 12px 14px; border-radius: 10px; margin-bottom: 14px; font-size: 13px; font-weight: 600;">
+                  <i class="ri-information-line"></i> {{ 'For checkout you need to login first' | translate }}
+              </div>
 
-          <!-- GUEST: Billing Address -->
-          <div class="kfc-step">
-            <div class="kfc-step-head">
-              <span class="kfc-step-num">03</span>
-              <h3>{{ 'Billing_address' | translate }}</h3>
-              <a href="javascript:void(0)" class="kfc-btn-add" (click)="AddressModal.openModal()">
-                <i class="ri-add-line"></i> {{ 'Add Address' | translate }}
-              </a>
-            </div>
-            <div class="kfc-step-body">
-              <app-address-block [addresses]="(user$ | async)?.address || []"
-                [type]="'billing'" (selectAddress)="selectBillingAddress($event)">
-              </app-address-block>
-            </div>
-          </div>
-
-          <!-- GUEST: Delivery Options -->
-          <div class="kfc-step" *ngIf="!(cartDigital$ | async)">
-            <div class="kfc-step-head">
-              <span class="kfc-step-num">04</span>
-              <h3>{{ 'Delivery Options' | translate }}</h3>
-            </div>
-            <div class="kfc-step-body">
-              <app-delivery-block [setting]="(setting$ | async)!"
-                (selectDelivery)="selectDelivery($event)">
-              </app-delivery-block>
+              <form [formGroup]="loginForm" class="kfc-form" *ngIf="authMode === 'login'">
+                  <div class="kfc-form-row">
+                      <div class="kfc-field">
+                          <label>{{ 'Email' | translate }}</label>
+                          <input type="email" formControlName="email" placeholder="{{ 'Enter Email Address' | translate }}">
+                          <span class="kfc-error" *ngIf="loginForm?.controls?.['email']?.touched && loginForm.controls['email']?.errors?.['required']">{{ 'Email is required' | translate }}</span>
+                      </div>
+                      <div class="kfc-field">
+                          <label>{{ 'Password' | translate }}</label>
+                          <input type="password" formControlName="password" placeholder="{{ 'Enter Password' | translate }}">
+                          <span class="kfc-error" *ngIf="loginForm?.controls?.['password']?.touched && loginForm.controls['password']?.errors?.['required']">{{ 'Password is required' | translate }}</span>
+                      </div>
+                  </div>
+                  <div class="kfc-account-actions" style="display:flex;align-items:center;gap:16px;margin-top:12px;flex-wrap:wrap;">
+                      <button type="button" class="btn btn-animation btn-md fw-bold" (click)="loginUser()" [disabled]="authLoading">
+                          <span *ngIf="!authLoading">{{ 'Login & Continue' | translate }}</span>
+                          <span *ngIf="authLoading">
+                              <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                              {{ 'Please wait...' | translate }}
+                          </span>
+                      </button>
+                      <span>{{ 'New customer?' | translate }}
+                          <a href="javascript:void(0)" class="text-primary" (click)="authMode = 'register'">{{ 'Register' | translate }}</a>
+                      </span>
+                  </div>
+                  <div class="kfc-error mt-2" *ngIf="authError" style="color:#dc3545;font-size:14px;">
+                      {{ authError }}
+                  </div>
+              </form>
             </div>
           </div>
         </ng-container>
@@ -339,9 +343,6 @@
           <img src="/assets/images/payments.png" alt="UPI">
         </div>
       </ng-container>
-      <ng-container *ngIf="payByNeoStep">
-        <p>Enter 14-digit transaction number</p>
-      </ng-container>
     </div>
     <div class="kfc-qr-modal-footer">
       <strong>₹ 1100.00</strong>
@@ -349,4 +350,74 @@
       <button class="kfc-btn-primary" (click)="paybyNeoDone()" *ngIf="payByNeoStep">Close</button>
     </div>
   </div>
+</ng-template>
+
+<ng-template #checkoutOtpModal let-modal>
+    <div class="modal-body theme-modal p-4">
+        <div class="login-container">
+            <!-- Welcome Text -->
+            <div class="welcome-header text-center pb-3 mb-4" style="border-bottom: 1px solid #eee;">
+                <h3 class="welcome-title mb-2" style="font-size: 24px; font-weight: 700; color: #1a1a1a;">Verify Your Account</h3>
+                <p class="welcome-subtitle text-muted mb-2">Enter the verification code sent to</p>
+                <div class="otp-destination">
+                    <span class="destination-text px-3 py-2" style="display: inline-flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 500; color: #1E7FC9; background: rgba(30, 127, 201, 0.08); border-radius: 8px; border: 1px solid rgba(30, 127, 201, 0.2);">
+                        <i class="ri-mail-line"></i>
+                        {{ otpEmail }}
+                    </span>
+                </div>
+            </div>
+
+            <!-- OTP Form -->
+            <div class="login-form-modern">
+                <div class="otp-boxes-group mb-4">
+                    <div class="field-label-row text-center mb-3">
+                        <label class="field-label" style="display: inline-flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 600; color: #333; text-transform: uppercase; letter-spacing: 0.8px;">
+                            <i class="ri-lock-password-line" style="color: #1E7FC9;"></i>
+                            Verification Code
+                        </label>
+                    </div>
+
+                    <div class="otp-boxes-container d-flex justify-content-center gap-2">
+                        <input
+                            *ngFor="let digit of otpDigits; let i = index; trackBy: trackByIndex"
+                            #otpBox
+                            type="text"
+                            inputmode="numeric"
+                            maxlength="1"
+                            class="otp-box"
+                            style="width: 44px; height: 50px; text-align: center; font-size: 20px; font-weight: 700; color: #1a1a1a; background: #f8f9fa; border: 2px solid #e0e0e0; border-radius: 10px; outline: none; transition: all 0.25s ease;"
+                            [class.otp-box-filled]="otpDigits[i]"
+                            [class.otp-box-error]="otpError"
+                            [value]="otpDigits[i]"
+                            (input)="onOtpDigitInput(i, $event)"
+                            (keydown)="onOtpKeyDown(i, $event)"
+                            (paste)="onOtpPaste($event)"
+                            autocomplete="one-time-code"
+                        />
+                    </div>
+
+                    <div *ngIf="otpError" class="field-error-message text-center text-danger mt-3" style="font-size: 13px;">
+                        <i class="ri-error-warning-line"></i>
+                        Please enter all 6 digits of the verification code
+                    </div>
+                    
+                    <div *ngIf="otpSuccessMsg" class="field-success-message text-center text-success mt-3" style="font-size: 13px;">
+                        <i class="ri-checkbox-circle-line"></i>
+                        {{ otpSuccessMsg }}
+                    </div>
+                    <div *ngIf="otpErrorMsg" class="field-error-message text-center text-danger mt-3" style="font-size: 13px;">
+                        <i class="ri-error-warning-line"></i>
+                        {{ otpErrorMsg }}
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="submit-button-wrapper mb-3">
+                    <button type="button" class="btn btn-animation w-100" (click)="verifyOtpCheckout()" [disabled]="otpLoading" style="height: 48px; background: #1E7FC9; border: none; border-radius: 10px; font-weight: 600; color: #fff; font-size: 15px;">
+                        {{ otpLoading ? 'Verifying...' : 'Verify OTP' }}
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 </ng-template>

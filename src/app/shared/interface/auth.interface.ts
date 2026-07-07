@@ -46,4 +46,12 @@ export interface RegisterModal {
   password_confirmation: string;
 }
 
+export interface VerifyRegistrationOtpModel {
+  email: string;
+  token: string;
+}
 
+export interface VerifyLoginOtpModel {
+  email: string;
+  token: string;
+}

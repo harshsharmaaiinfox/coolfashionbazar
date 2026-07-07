@@ -13,6 +13,8 @@ import { Values } from '../../../shared/interface/setting.interface';
 import * as data from '../../../shared/data/country-code';
 import { NotificationService } from '../../../shared/services/notification.service';
 
+import { AuthService } from '../../../shared/services/auth.service';
+
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -39,14 +41,15 @@ export class RegisterComponent {
     private store: Store,
     private router: Router,
     private formBuilder: FormBuilder,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private authService: AuthService
   ) {
     this.form = this.formBuilder.group({
       name: new FormControl('', [Validators.required, Validators.pattern(/^[A-Za-z\s]*$/)]),
       email: new FormControl('', [Validators.required, Validators.email]),
       phone: new FormControl('', [Validators.required, Validators.pattern(/^[0-9]*$/)]),
       country_code: new FormControl('91', [Validators.required]),
-      password: new FormControl('', [Validators.required]),
+      password: new FormControl('', [Validators.required, CustomValidators.StrongPassword()]),
       password_confirmation: new FormControl('', [Validators.required]),
       recaptcha: new FormControl(null, Validators.required)
     },{validator : CustomValidators.MatchValidator('password', 'password_confirmation')});
@@ -161,9 +164,10 @@ export class RegisterComponent {
       return
     }
     if(this.form.valid) {
+      this.authService.otpType = 'register';
       this.store.dispatch(new Register(this.form.value)).subscribe({
           complete: () => {
-            this.router.navigateByUrl('/account/dashboard');
+            this.router.navigateByUrl('/auth/otp');
           }
         }
       );

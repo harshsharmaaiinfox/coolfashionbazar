@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { tap } from "rxjs/operators";
 import { AccountClear } from "../action/account.action";
 import { AuthService } from "../services/auth.service";
-import { ForgotPassWord, Login, VerifyEmailOtp, UpdatePassword, Logout, AuthClear, Register, VerifyNumberOTP, LoginWithNumber } from "../action/auth.action";
+import { ForgotPassWord, Login, LoginWithEmailOtp, VerifyEmailOtp, UpdatePassword, Logout, AuthClear, Register, VerifyNumberOTP, LoginWithNumber, VerifyRegistrationOtp, VerifyLoginOtp } from "../action/auth.action";
 import { NotificationService } from "../services/notification.service";
 import { ClearCart } from "../action/cart.action";
 import { AddToWishlist } from "../action/wishlist.action";
@@ -70,7 +70,7 @@ export class AuthState {
           const state = ctx.getState();
           ctx.patchState({
             ...state,
-            access_token: result.access_token,
+            email: action.payload.email,
           });
         },
         error: err => {
@@ -128,6 +128,48 @@ export class AuthState {
     );
   }
 
+  @Action(LoginWithEmailOtp)
+  loginWithEmailOtp(ctx: StateContext<AuthStateModel>, action: LoginWithEmailOtp) {
+    this.notificationService.notification = false;
+    return this.authService.loginWithOtp(action.payload).pipe(
+      tap({
+        next: () => {
+          const state = ctx.getState();
+          ctx.patchState({
+            ...state,
+            email: action.payload.email,
+          });
+        },
+        error: err => {
+          throw new Error(err?.error?.message);
+        }
+      })
+    );
+  }
+
+  @Action(VerifyLoginOtp)
+  verifyLoginOtp(ctx: StateContext<AuthStateModel>, action: VerifyLoginOtp) {
+    this.notificationService.notification = false;
+    return this.authService.verifyLoginOtp(action.payload).pipe(
+      tap({
+        next: (result) => {
+          ctx.patchState({
+            access_token: result.access_token,
+            permissions: [],
+          });
+        },
+        error: err => {
+          throw new Error(err?.error?.message);
+        },
+        complete: () => {
+          if(localStorage.getItem('wishlist')){
+            this.store.dispatch(new AddToWishlist({product_id: localStorage.getItem('wishlist')}))
+          }
+        }
+      })
+    );
+  }
+
   @Action(ForgotPassWord)
   forgotPassword(ctx: StateContext<AuthStateModel>, action: ForgotPassWord) {
     this.notificationService.notification = false;
@@ -159,6 +201,18 @@ export class AuthState {
             token: action.payload.token
           });
         },
+        error: err => {
+          throw new Error(err?.error?.message);
+        }
+      })
+    );
+  }
+
+  @Action(VerifyRegistrationOtp)
+  verifyRegistrationOtp(ctx: StateContext<AuthStateModel>, action: VerifyRegistrationOtp) {
+    this.notificationService.notification = false;
+    return this.authService.verifyRegistrationOtp(action.payload).pipe(
+      tap({
         error: err => {
           throw new Error(err?.error?.message);
         }
